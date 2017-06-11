@@ -1,0 +1,65 @@
+  <div class="header">
+    <span><button type="submit" [disabled]="!companyForm.valid">Submit</button></span>
+    <span><button type="cancel" Name="cancel">Cancel</button></span>
+  </div>
+  <div class="content">
+    <form [formGroup]="companyForm"  (ngSubmit)="onSubmit()">
+      <span><button type="submit" >Submit</button></span>
+      <span><button type="cancel" Name="cancel">Cancel</button></span>
+    	<div id="General Information">
+    		<h4>General Information</h4>
+    		<div >
+    			<div><label>Name<input type="text" formControlName="comName" value="" placeholder="Enter name" required></label>	</div> <!--Company Name -->
+    			<div><label>Alias<input type="text" formControlName="comAlias" value="" placeholder=""></label></div>	<!--Alias Name -->
+    			<div><label>Phone<input type="text" formControlName="comPhone" value="" placeholder="" required=""></label></div> 	<!--Phone number -->
+    			<div><label>Fax<input type="text" formControlName="comFax" value="" placeholder="" ></label>	</div> <!--Company Fax -->
+    			<div><label>Toll free<input type="text" formControlName="comTollFree" value="" placeholder="" ></label>	</div> <!--Company Toll Free -->
+    			<div><label>District<input type="text" formControlName="comDistrict" value="" placeholder="" required></label>	</div><!--District -->
+    			<div><label>Web site<input type="text" formControlName="comWeb" value="" placeholder="" ></label>	</div> <!--Web Site -->
+    		</div>
+    	</div>
+
+    	<div id="Main Address">
+    		<h4> Main address</h4>
+    		<div>
+    			<div><label>Address line 1<input type="text" formControlName="comAddress" value="" placeholder="" required></label>	</div> <!--Main Address line 1 -->
+    			<div><label>Address line 2<input type="text" formControlName="comAddress2" value="" placeholder=""></label></div>	<!--Main Address line 2 -->
+    			<div><label>City<input type="text" formControlName="comCity" value="" placeholder="" required=""></label></div> 	<!--Main Address City -->
+    			<div><label>State<input type="text" formControlName="comState" value="" placeholder="" ></label>	</div> <!--Main Address State -->
+    			<div><label>Zip Code<input type="text" formControlName="comZip" value="" placeholder="" ></label>	</div> <!--Main Address Zip -->
+    			<div><label>Country<input type="text" formControlName="comCountry" value="" placeholder="" required></label>	</div><!--Main Address Country -->
+    			<div><label>Main Directions</label> <textarea formControlName="comDirections" rows="4" cols="50"></textarea> </div> <!--Main Address directions -->
+    		</div>
+    	</div>
+
+    	<div id="Mailing Address">
+    		<h4> Mailing address</h4>
+    			<label>Same as main address<input type="checkbox" name ="SameAsMainAddress" value=""></label> <!--Check box populate Mailing Address same as main address -->
+    		<div>
+    			<div><label>Address line 1<input type="text" formControlName="comMailAddress1" value="" placeholder="" required></label>	</div> <!--Mailing Address line 1 -->
+    			<div><label>Address line 2<input type="text" formControlName="comMailAddress2" value="" placeholder=""></label></div>	<!--Mailing Address line 2 -->
+    			<div><label>City<input type="text" formControlName="comMailCity" value="" placeholder="" required=""></label></div> 	<!--Mailing Address City -->
+    			<div><label>State<input type="text" formControlName="comMailState" value="" placeholder="" ></label>	</div> <!--Mailing Address State -->
+    			<div><label>Zip Code<input type="text" formControlName="comMailZip" value="" placeholder="" ></label>	</div> <!--Mailing Address Zip -->
+    			<div><label>Country<input type="text" formControlName="comMailCountry" value="" placeholder="" required></label>	</div><!--Mailing Address Country -->
+    		</div>
+    	</div>
+
+    	<div id="Delivery Address">
+    		<h4> Delivery address</h4>
+    			<label>Same as main address<input type="checkbox" name="SameAsMainAddress" value=""></label> <!--Check box populate Delivery Address same as main address -->
+    		<div>
+    			<div><label>Address line 1<input type="text" formControlName="comDeliveryAddress1" value="" placeholder="" required></label>	</div> <!--Delivery Address line 1 -->
+    			<div><label>Address line 2<input type="text" formControlName="comDeliveryAddress2" value="" placeholder=""></label></div>	<!--Delivery Address line 2 -->
+    			<div><label>City<input type="text" formControlName="comDeliveryCity" value="" placeholder="" required=""></label></div> 	<!--Delivery Address City -->
+    			<div><label>State<input type="text" formControlName="comDeliveryState" value="" placeholder="" ></label>	</div> <!--Delivery Address State -->
+    			<div><label>Zip Code<input type="text" formControlName="comDeliveryZip" value="" placeholder="" ></label>	</div> <!--Delivery Address Zip -->
+    			<div><label>Country<input type="text" formControlName="comDeliveryCountry" value="" placeholder="" required></label>	</div><!--Delivery Address Country -->
+    			<div><label>Delivery Directions</label> <textarea formControlName="comDirections" rows="4" cols="50"></textarea> </div> <!--Delivery directions -->
+    			<div><label>Delivery Comments</label> <textarea formControlName="comDirections" rows="4" cols="50"></textarea> </div> <!--Delivery Comments-->
+    		</div>
+    			<div><label>Priority<input type="checkbox" name="Priority" value=""></label></div> <!--Check box Mark as Priority-->
+    			<div><label>Company Comments</label> <textarea formControlName="cmcComment" rows="4" cols="50"></textarea> </div> <!--Delivery Comments-->
+    	</div>
+    </form>
+  </div>
