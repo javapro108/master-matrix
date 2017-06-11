@@ -1,1 +1,90 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  margin: 0;
+}
+
+.root-component {
+  height: 100%;
+  margin: 0;
+  margin: 0;
+}
+
+.home {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  border: 2px solid #f76707;
+}
+
+.header {
+  border: 2px solid green;
+  flex: 0 0 auto;
+}
+
+.main-content {
+  border: 2px solid blue;
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: row;
+}
+
+.side-nav {
+  width: 250px;
+  flex: 0 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 2px solid red;
+  transition: 1s;
+}
+
+.content-area {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  border: 2px solid orange;
+  display: flex;
+  flex-flow: column;
+}
+
+create-company-view {
+  display: flex;
+  flex-flow: column;
+  height: 100%;  
+}
+
+
+.content {
+  height: 100%;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  border: 2px solid orange;
+  display: flex;
+  flex-flow: column;
+}
+
+
+.footer {
+  border: 2px solid purple;
+  flex: 0 1 auto;
+}
+
+/* Form Related CSS*/
+/* Mark dirty form elements as yellow */
+.ng-dirty:not(form){
+border: 2px solid yellow; /* red */
+}
+
+/* Highlight required fields as green if value entered */
+.ng-valid[required],
+.ng-valid.required  {
+  border: 2px solid green; /* green */
+}
+/* Mark required fields as red */
+.ng-invalid:not(form)  {
+  border: 2px solid red; /* red */
+}

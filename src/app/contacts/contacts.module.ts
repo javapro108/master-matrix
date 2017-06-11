@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule }    from '@angular/http';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
-import { CompanyService } from './company.service';
-import { CompanyRouting } from './company.routing';
+import { ContactsService } from './contacts.service';
+import { ContactsRouting } from './contacts.routing';
 
 import { SearchComponent } from './search/search.component';
 import { CreateComponent } from './create/create.component';
@@ -12,11 +12,11 @@ import { ChangeComponent } from './change/change.component';
 import { DisplayComponent } from './display/display.component';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, HttpModule, CompanyRouting ],
+  imports: [ CommonModule, FormsModule, HttpModule, ContactsRouting ],
   declarations: [ SearchComponent, CreateComponent, ChangeComponent, DisplayComponent ],
-  providers: [ CompanyService ],
+  providers: [ ContactsService ],
   exports: []
 })
-export default class CompanyModule {
+export default class ContactsModule {
 
 }

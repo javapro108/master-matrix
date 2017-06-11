@@ -1,10 +1,14 @@
 <div class="login-view">
   <div class="login-image"></div>
   <div class="login-block">
-    <label>User Name</label>
-    <input id="uname" placeholder="Enter User Name" [(ngModel)]="uname"/>
-    <label>Password</label>
-    <input id="pass" placeholder="Enter Password" type="password"  [(ngModel)]="pass"/>
-    <button (click)="onLogin()">Login</button>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <label for="username">User Name:</label>
+      <input type="text" name="username" id="username" formControlName="username">
+      <br/>
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" formControlName="password">
+      <br/>
+      <button type="submit">log in</button>
+    </form>
   </div>
 </div>

@@ -1,27 +1,46 @@
 import { Component } from '@angular/core';
-import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'login-view',
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-   uname:String
-   pass:String
+   username = new FormControl('');
+   password = new FormControl('');
 
-   constructor(private loginService:LoginService,
-               private router: Router){}
+   loginForm: FormGroup = this.builder.group({
+     username: this.username,
+     password: this.password
+   });
+
+   constructor(private builder: FormBuilder,
+               private router: Router,
+               private loginService:LoginService){
+
+
+  }
 
    onLogin(){
-     this.loginService.login(this.uname, this.pass).subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
+     //this.router.navigate(['../home']);
+     debugger;
+     this.loginForm.value.username;
+     this.loginService.login(this.loginForm.value.username, this.loginForm.value.password)
+         .subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
+
    }
 
    loginSuccess(data){
-     window.localStorage.setItem("Auth-token", data.token);
      debugger;
-     this.router.navigate(['../home']);
+     if (data.token != undefined) {
+       window.localStorage.setItem("Auth-token", data.token);
+       this.router.navigate(['../home']);
+     } else {
+
+     }
    }
 
    loginError(){

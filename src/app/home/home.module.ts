@@ -14,6 +14,6 @@ import { HomeRouting } from './home.routing';
   providers: [],
   exports: []
 })
-export default class LoginModule {
+export default class HomeModule {
 
 }

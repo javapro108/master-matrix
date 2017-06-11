@@ -7,6 +7,34 @@ import { Router } from '@angular/router';
   templateUrl: './navigation.component.html'
 })
 export class NavigationComponent {
-   constructor(private router: Router){}
+
+  navLinks = [{
+    id:'Overview',
+    icon:'',
+    text:'Overview',
+    path: './overview',
+  },
+  {
+    id:'Company',
+    icon:'',
+    text:'Company',
+    path: './company',
+    childLinks: [{
+      id:'CreateCompany',
+      icon:'',
+      text:'Create Company',
+      path: './createcompany',
+    },
+    {
+      id:'Create',
+      icon:'',
+      text:'Overview',
+      path: './overview',
+    }]
+  }
+  ]
+
+  constructor(private router: Router){}
+
 
 }

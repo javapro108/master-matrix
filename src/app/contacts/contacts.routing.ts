@@ -6,11 +6,11 @@ import { DisplayComponent } from './display/display.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'find', pathMatch: 'full' },
+  { path: '', redirectTo: 'findcompany', pathMatch: 'full' },
   { path: 'find', component: SearchComponent },
   { path: 'create', component: CreateComponent },
   { path: 'change', component: ChangeComponent },
   { path: 'display', component: DisplayComponent }
 ];
 
-export const CompanyRouting = RouterModule.forChild(routes);
+export const ContactsRouting = RouterModule.forChild(routes);
