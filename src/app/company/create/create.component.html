@@ -1,11 +1,9 @@
-  <div class="header">
-    <span><button type="submit" [disabled]="!companyForm.valid">Submit</button></span>
-    <span><button type="cancel" Name="cancel">Cancel</button></span>
-  </div>
-  <div class="content">
-    <form [formGroup]="companyForm"  (ngSubmit)="onSubmit()">
-      <span><button type="submit" >Submit</button></span>
-      <span><button type="cancel" Name="cancel">Cancel</button></span>
+   <form [formGroup]="companyForm"  (ngSubmit)="onSubmit()" class="content-area">
+      <div class="header">
+        <span><button type="submit" [disabled]="!companyForm.valid">Submit</button></span>
+        <span><button type="cancel" Name="cancel">Cancel</button></span>
+      </div>
+      <div class="content-area">
     	<div id="General Information">
     		<h4>General Information</h4>
     		<div >
@@ -44,7 +42,6 @@
     			<div><label>Country<input type="text" formControlName="comMailCountry" value="" placeholder="" required></label>	</div><!--Mailing Address Country -->
     		</div>
     	</div>
-
     	<div id="Delivery Address">
     		<h4> Delivery address</h4>
     			<label>Same as main address<input type="checkbox" name="SameAsMainAddress" value=""></label> <!--Check box populate Delivery Address same as main address -->
@@ -60,6 +57,6 @@
     		</div>
     			<div><label>Priority<input type="checkbox" name="Priority" value=""></label></div> <!--Check box Mark as Priority-->
     			<div><label>Company Comments</label> <textarea formControlName="cmcComment" rows="4" cols="50"></textarea> </div> <!--Delivery Comments-->
-    	</div>
+    	  </div>
+      </div>
     </form>
-  </div>

@@ -2,12 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
-import { CompanyService } from '../company.service';
-
+import { CompanyService } from '../../services/company.service';
 
 @Component({
   selector: 'create-company-view',
-  templateUrl: './create.component.html'
+  templateUrl: './create.component.html',
+  styles: [`
+    create-company-view {
+      display: flex;
+      flex-flow: column;
+      height: 100%;
+    }
+  `]
 })
 export class CreateComponent implements OnInit {
 

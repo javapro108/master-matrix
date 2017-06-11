@@ -6,7 +6,7 @@ import { DisplayComponent } from './display/display.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'find', pathMatch: 'full' },
+  { path: '', redirectTo: 'find' },
   { path: 'find', component: SearchComponent },
   { path: 'create', component: CreateComponent },
   { path: 'change', component: ChangeComponent },

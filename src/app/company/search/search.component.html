@@ -1,3 +1,35 @@
-<div class="company">
-   Search Company Component
+<div class="content-area">
+  <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
+    <label for="comName">Company Name:</label>
+    <input type="text" name="comName" id="comName" formControlName="comName">
+    <br/>
+    <label for="comInactive">Inactive:</label>
+    <input type="text" name="comInactive" id="comInactive" formControlName="comInactive">
+    <br/>
+    <button type="submit">Find Company</button>
+  </form>
+  <div class="content-area">
+    <div class="company">
+       <table>
+          <thead class="header">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Alias</th>
+              <th>City</th>
+              <th>State</th>
+            </tr>
+          </thead>
+          <tbody class="content-area">
+            <tr *ngFor="let companyResult of companyService.companyEntity.findCompanyResults">
+              <td>{{companyResult.comID}}</td>
+              <td>{{companyResult.comName}}</td>
+              <td>{{companyResult.comAlias}</td>
+              <td>{{companyResult.comCity}}</td>
+              <td>{{companyResult.comState}}</td>
+            </tr>
+          </tbody>
+       </table>
+    </div>
+  </div>
 </div>

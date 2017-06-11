@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CompanyService } from '../company.service';
-
+import { CompanyService } from '../../services/company.service';
 
 @Component({
   selector: 'change-company-view',

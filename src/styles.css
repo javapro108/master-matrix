@@ -51,13 +51,6 @@ html, body {
   flex-flow: column;
 }
 
-create-company-view {
-  display: flex;
-  flex-flow: column;
-  height: 100%;  
-}
-
-
 .content {
   height: 100%;
   flex: 1 1 auto;
@@ -67,10 +60,16 @@ create-company-view {
   flex-flow: column;
 }
 
-
 .footer {
   border: 2px solid purple;
   flex: 0 1 auto;
+}
+
+create-company-view {
+  flex: 0 0 auto;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
 }
 
 /* Form Related CSS*/
