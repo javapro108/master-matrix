@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 interface Company {
+}
+
+interface Comment {
 
 }
 
@@ -36,7 +39,7 @@ export class CompanyService {
   constructor ( private http: Http ) {
     console.log('Company Service Initialized');
     this.companyEntity = {
-      findParams: { comName:'Initialized In Service constructor' }
+      findParams: { comName:'' }
     };
   }
 

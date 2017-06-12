@@ -1,3 +1,52 @@
-<div class="company">
-   Search Contacts Component
+<div class="content-area">
+  <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
+    <label for="conName">Contact Name:</label>
+    <input type="text" name="conName" id="conName" formControlName="conName">
+    <br/>
+    <label for="conActive">Active:</label>
+    <input type="checkbox" name="conActive" id="conActive" formControlName="conActive">
+    <br/>
+    <label for="conInactive">Inactive:</label>
+    <input type="checkbox" name="conInactive" id="conInactive" formControlName="conInactive">
+    <br/>
+    <button type="submit">Find Contacts</button>
+  </form>
+  <div class="content-area">
+    <div class="contacts">
+       <table>
+          <thead class="">
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Alias</th>
+              <th>Position</th>
+              <th>Title</th>
+              <th>Direct Phone</th>
+              <th>Email</th>
+              <th>District</th>
+              <th>Company Name</th>
+              <th>Company Phone</th>
+              <th>Last Contact Date</th>
+            </tr>
+          </thead>
+          <tbody class="">
+            <tr *ngFor="let contactResult of contactsService.contactEntity.findResults">
+              <td>{{contactResult.conID}}</td>
+              <td>{{contactResult.conFName}}</td>
+              <td>{{contactResult.conLName}}</td>
+              <td>{{contactResult.conAlias}}</td>
+              <td>{{contactResult.conPosition}}</td>
+              <td>{{contactResult.conTitle}}</td>
+              <td>{{contactResult.conDirectPhone}}</td>
+              <td>{{contactResult.conEmail}}</td>
+              <td>{{contactResult.comDistrict}}</td>
+              <td>{{contactResult.comName}}</td>
+              <td>{{contactResult.comPhone}}</td>
+              <td>{{contactResult.actDate}}</td>
+            </tr>
+          </tbody>
+       </table>
+    </div>
+  </div>
 </div>
