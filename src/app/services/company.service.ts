@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
 
 interface Company {
@@ -32,15 +32,35 @@ interface CompanyEntity {
 
 
 
-
 @Injectable()
 export class CompanyService {
   companyEntity:CompanyEntity;
+  rxService: BehaviorSubject<any>;
+
   constructor ( private http: Http ) {
     console.log('Company Service Initialized');
+    this.rxService = new BehaviorSubject({});
     this.companyEntity = {
       findParams: { comName:'' }
     };
+  }
+
+  subscribe(observer){
+    return this.rxService.subscribe(observer);
+  }
+
+  pushData(data) {
+    this.rxService.next(data);
+  }
+
+  getCompany(comID){
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+      let options = new RequestOptions({ headers: headers });
+      return this.http.get(
+        'http://localhost:8080/restjpa/api/company/get('+ comID + ')',
+        options
+      ).map(response => response.json());
   }
 
   findCompany(companyEntity:any){
@@ -55,4 +75,5 @@ export class CompanyService {
       ).map(response => response.json());
 
   }
+
 }

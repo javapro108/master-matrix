@@ -15,8 +15,9 @@ export class NavigationComponent implements OnInit {
   constructor(
     private router: Router,
     private homeService: HomeService
-  ){}
-  ngOnInit(){
+  ) {}
+
+  ngOnInit() {
     this.navItems = [{
       label:'Overview',
       icon:'',

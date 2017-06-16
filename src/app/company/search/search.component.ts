@@ -31,6 +31,15 @@ export class SearchComponent {
         .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
   }
 
+  displayCompany(company) {
+    this.companyService.pushData({ type:'DISPLAY', data:company.comID });
+    this.router.navigate(['./display']);
+  }
+
+  changeCompany(company) {
+
+  }
+
   findSuccess(findResult){
     debugger;
     this.companyService.companyEntity.findCompanyResults = findResult.findCompanyResults;

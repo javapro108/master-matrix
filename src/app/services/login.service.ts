@@ -20,7 +20,9 @@ export class LoginService {
 
   user:User;
 
-  constructor ( private http: Http ) { }
+  constructor ( private http: Http ) {
+    this.user = { firstName: '' };
+  }
 
   login(uName:String, pass:String){
       let headers = new Headers({'Content-Type': 'application/json'});
