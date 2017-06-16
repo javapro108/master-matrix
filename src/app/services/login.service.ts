@@ -3,8 +3,22 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
+
+export interface User {
+  userName?:String,
+  firstName?:String,
+  lastName?:String,
+  department?:String,
+  email?:String
+}
+
+
+
+
 @Injectable()
 export class LoginService {
+
+  user:User;
 
   constructor ( private http: Http ) { }
 

@@ -1,40 +1,55 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MenuItem } from 'primeng/primeng';
+
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'navigation-view',
   templateUrl: './navigation.component.html'
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
+  private navItems: MenuItem[];
 
-  navLinks = [{
-    id:'Overview',
-    icon:'',
-    text:'Overview',
-    path: './overview',
-  },
-  {
-    id:'Company',
-    icon:'',
-    text:'Company',
-    path: './company',
-    childLinks: [{
-      id:'CreateCompany',
+  constructor(
+    private router: Router,
+    private homeService: HomeService
+  ){}
+  ngOnInit(){
+    this.navItems = [{
+      label:'Overview',
       icon:'',
-      text:'Create Company',
-      path: './createcompany',
+      routerLink: ['overview']
     },
     {
-      id:'Create',
+      label:'Company',
       icon:'',
-      text:'Overview',
-      path: './overview',
+      items:[{
+          label:'Find Company',
+          icon:'',
+          routerLink: ['company/find']
+        },
+        {
+          label:'Create Company',
+          icon:'',
+          routerLink: ['company/create']
+        }]
+    },
+    {
+      label:'Contacts',
+      icon:'',
+      items:[{
+          label:'Find Contacts',
+          icon:'',
+          routerLink: ['contacts/find']
+        },
+        {
+          label:'Create Contacts',
+          icon:'',
+          routerLink: ['contacts/create']
+        }]
     }]
   }
-  ]
-
-  constructor(private router: Router){}
-
 
 }

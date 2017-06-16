@@ -19,34 +19,28 @@ html, body {
   display: flex;
   flex-flow: column;
   height: 100%;
-  border: 2px solid #f76707;
 }
 
 .header {
-  border: 2px solid green;
   flex: 0 0 auto;
 }
 
 .main-content {
-  border: 2px solid blue;
   flex: 1 1 auto;
   display: flex;
   flex-flow: row;
 }
 
 .side-nav {
-  width: 250px;
   flex: 0 0 auto;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 2px solid red;
   transition: 1s;
 }
 
 .content-area {
   flex: 1 1 auto;
   overflow-y: auto;
-  border: 2px solid orange;
   display: flex;
   flex-flow: column;
 }
@@ -55,13 +49,11 @@ html, body {
   height: 100%;
   flex: 1 1 auto;
   overflow-y: auto;
-  border: 2px solid orange;
   display: flex;
   flex-flow: column;
 }
 
 .footer {
-  border: 2px solid purple;
   flex: 0 1 auto;
 }
 

@@ -1,52 +1,51 @@
 <div class="content-area">
-  <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
-    <label for="conName">Contact Name:</label>
-    <input type="text" name="conName" id="conName" formControlName="conName">
-    <br/>
-    <label for="conActive">Active:</label>
-    <input type="checkbox" name="conActive" id="conActive" formControlName="conActive">
-    <br/>
-    <label for="conInactive">Inactive:</label>
-    <input type="checkbox" name="conInactive" id="conInactive" formControlName="conInactive">
-    <br/>
-    <button type="submit">Find Contacts</button>
-  </form>
+
+  <p-panel header="Find Contacts" [toggleable]="true">
+    <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
+      <div class="ui-g">
+        <label class="ui-g-2" for="conName">Contact Name:</label>
+        <input class="ui-g-3"type="text" name="conName" id="conName" formControlName="conName">
+
+        <p-checkbox class="ui-g-2" binary="true" label="Active:"
+                    name="conActive" id="conActive" formControlName="conActive"></p-checkbox>
+
+        <p-checkbox class="ui-g-2" binary="true" label="Inactive:"
+                    name="conInactive" id="conInactive" formControlName="conInactive"></p-checkbox>
+        <button pButton class="ui-g-2" type="submit" label="Find Contacts"></button>
+      </div>
+    </form>
+
+  </p-panel>
+
+
   <div class="content-area">
-    <div class="contacts">
-       <table>
-          <thead class="">
-            <tr>
-              <th>ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Alias</th>
-              <th>Position</th>
-              <th>Title</th>
-              <th>Direct Phone</th>
-              <th>Email</th>
-              <th>District</th>
-              <th>Company Name</th>
-              <th>Company Phone</th>
-              <th>Last Contact Date</th>
-            </tr>
-          </thead>
-          <tbody class="">
-            <tr *ngFor="let contactResult of contactsService.contactEntity.findResults">
-              <td>{{contactResult.conID}}</td>
-              <td>{{contactResult.conFName}}</td>
-              <td>{{contactResult.conLName}}</td>
-              <td>{{contactResult.conAlias}}</td>
-              <td>{{contactResult.conPosition}}</td>
-              <td>{{contactResult.conTitle}}</td>
-              <td>{{contactResult.conDirectPhone}}</td>
-              <td>{{contactResult.conEmail}}</td>
-              <td>{{contactResult.comDistrict}}</td>
-              <td>{{contactResult.comName}}</td>
-              <td>{{contactResult.comPhone}}</td>
-              <td>{{contactResult.actDate}}</td>
-            </tr>
-          </tbody>
-       </table>
-    </div>
+     <div>
+
+    <p-dataTable  [value]="contactsService.contactEntity.findResults"
+                  [rows]="20"
+                  [paginator]="true"
+                  [pageLinks]="5"
+                  [rowsPerPageOptions]="[10,20,30,40]" >
+
+    <p-header>
+        <div style="text-align:left">
+            <p-multiSelect [options]="columnOptions"  [(ngModel)]="cols">
+            </p-multiSelect>
+           <!-- <p>Selected Cars: {{selectedCars}}</p>
+
+            <p-multiSelect [options]="cars" [(ngModel)]="selectedCars"></p-multiSelect>-->
+        </div>
+    </p-header>
+
+    <p-column *ngFor="let col of cols" font-size:small
+      [field]="col.field"
+      [header]="col.header"
+      [style]="col.width"
+      [filter]="true" filterPlaceholder="Search"
+      [sortable]="true">
+    </p-column>
+   </p-dataTable>
+  </div>
+
   </div>
 </div>

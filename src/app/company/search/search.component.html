@@ -1,35 +1,53 @@
 <div class="content-area">
-  <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
-    <label for="comName">Company Name:</label>
-    <input type="text" name="comName" id="comName" formControlName="comName">
-    <br/>
-    <label for="comInactive">Inactive:</label>
-    <input type="checkbox" name="comInactive" id="comInactive" formControlName="comInactive">
-    <br/>
-    <button type="submit">Find Company</button>
-  </form>
+
+  <p-panel header="Find Company" [toggleable]="true">
+    <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
+      <div class="ui-g">
+        <label class="ui-g-2" for="comName">Company Name:</label>
+        <input class="ui-g-4" type="text" name="comName" id="comName" formControlName="comName" >
+        <p-checkbox class="ui-g-2" name="comInactive" label="Inactive:" id="comInactive" formControlName="comInactive" binary="true"></p-checkbox>
+        <span class="ui-g-1"></span>
+        <button pButton class="ui-g-2" type="submit" label="Find Company"></button>
+      </div>
+    </form>
+  </p-panel>
   <div class="content-area">
-    <div class="company">
-       <table>
-          <thead class="header">
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Alias</th>
-              <th>City</th>
-              <th>State</th>
-            </tr>
-          </thead>
-          <tbody class="content-area">
-            <tr *ngFor="let companyResult of companyService.companyEntity.findCompanyResults">
-              <td>{{companyResult.comID}}</td>
-              <td>{{companyResult.comName}}</td>
-              <td>{{companyResult.comAlias}</td>
-              <td>{{companyResult.comCity}}</td>
-              <td>{{companyResult.comState}}</td>
-            </tr>
-          </tbody>
-       </table>
-    </div>
+  <div>
+                   <p-dataTable [value]="companyService.companyEntity.findCompanyResults"
+                            [rows]="20"
+                            [paginator]="true"
+                            [pageLinks]="5"
+                            [rowsPerPageOptions]="[10,20,30,40]" >
+                    <p-column field="comID"
+                            header="ID"
+                            [style]="{'width':'10%'}"
+                            [filter]="true" filterPlaceholder="Search"
+                            [sortable]="true">
+                            </p-column>
+                  <p-column field="comName"
+                            header="Name"
+                            [style]="{'width':'30%'}"
+                            [sortable]="true"
+                            [filter]="true" filterPlaceholder="Search">
+                            </p-column>
+                  <p-column field="comAlias" header="Alias"
+                            [style]="{'width':'30%'}"
+                            [sortable]="true"
+                            [filter]="true" filterPlaceholder="Search">
+                            </p-column>
+                  <p-column field="comCity"
+                            header="City"
+                            [style]="{'width':'20%'}"
+                            [sortable]="true"
+                            [filter]="true" filterPlaceholder="Search">
+                            </p-column>
+                      <p-column field="comState"
+                            header="State"
+                            [style]="{'width':'10%'}"
+                            [sortable]="true"
+                            [filter]="true" filterPlaceholder="Search">
+                            </p-column>
+                  </p-dataTable>
+  </div>
   </div>
 </div>

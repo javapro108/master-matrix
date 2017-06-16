@@ -1,3 +1,13 @@
 <div class="header">
-    This is header
+
+  <p-toolbar>
+      <div class="ui-toolbar-group-left">
+          <button pButton type="button" icon="fa fa-bars" (click)="onSideNavToggle()"></button>
+      </div>
+
+      <div class="ui-toolbar-group-right">
+          <button pButton type="button" icon="fa-user-circle-o" [label]="homeService.user.firstName" ></button>
+          <button pButton type="button" icon="fa-power-off" ></button>
+      </div>
+  </p-toolbar>
 </div>

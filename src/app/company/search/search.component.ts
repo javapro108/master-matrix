@@ -18,12 +18,15 @@ export class SearchComponent {
 
   searchForm: FormGroup = this.builder.group({
     comName:     [this.companyService.companyEntity.findParams.comName,     Validators.required],
-    comInactive: [this.companyService.companyEntity.findParams.comInactive, Validators.required]
+    comInactive: [this.companyService.companyEntity.findParams.comInactive]
   });
 
   onFind(){
     debugger;
     this.companyService.companyEntity.findParams = this.searchForm.value;
+    if (this.companyService.companyEntity.findParams.comInactive != true ) {
+      this.companyService.companyEntity.findParams.comInactive = false;
+    }
     this.companyService.findCompany(this.companyService.companyEntity)
         .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
   }
