@@ -26,8 +26,14 @@ export class DisplayComponent implements OnInit, OnDestroy{
     debugger;
     if (data.type == 'DISPLAY'){
       this.companyService.getCompany(data.data)
-          .subscribe(data => this.companyService.companyEntity = data );
+          .subscribe(data => this.companyReceived(data) );
     }
+  }
+
+  companyReceived(data){
+    debugger;
+    this.companyService.companyEntity.company = data.company;
+    this.companyService.companyEntity.comments = data.comments;
   }
 
 }
