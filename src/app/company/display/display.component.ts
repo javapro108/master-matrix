@@ -15,14 +15,14 @@ export class DisplayComponent implements OnInit, OnDestroy{
     private router: Router){}
 
   ngOnInit() {
-    this.subscription = this.companyService.subscribe((data)=>this.updateReceived(data));
+    this.subscription = this.companyService.subscribe((data)=>this.rxUpdate(data));
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  updateReceived(data){
+  rxUpdate(data){
     debugger;
     if (data.type == 'DISPLAY'){
       this.companyService.getCompany(data.data)

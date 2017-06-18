@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
-import { LoginService } from '../services/login.service';
-import { HomeService } from '../services/home.service';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'login-view',
@@ -17,8 +16,7 @@ export class LoginComponent {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private loginService:LoginService,
-    private homeService:HomeService
+    private appService:AppService
   ){}
 
   loginForm: FormGroup = this.builder.group({
@@ -30,7 +28,7 @@ export class LoginComponent {
    //this.router.navigate(['../home']);
    debugger;
    this.loginForm.value.username;
-   this.loginService.login(this.loginForm.value.username, this.loginForm.value.password)
+   this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
        .subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
 
   }
@@ -39,7 +37,8 @@ export class LoginComponent {
    debugger;
    if (data.token != undefined) {
      window.localStorage.setItem("Auth-token", data.token);
-     this.homeService.user = data;
+     this.appService.user = data;
+     this.appService.initApp();
      this.router.navigate(['../home']);
    } else {
 

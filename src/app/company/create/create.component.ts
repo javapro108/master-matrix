@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
+import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
+import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/company.types';
 
 @Component({
   selector: 'create-company-view',
@@ -17,15 +19,17 @@ import { CompanyService } from '../../services/company.service';
 })
 export class CreateComponent implements OnInit {
 
+  busy:Boolean = false;
   companyForm: FormGroup;
-  comName:String;
 
   constructor(
-    private formBuilder: FormBuilder,
     private router: Router,
+    private activeRoute:ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private appService: AppService,
     private companyService:CompanyService
   ){
-    this.comName = "This is Test Name";
+    debugger;    
   }
 
   ngOnInit(): void{
@@ -36,16 +40,9 @@ export class CreateComponent implements OnInit {
      this.buildForm();
    }
 
-  onSubmit() {
-     debugger;
-     console.log(this.comName);
-     this.companyForm.markAsPristine();
-     console.log(this.companyForm.value);
-  }
-
   buildForm(): void{
     this.companyForm = this.formBuilder.group({
-      comName : [this.comName, Validators.required],
+      comName : ['', Validators.required],
       comAlias :'',
       comPhone: ['', Validators.required],
       comFax :'',
@@ -74,6 +71,37 @@ export class CreateComponent implements OnInit {
       comDeliveryDirections :'',
       comDirectionComments :'',
       cmcComment :'',
+      cmcPriority: false
     });
   }
+
+  onSubmit() {
+    debugger;
+    let company: TblCompany = {};
+    let comment: TblCompanyComment = {};
+    let companyEntity : CompanyEntity = {};
+    company = this.companyForm.value;
+    comment = {
+     cmcComment: this.companyForm.value.cmcComment,
+     cmcPriority: this.companyForm.value.cmcPriority
+    };
+    companyEntity.company = company;
+    companyEntity.comments = [comment];
+
+    this.companyService.createCompany(companyEntity)
+        .subscribe((data) => this.createSuccess(data),(data) => this.createError(data) )
+    this.companyForm.markAsPristine();
+    console.log(this.companyForm.value);
+  }
+
+  createSuccess(companyEntity){
+    debugger;
+    this.companyService.pushData({ type:'CHANGE-FROM-CREATE', data:companyEntity.company });
+    this.router.navigate(['../change'], { relativeTo: this.activeRoute })
+  }
+
+  createError(error){
+    console.log(error);
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeService } from '../services/home.service';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'home-view',
@@ -21,7 +21,7 @@ import { HomeService } from '../services/home.service';
 export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
-    private homeService: HomeService){}
+    private appService: AppService){}
 
   ngOnInit(){
   }

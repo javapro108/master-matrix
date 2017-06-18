@@ -1,3 +1,191 @@
-<div class="company">
-   Change Company Component
-</div>
+<form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
+  <div class="ui-g ui-fluid content-area">
+    <div class="ui-g ui-widget-content header">
+      <div class="ui-g-8">
+        <button pButton type="button" class="ui-button-info" label="Change Company"></button>
+      </div>
+      <div class="ui-g-2">
+        <button pButton type="button" icon="fa-check-square-o" label="Submit"></button>
+      </div>
+      <div class="ui-g-2">
+        <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
+      </div>
+    </div>
+    <div class="ui-g-12 ui-widget-content content-area">
+      <div>
+        <div class="ui-g-6">
+          <div class="ui-g ui-widget-content">
+            <span class="ui-g-1"></span>
+            <H4 class="ui-g-11">General Information</H4>
+
+            <div class="ui-g-2 label-form"> Name: </div>
+            <div class="ui-g-10"><input pInputText type="text" formControlName="comName"></div>
+
+            <div class="ui-g-2 label-form"> Alias: </div>
+            <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias"></div>
+
+            <div class="ui-g-2 label-form"> Phone: </div>
+            <div class="ui-g-4">
+              <p-inputMask formControlName="comPhone" mask="(999) 999-9999"></p-inputMask>
+            </div>
+
+            <div class="ui-g-2 label-form"> Fax: </div>
+            <div class="ui-g-4">
+              <p-inputMask formControlName="comFax" mask="(999) 999-9999"></p-inputMask>
+            </div>
+
+            <div class="ui-g-2 label-form"> Toll Free: </div>
+            <div class="ui-g-4">
+              <p-inputMask formControlName="comTollFree" mask="(999) 999-9999"></p-inputMask>
+            </div>
+            <div class="ui-g-2 label-form"> District: </div>
+            <div class="ui-g-4">
+              <p-dropdown [options]="appService.districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}">
+              </p-dropdown>
+            </div>
+            <div class="ui-g-2 label-form"> Web Site: </div>
+            <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias"></div>
+          </div>
+        </div>
+
+        <div class="ui-g-6">
+          <div class="ui-g ui-widget-content">
+            <span class="ui-g-1"></span>
+            <H4 class="ui-g-11">Main Address</H4>
+
+            <div class="ui-g-3 label-form"> Address line 1: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress"></div>
+
+            <div class="ui-g-3 label-form"> Address line 2: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress2"></div>
+
+            <div class="ui-g-3 label-form"> City: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comCity"></div>
+
+            <div class="ui-g-3 label-form"> State: </div>
+            <div class="ui-g-4">
+              <p-dropdown [options]="appService.states" formControlName="comState" filter="filter" [style]="{'width':'100%'}">
+              </p-dropdown>
+            </div>
+
+            <div class="ui-g-3 label-form"> Zip code:</div>
+            <div class="ui-g-2">
+              <p-inputMask formControlName="comZip" mask="99999"></p-inputMask>
+            </div>
+
+            <div class="ui-g-3 label-form">Country:</div>
+            <div class="ui-g-3">
+              <p-dropdown [options]="appService.countries" formControlName="comCountry" filter="filter">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g ui-widget-content">
+            <div class="ui-g-2 label-form">Main Directions:</div>
+            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirections" rows="3" cols="50"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ui-g-6">
+          <div class="ui-g ui-widget-content">
+            <span class="ui-g-1"></span>
+            <div class="ui-g-5">
+              <B>Mailing Address</B>
+            </div>
+            <div class="ui-g-6">
+              <p-checkbox name="group1" value="Chk-Mailing-Address" label="Same as main address"></p-checkbox>
+            </div>
+
+            <div class="ui-g-3 label-form"> Address line 1: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress1"></div>
+
+            <div class="ui-g-3 label-form"> Address line 2: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress2"></div>
+
+            <div class="ui-g-3 label-form"> City: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailCity"></div>
+
+            <div class="ui-g-3 label-form"> State: </div>
+            <div class="ui-g-4">
+              <p-dropdown [options]="appService.states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}">
+              </p-dropdown>
+            </div>
+
+            <div class="ui-g-3 label-form"> Zip code:</div>
+            <div class="ui-g-2">
+              <p-inputMask formControlName="comMailZip" mask="99999"></p-inputMask>
+            </div>
+
+            <div class="ui-g-3 label-form">Country:</div>
+            <div class="ui-g-3">
+              <p-dropdown [options]="appService.countries" formControlName="comMailCountry" filter="filter">
+              </p-dropdown>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g-6">
+          <div class="ui-g ui-widget-content">
+
+            <span class="ui-g-1"></span>
+            <div class="ui-g-5">
+              <B>Delivery Address</B>
+            </div>
+            <div class="ui-g-6">
+              <p-checkbox name="group1" value="Chk-Delivery-Address" label="Same as main address"></p-checkbox>
+            </div>
+
+
+            <div class="ui-g-3 label-form"> Address line 1: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress1"></div>
+
+            <div class="ui-g-3 label-form"> Address line 2: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress2"></div>
+
+            <div class="ui-g-3 label-form"> City: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryCity"></div>
+
+            <div class="ui-g-3 label-form"> State: </div>
+            <div class="ui-g-4">
+              <p-dropdown [options]="appService.states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}">
+              </p-dropdown>
+            </div>
+
+            <div class="ui-g-3 label-form"> Zip code:</div>
+            <div class="ui-g-2">
+              <p-inputMask formControlName="comDeliveryZip" mask="99999"></p-inputMask>
+            </div>
+
+            <div class="ui-g-3 label-form">Country:</div>
+            <div class="ui-g-3">
+              <p-dropdown [options]="appService.countries" formControlName="comDeliveryCountry" filter="filter">
+              </p-dropdown>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g ui-widget-content">
+            <div class="ui-g-2 label-form">Delivery Directions:</div>
+            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDeliveryDirections" rows="3" cols="50"></textarea></div>
+            <div class="ui-g-2 label-form">Delivery Comments:</div>
+            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirectionComments" rows="3" cols="50"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-g-12">
+        <div class="ui-g-12 ui-widget-content">
+          <div class="ui-g-2 label-form">Priority:</div>
+          <p-checkbox class="ui-g-10" formControlName="cmcPriority" label=""></p-checkbox>
+          <div class="ui-g-2 label-form">Comments:</div>
+          <div class="ui-g-10"> <textarea pInputTextarea formControlName="cmcComment" rows="3" cols="50"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,13 +1,28 @@
+<p-blockUI [blocked]="busy" [target]="page">
+  <div style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
 <div class="content-area">
-
-  <p-panel header="Find Company" [toggleable]="true">
+  <p-panel #page header="Find Company" [toggleable]="true">
     <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
-      <div class="ui-g">
-        <label class="ui-g-2" for="comName">Company Name:</label>
-        <input class="ui-g-4" type="text" name="comName" id="comName" formControlName="comName" >
-        <p-checkbox class="ui-g-2" name="comInactive" label="Inactive:" id="comInactive" formControlName="comInactive" binary="true"></p-checkbox>
-        <span class="ui-g-1"></span>
-        <button pButton class="ui-g-2" type="submit" label="Find Company"></button>
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+
+
+          <div class="ui-g-2">Company Name:</div>
+          <div class="ui-g-4">
+            <input pInputText type="text" name="comName" id="comName" formControlName="comName" >
+          </div>
+          <div class="ui-g-2">
+            <p-checkbox name="comInactive" label="Inactive:" id="comInactive" formControlName="comInactive" binary="true"></p-checkbox>
+          </div>
+          <div class="ui-g-1">
+          </div>
+          <div class="ui-g-2">
+            <button pButton type="submit" label="Find Company"></button>
+          </div>
+        </div>
       </div>
     </form>
   </p-panel>

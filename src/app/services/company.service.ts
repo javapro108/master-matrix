@@ -3,34 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-interface Company {
-}
-
-interface Comment {
-
-}
-
-interface FindParams {
-  comName?: String;
-  comInactive?: Boolean;
-}
-
-interface FindCompanyResult {
-  comID?: String;
-  comName?: String;
-  comAlias?: String;
-  comCity?: String;
-  comState?: String;
-}
-
-interface CompanyEntity {
-  company?: Company;
-  comments?: Array<any>;
-  findParams?: FindParams;
-  findCompanyResults?: Array<FindCompanyResult>;
-}
-
-
+import { CompanyEntity, TblCompany, TblCompanyComment, FindParams, FindCompanyResult } from './company.types';
 
 @Injectable()
 export class CompanyService {
@@ -70,6 +43,44 @@ export class CompanyService {
       let options = new RequestOptions({ headers: headers });
       return this.http.post(
         'http://localhost:8080/restjpa/api/company/findcompany',
+        companyEntity,
+        options
+      ).map(response => response.json());
+
+  }
+
+  getCompanyDetails(params:any){
+
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+      let options = new RequestOptions({ headers: headers });
+      return this.http.post(
+        'http://localhost:8080/restjpa/api/company/details',
+        params,
+        options
+      ).map(response => response.json());
+
+  }
+
+  createCompany(companyEntity:any){
+
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+      let options = new RequestOptions({ headers: headers });
+      return this.http.post(
+        'http://localhost:8080/restjpa/api/company/create',
+        companyEntity,
+        options
+      ).map(response => response.json());
+
+  }
+  changeCompany(companyEntity:any){
+
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+      let options = new RequestOptions({ headers: headers });
+      return this.http.post(
+        'http://localhost:8080/restjpa/api/company/change',
         companyEntity,
         options
       ).map(response => response.json());

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 
-import { HomeService } from '../services/home.service';
+import { AppService } from '../services/app.service';
 
 
 @Component({
@@ -13,11 +13,11 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
-    private homeService: HomeService
+    private appService: AppService
   ){}
 
   onSideNavToggle(){
     debugger;
-    this.homeService.toggleSideNav();
+    this.appService.toggleSideNav();
   }
 }

@@ -7,8 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRouting }  from './app.routing';
 
-import { LoginService } from './services/login.service';
-import { HomeService } from './services/home.service';
+import { AppService } from './services/app.service';
 import { CompanyService } from './services/company.service';
 import { ContactsService } from './services/contacts.service';
 
@@ -28,8 +27,7 @@ import { ContactsService } from './services/contacts.service';
   ],
 
   providers: [
-    LoginService,
-    HomeService,
+    AppService,
     CompanyService,
     ContactsService
   ],

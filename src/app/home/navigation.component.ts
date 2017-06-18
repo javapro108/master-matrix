@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { MenuItem } from 'primeng/primeng';
 
-import { HomeService } from '../services/home.service';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'navigation-view',
@@ -14,7 +14,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private homeService: HomeService
+    private appService: AppService
   ) {}
 
   ngOnInit() {
