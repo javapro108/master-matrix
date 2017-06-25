@@ -1,11 +1,11 @@
 <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
-  <div class="ui-g ui-fluid content-area">
-    <div class="ui-g ui-widget-content header">
+  <div class="ui-g-12 ui-fluid content-area">
+    <div class="ui-g-12 ui-widget-content header">
       <div class="ui-g-8">
         <button pButton type="button" class="ui-button-info" label="Change Company"></button>
       </div>
       <div class="ui-g-2">
-        <button pButton type="button" icon="fa-check-square-o" label="Submit"></button>
+        <button pButton type="submit" icon="fa-check-square-o" label="Submit"></button>
       </div>
       <div class="ui-g-2">
         <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
@@ -26,17 +26,17 @@
 
             <div class="ui-g-2 label-form"> Phone: </div>
             <div class="ui-g-4">
-              <p-inputMask formControlName="comPhone" mask="(999) 999-9999"></p-inputMask>
+              <p-inputMask formControlName="comPhone" mask="(999) 999-9999" unmask="true"></p-inputMask>
             </div>
 
             <div class="ui-g-2 label-form"> Fax: </div>
             <div class="ui-g-4">
-              <p-inputMask formControlName="comFax" mask="(999) 999-9999"></p-inputMask>
+              <p-inputMask formControlName="comFax" mask="(999) 999-9999" unmask="true"></p-inputMask>
             </div>
 
             <div class="ui-g-2 label-form"> Toll Free: </div>
             <div class="ui-g-4">
-              <p-inputMask formControlName="comTollFree" mask="(999) 999-9999"></p-inputMask>
+              <p-inputMask formControlName="comTollFree" mask="(999) 999-9999" unmask="true"></p-inputMask>
             </div>
             <div class="ui-g-2 label-form"> District: </div>
             <div class="ui-g-4">

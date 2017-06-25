@@ -3,29 +3,37 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import { User, DropDownOption } from './app.types';
+import {SelectItem} from 'primeng/primeng';
+
+import { User } from './app.types';
 
 @Injectable()
 export class AppService {
+
+  serverUrl = 'http://localhost:8080/restjpa/api/';
 
   rxService: BehaviorSubject<any>;
   user:User;
   displaySideNav: string = 'show';
 
-  districts: DropDownOption[];
-  states: DropDownOption[];
-  countries: DropDownOption[];
+  districts: SelectItem[] = [];
+  states: SelectItem[] = [];
+  countries: SelectItem[] = [];
+  repOpts: SelectItem[] = [];
+  prefixOpts: SelectItem[] = [];
+  disciplineOpts: SelectItem[] = [];
+  positionOpts: SelectItem[] = [];
+  affiliateOpts:SelectItem[] = [];
+  affStatusOpts:SelectItem[] = [];
+
 
 
   constructor (
     private http: Http )
   {
     this.rxService = new BehaviorSubject({});
-    this.user = { firstName: '' };
+    this.user = { firstName: 'Guest' };
     this.displaySideNav = 'show';
-    this.states = [];
-    this.countries = [];
-    this.districts = [];
   }
 
   subscribe(observer){
@@ -56,39 +64,52 @@ export class AppService {
   }
 
   initApp(){
-    this.getStates().subscribe((states)=> this.setStates(states), (error)=> console.log(error));
-    this.getCountries().subscribe((countries)=> this.setCountries(countries), (error)=> console.log(error));
-    this.getDistricts().subscribe((districts)=> this.setDistricts(districts), (error)=> console.log(error))
+    debugger;
+    this.httpGet('app/states')
+        .subscribe((states)=> this.setStates(states), (error)=> console.log(error));
+    this.httpGet('app/countries')
+        .subscribe((countries)=> this.setCountries(countries), (error)=> console.log(error));
+    this.httpGet('employee/getdistricts')
+        .subscribe((districts)=> this.setDistricts(districts), (error)=> console.log(error));
+    this.httpGet('app/prefixes')
+        .subscribe((prefixes)=> this.setPrefixes(prefixes), (error)=> console.log(error));
+    this.httpGet('app/affiliatedropdown')
+        .subscribe((affiliates)=> this.setAffiliates(affiliates), (error)=> console.log(error));
+    this.httpGet('app/positiondropdown')
+        .subscribe((positions)=> this.setPositions(positions), (error)=> console.log(error));
+    this.httpGet('app/disciplinedropdown')
+        .subscribe((disciplines)=> this.setDisciplines(disciplines), (error)=> console.log(error));
+    this.httpGet('app/repdropdown')
+        .subscribe((reps)=> this.setReps(reps), (error)=> console.log(error));
+    this.httpGet('app/affstatus')
+        .subscribe((affStats)=> this.setAffStatus(affStats), (error)=> console.log(error));
+
   }
 
-  getStates(){
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
-      let options = new RequestOptions({ headers: headers });
-      return this.http.get(
-        'http://localhost:8080/restjpa/api/app/states',
-        options
-      ).map(response => response.json());
+  httpGet(url:string){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get( this.serverUrl + url, options)
+               .map(response => response.json());
   }
 
-  getCountries(){
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
-      let options = new RequestOptions({ headers: headers });
-      return this.http.get(
-        'http://localhost:8080/restjpa/api/app/countries',
-        options
-      ).map(response => response.json());
+
+  httpPost(url:string, data:any){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.serverUrl + url, data, options)
+               .map(response => response.json());
   }
 
-  getDistricts(){
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
-      let options = new RequestOptions({ headers: headers });
-      return this.http.get(
-        'http://localhost:8080/restjpa/api/employee/getdistricts',
-        options
-      ).map(response => response.json());
+
+  httpPut(url:string, data:any){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    headers.append('Authorization', window.localStorage.getItem("Auth-token"));
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(this.serverUrl + url, data, options)
+               .map(response => response.json());
   }
 
   setStates(states){
@@ -101,7 +122,7 @@ export class AppService {
         this.states.push({
           value: state.staAbbrev,
           label: state.staState
-        });        
+        });
       }
     });
   }
@@ -129,6 +150,100 @@ export class AppService {
         value: district.emdDisID,
         label: district.disDescription
       });
+    });
+  }
+
+  setPrefixes(prefixes){
+    this.prefixOpts.push({
+      value: '',
+      label: ''
+    });
+
+    prefixes.forEach((prefixes)=>{
+      this.prefixOpts.push({
+        value: prefixes.pfxPrefix,
+        label: prefixes.pfxPrefix
+      });
+    });
+  }
+
+  setAffiliates(affiliates){
+    this.affiliateOpts.push({
+      value:'',
+      label:''
+    });
+
+    affiliates.forEach((affiliate)=>{
+      this.affiliateOpts.push({
+        value: affiliate.affID,
+        label: affiliate.affName
+      });
+    });
+  }
+
+  setPositions(positions){
+    this.positionOpts.push({
+      value:'',
+      label:''
+    });
+
+    positions.forEach((position)=>{
+      this.positionOpts.push({
+        value: position.posID,
+        label: position.posPosition
+      });
+    });
+  }
+
+  setDisciplines(disciplines){
+    /*
+    this.disciplineOpts.push({
+      value:'',
+      label:''
+    });
+    */
+    disciplines.forEach((discipline)=>{
+      this.disciplineOpts.push({
+        value: discipline.dispCode,
+        label: discipline.dispName
+      });
+    });
+  }
+
+  setReps(reps){
+    this.repOpts.push({
+      value:'',
+      label:''
+    });
+
+    reps.forEach((rep)=>{
+      this.repOpts.push({
+        value: rep.empUserName,
+        label: rep.empDescription
+      });
+    });
+  }
+
+setAffStatus(affStats){
+  this.affStatusOpts.push({
+    value:'',
+    label:''
+  });
+
+  affStats.forEach((affStat)=>{
+    this.affStatusOpts.push({
+      value: affStat.staAffID,
+      label: affStat.staAffDesc
+    });
+  });
+}
+
+
+/* UTILITY METHODS */
+
+  arrayFind(array=[], propertyName:string, value){
+    return array.find(function(element){
+      return element[propertyName] == value;
     });
   }
 

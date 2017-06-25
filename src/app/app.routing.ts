@@ -8,8 +8,8 @@ const routes: Routes = [
 //  { path: 'home', component: HomeComponent }
 
 // Lazy Loading
-  { path: 'login', loadChildren:'./login/login.module' },
-  { path: 'home', loadChildren:'./home/home.module' }
+  { path: 'login', loadChildren:'./login/login.module#LoginModule' },
+  { path: 'home', loadChildren:'./home/home.module#HomeModule' }
 //  { path: '', redirectTo: 'login', pathMatch: 'full' },
 //  { path: '**', redirectTo: 'login' },
 ];

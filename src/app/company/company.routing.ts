@@ -9,8 +9,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'find' },
   { path: 'find', component: SearchComponent },
   { path: 'create', component: CreateComponent },
-  { path: 'change', component: ChangeComponent },
-  { path: 'display', component: DisplayComponent }
+  { path: 'change/:id', component: ChangeComponent },
+  { path: 'display/:id', component: DisplayComponent }
 ];
 
 export const CompanyRouting = RouterModule.forChild(routes);

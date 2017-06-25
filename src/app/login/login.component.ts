@@ -1,52 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'login-view',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['/login.styles.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   username = new FormControl('');
   password = new FormControl('');
-
+  loginForm: FormGroup;
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private appService:AppService
-  ){}
+    private appService: AppService
+  ) { }
 
-  loginForm: FormGroup = this.builder.group({
-    username: this.username,
-    password: this.password
-  });
+  ngOnInit(): void {
+    this.buildForm();
+  }
 
-  onLogin(){
-   //this.router.navigate(['../home']);
-   debugger;
-   this.loginForm.value.username;
-   this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
-       .subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
+  buildForm() {
+    this.loginForm = this.builder.group(
+      {
+        username: ['', Validators.required],
+        password: ['', Validators.required]
+
+      })
+
+  };
+
+  keyDownFunction(event) {
+    if (event.keyCode == 13) {
+      this.onLogin
+    }
+  }
+
+  onLogin() {
+    //this.router.navigate(['../home']);
+    debugger;
+    this.loginForm.value.username;
+    this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
+      .subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
 
   }
 
-  loginSuccess(data){
-   debugger;
-   if (data.token != undefined) {
-     window.localStorage.setItem("Auth-token", data.token);
-     this.appService.user = data;
-     this.appService.initApp();
-     this.router.navigate(['../home']);
-   } else {
+  loginSuccess(data) {
+    debugger;
+    if (data.token != undefined) {
+      window.localStorage.setItem("Auth-token", data.token);
+      this.appService.user = data;
+      this.appService.initApp();
+      this.router.navigate(['../home']);
+    } else {
 
-   }
+    }
   }
 
-  loginError(){
-   //show error
+  loginError() {
+    //show error
   }
 
 }

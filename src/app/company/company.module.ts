@@ -21,7 +21,7 @@ import { DisplayComponent } from './display/display.component';
     MultiSelectModule, DropdownModule, PanelModule, CheckboxModule, BlockUIModule,
     InputMaskModule
   ],
-  declarations: [SearchComponent, CreateComponent, ChangeComponent, DisplayComponent],
+  declarations: [ SearchComponent, CreateComponent, ChangeComponent, DisplayComponent ],
   providers: [],
   exports: []
 })

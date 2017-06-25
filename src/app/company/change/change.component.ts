@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
+import { Subscription } from 'rxjs/Subscription'
+
 import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
 import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/company.types';
-import { Subscription } from 'rxjs/Subscription'
 
 @Component({
   selector: 'change-company-view',
@@ -16,9 +17,8 @@ export class ChangeComponent implements OnInit{
   busy:Boolean = false;
   companyForm: FormGroup;
   subscription: Subscription;
+  subRoute: Subscription;
   companyEntity: CompanyEntity;
-
-
 
   constructor(
     private router: Router,
@@ -30,15 +30,19 @@ export class ChangeComponent implements OnInit{
 
   ngOnInit(): void{
    this.buildForm();
+   this.subRoute = this.activeRoute.params.subscribe( (params) => {
+     this.companyService.getCompany(params.id)
+         .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
+   });
    this.subscription = this.companyService.subscribe((data)=>this.rxUpdate(data));
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subRoute.unsubscribe();
   }
 
   rxUpdate(data){
-    debugger;
     if (data.type == 'CHANGE-FROM-CREATE'){
       this.setCompanyFormValue(data.data);
     } else if ( data.type == 'CHANGE-FROM-SEARCH' ) {
@@ -86,17 +90,16 @@ export class ChangeComponent implements OnInit{
   }
 
   onSubmit() {
-    debugger;
-    this.companyEntity.company = this.companyForm.value;
-    this.companyService.changeCompany(this.companyEntity)
+    this.companyService.companyEntity.company = this.companyForm.value;
+    console.log(this.companyService.companyEntity);
+    this.companyService.changeCompany(this.companyService.companyEntity)
         .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
     this.companyForm.markAsPristine();
-    console.log(this.companyForm.value);
   }
 
   changeSuccess(companyEntity){
-    this.companyEntity = companyEntity;
-    this.setCompanyFormValue(companyEntity.company);
+    this.companyService.companyEntity = companyEntity;
+    this.setCompanyFormValue(this.companyService.companyEntity.company);
   }
 
   changeError(error){
@@ -104,7 +107,8 @@ export class ChangeComponent implements OnInit{
   }
 
   getSuccess(companyEntity){
-    this.companyEntity = companyEntity;
+    console.log('get company');
+    console.log(companyEntity.company);
     this.setCompanyFormValue(companyEntity.company);
   }
 
@@ -133,7 +137,7 @@ export class ChangeComponent implements OnInit{
       comMailAddress1 : company.comMailAddress1,
       comMailAddress2 : company.comMailAddress2,
       comMailCity : company.comMailCity,
-      comMailState : company.comMailCity,
+      comMailState : company.comMailState,
       comMailZip : company.comMailZip,
       comMailCountry : company.comMailCountry,
       comDeliveryAddress1 : company.comDeliveryAddress1,

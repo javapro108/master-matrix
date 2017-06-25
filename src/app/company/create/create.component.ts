@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
     private appService: AppService,
     private companyService:CompanyService
   ){
-    debugger;    
+    debugger;
   }
 
   ngOnInit(): void{
@@ -96,8 +96,10 @@ export class CreateComponent implements OnInit {
 
   createSuccess(companyEntity){
     debugger;
-    this.companyService.pushData({ type:'CHANGE-FROM-CREATE', data:companyEntity.company });
-    this.router.navigate(['../change'], { relativeTo: this.activeRoute })
+    this.companyService.companyEntity = companyEntity;
+    //
+    //this.companyService.pushData({ type:'CHANGE-FROM-CREATE', data:companyEntity.company });
+    this.router.navigate(['../change', companyEntity.comID], { relativeTo: this.activeRoute })
   }
 
   createError(error){

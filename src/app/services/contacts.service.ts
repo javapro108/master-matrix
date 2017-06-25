@@ -3,6 +3,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
+import { AppService } from './app.service';
+
 interface Contact {
 
 }
@@ -53,7 +55,10 @@ export class ContactsService {
 
   contactEntity: ContactEntity;
 
-  constructor ( private http: Http ) {
+  constructor (
+    private http: Http,
+    private appService: AppService
+  ) {
     this.contactEntity = {
       findParams: {
         conName: '',
@@ -64,7 +69,8 @@ export class ContactsService {
   }
 
   findContactsAdvAll(contactEntity:any){
-
+    return this.appService.httpPost('contacts/findcontactadvall', contactEntity);
+    /*
       let headers = new Headers({ 'Content-Type': 'application/json' });
       headers.append('Authorization', window.localStorage.getItem("Auth-token"));
       let options = new RequestOptions({ headers: headers });
@@ -73,11 +79,12 @@ export class ContactsService {
         contactEntity,
         options
       ).map(response => response.json());
-
+    */
   }
 
   findContactsAdv(contactEntity:any){
-
+    return this.appService.httpPost('contacts/findcontactadv', contactEntity);
+    /*
       let headers = new Headers({ 'Content-Type': 'application/json' });
       headers.append('Authorization', window.localStorage.getItem("Auth-token"));
       let options = new RequestOptions({ headers: headers });
@@ -86,6 +93,6 @@ export class ContactsService {
         contactEntity,
         options
       ).map(response => response.json());
-
+    */
   }
 }

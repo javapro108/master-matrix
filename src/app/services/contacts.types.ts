@@ -60,7 +60,7 @@ export interface TblContacts {
   conHomeEmail?: string;
   conRevisedDate?: string;
   conRevisedBy?: string;
-  conInactive?: string;
+  conInactive?: boolean;
   conOldCompID?: string;
   conOldID?: string;
   conDate?: string;

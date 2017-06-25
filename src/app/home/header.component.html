@@ -6,7 +6,7 @@
       </div>
 
       <div class="ui-toolbar-group-right">
-          <button pButton type="button" icon="fa-user-circle-o" label="User Name" ></button>
+          <button pButton type="button" icon="fa-user-circle-o" [label]="appService.user.firstName" ></button>
           <button pButton type="button" icon="fa-power-off" ></button>
       </div>
   </p-toolbar>

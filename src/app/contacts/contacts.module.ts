@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {InputTextModule,DataTableModule,ButtonModule,DialogModule, MultiSelectModule,
-        DropdownModule, PanelModule, CheckboxModule } from 'primeng/primeng';
+        DropdownModule, PanelModule, CheckboxModule, CalendarModule, InputMaskModule } from 'primeng/primeng';
+
+import { CommonUtilityModule } from '../common/commonutility.module';
 
 import { ContactsRouting } from './contacts.routing';
 
@@ -15,7 +17,8 @@ import { DisplayComponent } from './display/display.component';
 @NgModule({
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, ContactsRouting,
              InputTextModule, DataTableModule, ButtonModule, DialogModule, MultiSelectModule,
-             DropdownModule, PanelModule, CheckboxModule ],
+             DropdownModule, PanelModule, CheckboxModule,  CalendarModule, InputMaskModule,
+             CommonUtilityModule ],
   declarations: [ SearchComponent, CreateComponent, ChangeComponent, DisplayComponent ],
   providers: [],
   exports: []
