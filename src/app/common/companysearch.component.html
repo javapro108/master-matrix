@@ -1,0 +1,51 @@
+<span>
+  <input pInputText type="text" [(ngModel)]="value" style="width:20%;">
+</span>
+<span>
+  <label style="width:70%;">{{comName}}</label>
+</span>
+<span>
+  <button pButton type="button" icon="fa fa-search" iconPos="left" (click)="displayDialog=true; comFindName=value;" style="width:5%;"></button>
+</span>
+
+<!-- Company Search Popup -->
+<p-dialog [(visible)]="displayDialog" [width]="800">
+  <p-header>
+    Find Company
+  </p-header>
+  <div class="ui-g ui-fluid">
+
+    <div class="ui-g-12">
+      <div class="ui-g-3">
+        Name:
+      </div>
+      <div class="ui-g-7">
+        <input pInputText [(ngModel)]="comFindName" type="text" id="comFindName">
+      </div>
+      <div class="ui-g-2">
+        <button pButton type="button" icon="fa fa-search" (click)="getSearchCompanyResults()"></button>
+      </div>
+    </div>
+
+    <div class="ui-g-12 content-area">
+      <p-dataTable [value]="findCompanyResults" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]" selectionMode="single" [(selection)]="selectedCompany">
+        <p-column field="comID" header="ID" [style]="{'width':'10%'}" [filter]="true" filterPlaceholder="Search" [sortable]="true">
+        </p-column>
+        <p-column field="comName" header="Name" [style]="{'width':'25%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+        <p-column field="comCity" header="City" [style]="{'width':'20%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+        <p-column field="comState" header="State" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+      </p-dataTable>
+    </div>
+  </div>
+  <p-footer>
+      <div class="ui-g-12">
+        <div class="ui-g-10"></div>
+        <div class="ui-g-2">
+          <button type="button" pButton icon="fa-check" iconPos="left" (click)="selectCompany()" label="Select"></button>
+        </div>
+      </div>
+  </p-footer>
+</p-dialog>

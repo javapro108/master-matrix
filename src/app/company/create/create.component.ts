@@ -8,14 +8,7 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
 
 @Component({
   selector: 'create-company-view',
-  templateUrl: './create.component.html',
-  styles: [`
-    create-company-view {
-      display: flex;
-      flex-flow: column;
-      height: 100%;
-    }
-  `]
+  templateUrl: './create.component.html'
 })
 export class CreateComponent implements OnInit {
 
