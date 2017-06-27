@@ -1,64 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import 'rxjs/add/operator/map';
+
+import { SelectItem } from 'primeng/primeng';
 
 import { AppService } from './app.service';
 
-interface Contact {
-
-}
-
-interface Comment {
-
-}
-
-interface FindParams {
-  conName?: String;
-  conInactive?: Boolean;
-  conActive?: Boolean;
-}
-
-interface Discipline {}
-
-interface Affiliate {}
-
-interface Rep {}
-
-interface FindResult {
-  conID?: String;
-	conFName?: String;
-	conLName?: String;
-	conAlias?: String;
-	conPosition?: String;
-	conTitle?: String;
-	conDirectPhone?: String
-	conEmail?: String;
-	comDistrict?: String;
-	comName?: String;
-	comPhone?: String;
-	actDate?: String;
-}
-
-interface ContactEntity {
-  contact?: Contact,
-  comments?: Array<Comment>,
-  disciplines?: Array<Discipline>,
-  affiliates?: Array<Affiliate>,
-  reps?: Array<Rep>,
-  findParams?: FindParams,
-  findResults?: Array<FindResult>
-}
+import { ContactEntity } from './contacts.types';
 
 @Injectable()
 export class ContactsService {
 
   contactEntity: ContactEntity;
+  rxService: BehaviorSubject<any>;
 
   constructor (
     private http: Http,
     private appService: AppService
-  ) {
+  ){
     this.contactEntity = {
       findParams: {
         conName: '',
@@ -66,7 +26,28 @@ export class ContactsService {
         conActive: true
       }
     };
+
+    this.rxService = new BehaviorSubject({});
+
   }
+
+  subscribe(next, error?, complete?){
+    return this.rxService.subscribe(next, error, complete);
+  }
+
+  pushData(data) {
+    this.rxService.next(data);
+  }
+
+  getContact(conID){
+    return this.appService.httpGet('contacts/get('+ conID + ')');
+  }
+
+
+  createContact(contactEntity:ContactEntity){
+    return this.appService.httpPost('contacts/create',contactEntity);
+  }
+
 
   findContactsAdvAll(contactEntity:any){
     return this.appService.httpPost('contacts/findcontactadvall', contactEntity);

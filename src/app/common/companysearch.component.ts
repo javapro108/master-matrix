@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, forwardRef } from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 import { CompanyService } from '../services/company.service';
@@ -17,7 +17,7 @@ const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: './companysearch.component.html',
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class CompanySearchComponent implements ControlValueAccessor{
+export class CompanySearchComponent implements OnInit, OnDestroy, ControlValueAccessor{
   displayDialog:boolean = false;
   comFindName:string;
   comName:string;
@@ -34,7 +34,16 @@ export class CompanySearchComponent implements ControlValueAccessor{
 
   constructor(
     private companyService: CompanyService
-  ){}
+  ){
+    this.setCompany(this.companyService.companyEntity.company.comID,
+                    this.companyService.companyEntity.company.comName);
+  }
+
+  ngOnInit() {
+  }
+
+  ngOnDestroy() {
+  }
 
 
   getSearchCompanyResults(){
@@ -56,12 +65,15 @@ export class CompanySearchComponent implements ControlValueAccessor{
     this.displayDialog = false;
   }
 
-
+  setCompany(comId:string, comName:string){
+    this.value = comId;
+    this.comName = comName;
+  }
 
   //get accessor
   get value(): any {
       return this.innerValue;
-  };
+  }
 
   //set accessor including call the onchange callback
   set value(v: any) {

@@ -15,6 +15,7 @@ import { CompanyEntity, TblCompany, SpCompanyTableResult, CompanyDetail } from '
 export class DisplayComponent implements OnInit, OnDestroy{
 
   busy:boolean = true;
+  displayDialog:boolean = false;
   companyForm: FormGroup;
   subscription: Subscription;
   subRoute: Subscription;
@@ -93,6 +94,11 @@ export class DisplayComponent implements OnInit, OnDestroy{
   changeCompany(company) {
     this.router.navigate(['../../change', this.companyDetail.company.comID], { relativeTo: this.activeRoute });
   }
+
+  saveComments(cmcPriority,cmcComment){
+    this.displayDialog = false;
+  }
+
 
   buildForm(): void{
     this.companyForm = this.formBuilder.group({

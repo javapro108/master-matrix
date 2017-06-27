@@ -1,17 +1,23 @@
-export interface affiliates {
+export interface FindParams {
+  conName?: String;
+  conInactive?: Boolean;
+  conActive?: Boolean;
+}
+
+export interface Affiliate {
   cafAffialiateID?: string;
   cafContactID?: string;
   cafStatus?: string;
   cafstatus2?: string;
 }
 
-export interface disciplines {
+export interface Discipline {
   codContactID?: string;
   codDisciplineID?: string;
 }
 
 
-export interface reps {
+export interface Rep {
   corRepID?: string;
   corAffialiateID?: string;
   corContactID?: string;
@@ -66,4 +72,29 @@ export interface TblContacts {
   conDate?: string;
   conCreatedBy?: string;
   conAssistEmail?: string;
+}
+
+export interface FindResult {
+  conID?: String;
+	conFName?: String;
+	conLName?: String;
+	conAlias?: String;
+	conPosition?: String;
+	conTitle?: String;
+	conDirectPhone?: String
+	conEmail?: String;
+	comDistrict?: String;
+	comName?: String;
+	comPhone?: String;
+	actDate?: String;
+}
+
+export interface ContactEntity {
+  contact?: TblContacts,
+  comments?: Array<TblContactComments>,
+  disciplines?: Array<Discipline>,
+  affiliates?: Array<Affiliate>,
+  reps?: Array<Rep>,
+  findParams?: FindParams,
+  findResults?: Array<FindResult>
 }

@@ -25,6 +25,8 @@ export class AppService {
   positionOpts: SelectItem[] = [];
   affiliateOpts:SelectItem[] = [];
   affStatusOpts:SelectItem[] = [];
+  productStatusOpts: SelectItem[];
+  repStatusOpts: SelectItem[];
 
 
 
@@ -34,6 +36,19 @@ export class AppService {
     this.rxService = new BehaviorSubject({});
     this.user = { firstName: 'Guest' };
     this.displaySideNav = 'show';
+
+    this.productStatusOpts = [];
+    this.productStatusOpts.push({ label: '', value: '' });
+    this.productStatusOpts.push({ label: 'Likes the Product', value: 'A' });
+    this.productStatusOpts.push({ label: 'Ok with the Product', value: 'B' });
+    this.productStatusOpts.push({ label: 'Needs to be educated about the product', value: 'C' });
+
+    this.repStatusOpts = [];
+    this.repStatusOpts.push({ label: '', value: '' });
+    this.repStatusOpts.push({ label: 'Excellent', value: 'X' });
+    this.repStatusOpts.push({ label: 'Good', value: 'Y' });
+    this.repStatusOpts.push({ label: 'Improving', value: 'Z' });
+
   }
 
   subscribe(observer){

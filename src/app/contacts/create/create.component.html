@@ -6,7 +6,7 @@
         <button pButton type="button" class="ui-button-info" label="Create Contact"></button>
       </div>
       <div class="ui-g-2">
-        <button pButton type="button" icon="fa-check-square-o" label="Submit"></button>
+        <button pButton type="submit" icon="fa-check-square-o" label="Submit"></button>
       </div>
       <div class="ui-g-2">
         <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
@@ -23,7 +23,7 @@
 
             <div class="ui-g-3 align-right">Prefix: </div>
             <div class="ui-g-9">
-              <p-dropdown [options]="appService.prefixOpts" formControlName="conTitle"></p-dropdown>
+              <p-dropdown [options]="appService.prefixOpts" formControlName="conCourtesy"></p-dropdown>
             </div>
 
             <div class="ui-g-3 align-right">First name: </div>
@@ -231,10 +231,10 @@
 
           <p-column field="cafstatus2" header="Product Status" [editable]="true" [style]="{'overflow':'visible', 'width': '35%'}">
             <ng-template let-col let-row="rowData" pTemplate="editor">
-              <p-dropdown [(ngModel)]="row[col.field]" [options]="productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+              <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
             </ng-template>
             <ng-template let-col let-row="rowData" pTemplate="body">
-              <p-dropdown [(ngModel)]="row[col.field]" [options]="productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+              <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
             </ng-template>
           </p-column>
         </p-dataTable>
@@ -285,11 +285,11 @@
           </p-column>
           <p-column field="corStatus" header="RepsStatus" [editable]="true" [style]="{'overflow':'visible'}">
             <ng-template let-col let-row="rowData" pTemplate="editor">
-              <p-dropdown [(ngModel)]="row[col.field]" [options]="repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+              <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
               </p-dropdown>
             </ng-template>
             <ng-template let-col let-row="rowData" pTemplate="body">
-              <p-dropdown [(ngModel)]="row[col.field]" [options]="repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+              <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
               </p-dropdown>
             </ng-template>
           </p-column>

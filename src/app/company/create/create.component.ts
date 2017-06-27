@@ -74,6 +74,7 @@ export class CreateComponent implements OnInit {
     let comment: TblCompanyComment = {};
     let companyEntity : CompanyEntity = {};
     company = this.companyForm.value;
+    company.comInactive = false;
     comment = {
      cmcComment: this.companyForm.value.cmcComment,
      cmcPriority: this.companyForm.value.cmcPriority
@@ -82,17 +83,14 @@ export class CreateComponent implements OnInit {
     companyEntity.comments = [comment];
 
     this.companyService.createCompany(companyEntity)
-        .subscribe((data) => this.createSuccess(data),(data) => this.createError(data) )
+        .subscribe((data) => this.createSuccess(data),(error) => this.createError(error));
     this.companyForm.markAsPristine();
     console.log(this.companyForm.value);
   }
 
   createSuccess(companyEntity){
-    debugger;
-    this.companyService.companyEntity = companyEntity;
-    //
-    //this.companyService.pushData({ type:'CHANGE-FROM-CREATE', data:companyEntity.company });
-    this.router.navigate(['../change', companyEntity.comID], { relativeTo: this.activeRoute })
+    this.companyService.companyEntity.company = companyEntity.company;
+    this.router.navigate(['../../contacts/create'], { relativeTo: this.activeRoute });
   }
 
   createError(error){

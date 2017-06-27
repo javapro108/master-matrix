@@ -20,7 +20,8 @@ export class CompanyService {
     console.log('Company Service Initialized');
     this.rxService = new BehaviorSubject({});
     this.companyEntity = {
-      findParams: { comName:'' }
+      findParams: { comName:'' },
+      company: {}
     };
     this.companyDetail = {
       company: {},
@@ -33,8 +34,8 @@ export class CompanyService {
     };
   }
 
-  subscribe(observer){
-    return this.rxService.subscribe(observer);
+  subscribe(next, error?, complete?){
+    return this.rxService.subscribe(next, error, complete);
   }
 
   pushData(data) {

@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription'
 
 import { SelectItem } from 'primeng/primeng';
 
 import { AppService } from  '../../services/app.service';
 import { ContactsService } from '../../services/contacts.service';
+import { CompanyService } from '../../services/company.service';
+import { CompanySearchComponent } from '../../common/companysearch.component';
 
 @Component({
   selector: 'create-contact-view',
@@ -15,15 +18,13 @@ export class CreateComponent {
 
   busy: boolean = false;
   contactsForm: FormGroup;
-  dispCompSearchPopup: boolean = false;
+  rxSub: Subscription;
 
   affiliates = [];
   disciplines = [];
   reps = [];
 
   disciplineOpts: SelectItem[];
-  productStatusOpts: SelectItem[];
-  repStatusOpts: SelectItem[];
   repAffiliateOpts: SelectItem[];
 
   constructor(
@@ -31,18 +32,12 @@ export class CreateComponent {
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
-    private contactsService: ContactsService
+    private contactsService: ContactsService,
+    private companyService:CompanyService
   ) {
     debugger;
-    this.productStatusOpts = [];
-    this.productStatusOpts.push({ label: 'Likes the Product', value: 'Likes the Product' });
-    this.productStatusOpts.push({ label: 'Ok with the Product', value: 'Ok with the Product' });
-    this.productStatusOpts.push({ label: 'Needs to be educated about the product', value: 'Needs to be educated about the product' });
 
-    this.repStatusOpts = [];
-    this.repStatusOpts.push({ label: 'Excellent', value: 'X' });
-    this.repStatusOpts.push({ label: 'Good', value: 'Y' });
-    this.repStatusOpts.push({ label: 'Improving', value: 'Z' });
+    this.contactsService.subscribe((data)=>this.rxUpdate(data));
 
     this.disciplineOpts = [];
     this.appService.disciplineOpts.forEach((option) => {
@@ -62,17 +57,41 @@ export class CreateComponent {
     this.buildForm();
   }
 
+  ngOnDestroy() {
+    this.rxSub.unsubscribe();
+  }
+
+  rxUpdate(data){
+  }
+
+
+
   onSubmit() {
     //debugger;
     this.contactsForm.markAsPristine();
-    console.log(this.contactsForm.value);
+
+    let contactEntity = {
+      contact: this.contactsForm.value,
+      disciplines: this.disciplines,
+      affiliates: this.affiliates,
+      reps: this.reps
+    };
+
+    console.log(contactEntity);
+
+    this.contactsService.createContact(contactEntity)
+        .subscribe((data)=>this.createSuccess(data), (error)=>this.createError(error))
   }
 
-
-  searchCompany(){
-    debugger;
-    this.dispCompSearchPopup = true;
+  createSuccess(contactEntity){
+    console.log('create contact success');
+    console.log(contactEntity);
   }
+
+  createError(error){
+    console.log(error);
+  }
+
 
   onMultiselectChange(data) {
     this.disciplines = this.contactsForm.value.codDisciplineID;
@@ -133,7 +152,7 @@ export class CreateComponent {
       conMI: '',
       conLName: ['', Validators.required],
       conAlias: '',
-      conCompanyID: ['', Validators.required],
+      conCompanyID: [this.companyService.companyEntity.company.comID, Validators.required],
       conTitle: '',
       conPosition: ['', Validators.required],
       conDirectPhone: '',
