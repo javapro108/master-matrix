@@ -16,10 +16,13 @@ import { ChangeComponent } from './change/change.component';
 import { DisplayComponent } from './display/display.component';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpModule, CompanyRouting,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpModule,
+
     InputTextModule, InputTextareaModule, DataTableModule, ButtonModule, DialogModule,
     MultiSelectModule, DropdownModule, PanelModule, CheckboxModule, BlockUIModule,
-    InputMaskModule
+    InputMaskModule,
+
+    CompanyRouting
   ],
   declarations: [ SearchComponent, CreateComponent, ChangeComponent, DisplayComponent ],
   providers: [],

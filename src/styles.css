@@ -65,19 +65,3 @@ create-company-view {
   display: flex;
   flex-flow: column;
 }
-
-/* Form Related CSS*/
-/* Mark dirty form elements as yellow */
-.ng-dirty:not(form){
-border: 2px solid yellow; /* red */
-}
-
-/* Highlight required fields as green if value entered */
-.ng-valid[required],
-.ng-valid.required  {
-  border: 2px solid green; /* green */
-}
-/* Mark required fields as red */
-.ng-invalid:not(form)  {
-  border: 2px solid red; /* red */
-}

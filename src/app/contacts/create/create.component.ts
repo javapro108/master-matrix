@@ -20,6 +20,9 @@ export class CreateComponent {
   contactsForm: FormGroup;
   rxSub: Subscription;
 
+  duplicateContacts: any;
+  showDuplicate: boolean;
+
   affiliates = [];
   disciplines = [];
   reps = [];
@@ -65,23 +68,59 @@ export class CreateComponent {
   rxUpdate(data){
   }
 
+  onBlurName(){
+    if (this.contactsForm.value.conFName && this.contactsForm.value.conLName){
+      this.contactsService.newCheck(this.contactsForm.value.conFName, this.contactsForm.value.conLName)
+          .subscribe((data) => this.newCheckResults(data));
+    }
+  }
 
+  newCheckResults(duplicateContacts) {
+    this.duplicateContacts = duplicateContacts;
+    if (this.duplicateContacts.length > 0){
+      this.showDuplicate = true;
+    }
+  }
 
   onSubmit() {
-    //debugger;
+    debugger;
     this.contactsForm.markAsPristine();
+    let disciplinesSend: any[];
+    let affiliatesSend: any[];
+    let repsSend: any[];
+
+    disciplinesSend = this.disciplines.map((discipline)=>{
+      if (discipline.codDisciplineID){
+        discipline.mode = "I";
+      }
+      return discipline
+    });
+
+    affiliatesSend = this.affiliates.map((affiliate)=>{
+      if(affiliate.cafAffialiateID){
+        affiliate.mode = "I";
+      }
+      return affiliate;
+    });
+
+    repsSend = this.reps.map((rep)=>{
+      if (rep.corRepID && rep.corAffialiateID){
+        rep.mode = "I";
+      }
+    });
 
     let contactEntity = {
       contact: this.contactsForm.value,
-      disciplines: this.disciplines,
-      affiliates: this.affiliates,
-      reps: this.reps
+      disciplines: disciplinesSend,
+      affiliates: affiliatesSend,
+      reps: repsSend
     };
 
     console.log(contactEntity);
 
     this.contactsService.createContact(contactEntity)
-        .subscribe((data)=>this.createSuccess(data), (error)=>this.createError(error))
+        .subscribe((data)=>this.createSuccess(data), (error)=>this.createError(error));
+
   }
 
   createSuccess(contactEntity){

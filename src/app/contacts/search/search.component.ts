@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ContactsService } from '../../services/contacts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,61 +9,66 @@ import {SelectItem} from 'primeng/primeng';
   selector: 'search-company-view',
   templateUrl: './search.component.html'
 })
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit {
 
-
+  busy: Boolean = false;
+  cols: any[];
+  columnOptions: SelectItem[];
+  selectedColumns: SelectItem[];
+  searchForm: FormGroup;
 
   constructor(
     private router: Router,
+    private activeRoute: ActivatedRoute,
     private builder: FormBuilder,
-    private contactsService:ContactsService
-  ){
-
+    private contactsService: ContactsService
+  ) {
+    this.searchForm = this.builder.group({
+      conName: [this.contactsService.contactEntity.findParams.conName, Validators.required],
+      conActive: [this.contactsService.contactEntity.findParams.conActive],
+      conInactive: [this.contactsService.contactEntity.findParams.conInactive]
+    });
   }
 
-  columnOptions: SelectItem[];
-  cols: any[];
 
   ngOnInit() {
 
     this.cols = [
-        {field: 'conID', header: 'ID', width:{'width':'7%'} },
-        {field: 'conFName', header: 'First Name', width:{'width':'14%'} },
-        {field: 'conLName', header: 'Last Name', width:{'width':'14%'} },
-        {field: 'conTitle', header: 'Title', width:{'width':'12%'} },
-        {field: 'conDirectPhone', header: 'Direct Phone', width:{'width':'17%'} },
-        {field: 'comName', header: 'Company Name', width:{'width':'30%'} },
-        {field: 'actDate', header: 'Last Contacted', width:{'width':'17%'} },
-
-        {field: 'comPhone', header: 'Company Phone' },
-        {field: 'conAlias', header: 'Alias'},
-        {field: 'conPosition', header: 'Position'},
-        {field: 'conEmail', header: 'Email', },
-        {field: 'comDistrict', header: 'District', }
+      //        {field: 'conID', header: 'ID', width:{'width':'5%'}},
+      { field: 'conID', header: 'ID', display: true },
+      { field: 'conFName', header: 'First Name', display: true },
+      { field: 'conLName', header: 'Last Name', display: true },
+      { field: 'conTitle', header: 'Title', display: true },
+      { field: 'conDirectPhone', header: 'Direct Phone', display: true },
+      { field: 'comName', header: 'Company Name', display: true },
+      { field: 'actDate', header: 'Last Contacted', display: true },
+      { field: 'comDistrict', header: 'District', display: true },
+      { field: 'comPhone', header: 'Company Phone' },
+      { field: 'conAlias', header: 'Alias' },
+      { field: 'conPosition', header: 'Position' },
+      { field: 'conEmail', header: 'Email', }
     ];
 
-    this.columnOptions = [];
-    for(let i = 0; i < this.cols.length; i++) {
-        this.columnOptions.push({label: this.cols[i].header, value: this.cols[i]});
-    }
+    this.columnOptions = this.cols.map((column) => {
+      return {
+        label: column.header,
+        value: column
+      };
+    });
 
+    this.selectedColumns = this.cols.filter((column) => {
+      return (column.display == true ? true : false);
+    });
   }
 
+  onFind() {
 
-  searchForm: FormGroup = this.builder.group({
-    conName:     [this.contactsService.contactEntity.findParams.conName,     Validators.required],
-    conActive:   [this.contactsService.contactEntity.findParams.conActive],
-    conInactive: [this.contactsService.contactEntity.findParams.conInactive],
-  });
-
-  onFind(){
-    debugger;
     this.contactsService.contactEntity.findParams = this.searchForm.value;
     // if both active and inactive selected then call findContactsAdvAll
-    if ( this.contactsService.contactEntity.findParams.conInactive == true
-      && this.contactsService.contactEntity.findParams.conActive == true ) {
-         this.contactsService.findContactsAdvAll(this.contactsService.contactEntity)
-            .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
+    if (this.contactsService.contactEntity.findParams.conInactive == true
+      && this.contactsService.contactEntity.findParams.conActive == true) {
+      this.contactsService.findContactsAdvAll(this.contactsService.contactEntity)
+        .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
     } else { //else  call findContactsAdv
       // set Inactive to false if active checkboc is selected.
       if (this.contactsService.contactEntity.findParams.conActive == true) {
@@ -72,16 +77,30 @@ export class SearchComponent implements OnInit{
         this.contactsService.contactEntity.findParams.conInactive = true;
       }
       this.contactsService.findContactsAdv(this.contactsService.contactEntity)
-          .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
+        .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
+      this.busy = true;
     }
   }
 
-  findSuccess(findResult){
-    debugger;
+
+  displayContact(contact) {
+    //    this.companyService.pushData({ type:'DISPLAY-FROM-SEARCH', data:company.comID });
+    this.router.navigate(['../display', contact.conID], { relativeTo: this.activeRoute });
+  }
+
+  changeContact(contact) {
+    //    this.companyService.pushData({ type:'CHANGE-FROM-SEARCH', data:company.comID });
+    this.router.navigate(['../change', contact.conID], { relativeTo: this.activeRoute });
+  }
+
+  findSuccess(findResult) {
+
+    this.busy = false;
     this.contactsService.contactEntity.findResults = findResult.findResults;
   }
-  findError(error){
-    debugger;
+  findError(error) {
+
+    this.busy = false;
     console.log(error);
   }
 

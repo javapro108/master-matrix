@@ -3,6 +3,7 @@
     <font size="5" color="black">Loading...</font>
   </div>
 </p-blockUI>
+
 <div class="content-area">
   <p-panel #page header="Find Company" [toggleable]="true">
     <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
@@ -33,7 +34,7 @@
                    [pageLinks]="5"
                    [rowsPerPageOptions]="[10,20,30,40]" >
 
-        <p-column styleClass="col-button">
+        <p-column styleClass="col-button"  [style]="{'width':'7%'}">
            <ng-template let-company="rowData" pTemplate="body">
                <button type="button" pButton (click)="changeCompany(company)" icon="fa-pencil"></button>
                <button type="button" pButton (click)="displayCompany(company)" icon="fa-binoculars"></button>

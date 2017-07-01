@@ -20,7 +20,7 @@
             <div class="ui-g-11"><b>General Information</b></div>
 
             <div class="ui-g-2 align-right"> Name: </div>
-            <div class="ui-g-10"><input pInputText type="text" formControlName="comName" maxlength="50" placeholder="Required"></div>
+            <div class="ui-g-10"><input pInputText type="text" formControlName="comName" maxlength="50" placeholder="Required" (blur)="onBlurName()"></div>
 
             <div class="ui-g-2 align-right"> Alias: </div>
             <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias" maxlength="100"></div>
@@ -193,3 +193,23 @@
     </div>
   </div>
 </form>
+
+<p-dialog [(visible)]="showDuplicate" [width]="800">
+  <p-header>
+    Companies With Similar Name
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 content-area">
+      <B>Please review below companies with similar name to avoide duplicate company.</B>
+    </div>
+    <div class="ui-g-12 content-area">
+      <p-dataTable [value]="duplicateCompanies" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
+        <p-column field="comID" header="ID" [sortable]="true" [filter]="true" filterPlaceholder="Search" ></p-column>
+        <p-column field="comName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="comCity" header="City" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="comState" header="State" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="comZip" header="Zip Code" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</p-dialog>

@@ -29,13 +29,13 @@
               </div>
 
               <div class="ui-g-3 align-right">First name: </div>
-              <div class="ui-g-9"><input pInputText type="text" formControlName="conFName" maxlength="30" placeholder="Required"></div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conFName" maxlength="30" placeholder="Required" (blur)="onBlurName()"></div>
 
               <div class="ui-g-3 align-right">Middle Initial:</div>
               <div class="ui-g-9"><input pInputText type="text" formControlName="conMI" maxlength="2"></div>
 
               <div class="ui-g-3 align-right">Last name: </div>
-              <div class="ui-g-9"><input pInputText type="text" formControlName="conLName" maxlength="30" placeholder="Required"></div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conLName" maxlength="30" placeholder="Required" (blur)="onBlurName()"></div>
 
               <div class="ui-g-3 align-right">Alias: </div>
               <div class="ui-g-9"><input pInputText type="text" formControlName="conAlias" maxlength="30"></div>
@@ -292,3 +292,22 @@
   </div>
 
 </div>
+
+<p-dialog [(visible)]="showDuplicate" [width]="800">
+  <p-header>
+    Contacts With Similar Name
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 content-area">
+      <B>Please review below contacts with similar name to avoide duplicate contact.</B>
+    </div>
+    <div class="ui-g-12 content-area">
+      <p-dataTable [value]="duplicateContacts" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
+        <p-column field="coID" header="ID" [sortable]="true" [filter]="true" filterPlaceholder="Search" ></p-column>
+        <p-column field="conFName" header="First Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="conLName" header="Last Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="comName" header="Company" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</p-dialog>

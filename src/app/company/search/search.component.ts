@@ -30,8 +30,6 @@ export class SearchComponent implements OnInit {
 
   }
 
-
-
   onFind(){
     this.companyService.companyEntity.findParams = this.searchForm.value;
     if (this.companyService.companyEntity.findParams.comInactive != true ) {

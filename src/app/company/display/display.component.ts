@@ -68,24 +68,9 @@ export class DisplayComponent implements OnInit, OnDestroy{
 
   rxUpdate(data){
     debugger;
-    if (data.type == 'DISPLAY-FROM-SEARCH'){
-      let params = {
-        comID: data.data,
-        getCompanyDetail: true,
-        getComments: true,
-        getContacts: true,
-        getJobs: true,
-        getProjects: true,
-        getMarketing: true
-      }
-      this.companyService.getCompanyDetails(params)
-          .subscribe(data => this.companyReceived(data) );
-      this.busy = true;
-    }
   }
 
   companyReceived(companyDetail){
-    debugger;
     this.companyDetail = companyDetail;
     this.setCompanyFormValue(this.companyDetail.company);
     this.busy = false;

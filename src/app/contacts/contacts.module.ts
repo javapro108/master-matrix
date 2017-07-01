@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {InputTextModule,DataTableModule,ButtonModule,DialogModule, MultiSelectModule,
-        DropdownModule, PanelModule, CheckboxModule, CalendarModule, InputMaskModule } from 'primeng/primeng';
+        DropdownModule, PanelModule, CheckboxModule, CalendarModule, InputMaskModule,
+        BlockUIModule } from 'primeng/primeng';
 
 import { CommonUtilityModule } from '../common/commonutility.module';
 
@@ -15,10 +16,13 @@ import { ChangeComponent } from './change/change.component';
 import { DisplayComponent } from './display/display.component';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, ContactsRouting,
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule,
+
              InputTextModule, DataTableModule, ButtonModule, DialogModule, MultiSelectModule,
              DropdownModule, PanelModule, CheckboxModule,  CalendarModule, InputMaskModule,
-             CommonUtilityModule ],
+             BlockUIModule,
+
+             ContactsRouting, CommonUtilityModule ],
   declarations: [ SearchComponent, CreateComponent, ChangeComponent, DisplayComponent ],
   providers: [],
   exports: []

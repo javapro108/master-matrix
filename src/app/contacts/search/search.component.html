@@ -1,51 +1,63 @@
+<p-blockUI [blocked]="busy" [target]="page">
+  <div style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
+
 <div class="content-area">
-
-  <p-panel header="Find Contacts" [toggleable]="true">
+  <p-panel #page header="Find Contacts" [toggleable]="true">
     <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
-      <div class="ui-g">
-        <label class="ui-g-2" for="conName">Contact Name:</label>
-        <input class="ui-g-3"type="text" name="conName" id="conName" formControlName="conName">
+      <div class="ui-g ui-fluid">
 
-        <p-checkbox class="ui-g-2" binary="true" label="Active:"
-                    name="conActive" id="conActive" formControlName="conActive"></p-checkbox>
-
-        <p-checkbox class="ui-g-2" binary="true" label="Inactive:"
-                    name="conInactive" id="conInactive" formControlName="conInactive"></p-checkbox>
-        <button pButton class="ui-g-2" type="submit" label="Find Contacts"></button>
+        <div class="ui-g-2">Contact Name:</div>
+        <div class="ui-g-4">
+          <input pInputText type="text" name="conName" id="conName" formControlName="conName">
+        </div>
+        <div class="ui-g-2">
+          <p-checkbox  binary="true" label="Active:" name="conActive" id="conActive" formControlName="conActive"></p-checkbox>
+        </div>
+        <div class="ui-g-2">
+          <p-checkbox binary="true" label="Inactive:" name="conInactive" id="conInactive" formControlName="conInactive"></p-checkbox>
+        </div>
+        <div class="ui-g-2">
+          <button pButton type="submit" label="Find Contacts"></button>
+        </div>
       </div>
     </form>
-
   </p-panel>
 
 
   <div class="content-area">
-     <div>
+    <div>
+      <p-dataTable  [value]="contactsService.contactEntity.findResults"
+      [rows]="20"
+      [paginator]="true"
+      [pageLinks]="5"
+      [rowsPerPageOptions]="[10,20,30,40]"
+      [scrollable] = "true">
 
-    <p-dataTable  [value]="contactsService.contactEntity.findResults"
-                  [rows]="20"
-                  [paginator]="true"
-                  [pageLinks]="5"
-                  [rowsPerPageOptions]="[10,20,30,40]" >
-
-    <p-header>
+      <p-header>
         <div style="text-align:left">
-            <p-multiSelect [options]="columnOptions"  [(ngModel)]="cols">
-            </p-multiSelect>
-           <!-- <p>Selected Cars: {{selectedCars}}</p>
+          <p-multiSelect [options]="columnOptions"  [(ngModel)]="selectedColumns">
+          </p-multiSelect>
+         </div>
+       </p-header>
 
-            <p-multiSelect [options]="cars" [(ngModel)]="selectedCars"></p-multiSelect>-->
-        </div>
-    </p-header>
+       <p-column styleClass="col-button" [style]="{'width':'7%'}">
+           <ng-template let-contact="rowData" pTemplate="body">
+               <button type="button" pButton (click)="changeContact(contact)" icon="fa-pencil"></button>
+               <button type="button" pButton (click)="displayContact(contact)" icon="fa-binoculars"></button>
+           </ng-template>
+       </p-column>
 
-    <p-column *ngFor="let col of cols" font-size:small
-      [field]="col.field"
-      [header]="col.header"
-      [style]="col.width"
-      [filter]="true" filterPlaceholder="Search"
-      [sortable]="true">
-    </p-column>
+       <p-column *ngFor="let column of selectedColumns" font-size:small
+       [field]="column.field"
+       [header]="column.header"
+       [filter]="true" filterPlaceholder="Search"
+       [sortable]="true">
+     </p-column>
    </p-dataTable>
-  </div>
+ </div>
 
-  </div>
+</div>
 </div>

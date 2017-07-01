@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
@@ -12,45 +12,58 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
 })
 export class CreateComponent implements OnInit {
 
-  busy:Boolean = false;
+  busy: Boolean = false;
   companyForm: FormGroup;
+  duplicateCompanies: any;
+  showDuplicate: boolean;
 
   constructor(
     private router: Router,
-    private activeRoute:ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
-    private companyService:CompanyService
-  ){
+    private companyService: CompanyService
+  ) {
     debugger;
   }
 
-  ngOnInit(): void{
-   this.buildForm();
+  ngOnInit(): void {
+    this.buildForm();
   }
 
   addCompany() {
-     this.buildForm();
-   }
+    this.buildForm();
+  }
 
-   copyMainToMail(checked:boolean) {
-     if (checked) {
-       let formValue = this.companyForm.value;
+  onBlurName() {
+    this.companyService.newCheck(this.companyForm.value.comName)
+      .subscribe((data) => this.newCheckResults(data))
+  }
 
-       formValue.comMailAddress1 = formValue.comAddress;
-       formValue.comMailAddress2 = formValue.comAddress2
-       formValue.comMailCity = formValue.comCity;
-       formValue.comMailState = formValue.comState;
-       formValue.comMailZip  = formValue.comZip;
-       formValue.comMailCountry = formValue.comCountry;
+  newCheckResults(duplicateCompanies) {
+    this.duplicateCompanies = duplicateCompanies;
+    if (this.duplicateCompanies.length > 0){
+      this.showDuplicate = true;
+    }
+  }
 
-       this.companyForm.setValue(formValue);
-     }
+  copyMainToMail(checked: boolean) {
+    if (checked) {
+      let formValue = this.companyForm.value;
 
-   }
+      formValue.comMailAddress1 = formValue.comAddress;
+      formValue.comMailAddress2 = formValue.comAddress2
+      formValue.comMailCity = formValue.comCity;
+      formValue.comMailState = formValue.comState;
+      formValue.comMailZip = formValue.comZip;
+      formValue.comMailCountry = formValue.comCountry;
 
-  copyMainToDelv(checked:boolean) {
-    debugger;
+      this.companyForm.setValue(formValue);
+    }
+
+  }
+
+  copyMainToDelv(checked: boolean) {
     if (checked) {
       let formValue = this.companyForm.value;
 
@@ -58,75 +71,76 @@ export class CreateComponent implements OnInit {
       formValue.comDeliveryAddress2 = formValue.comAddress2
       formValue.comDeliveryCity = formValue.comCity;
       formValue.comDeliveryState = formValue.comState;
-      formValue.comDeliveryZip  = formValue.comZip;
+      formValue.comDeliveryZip = formValue.comZip;
       formValue.comDeliveryCountry = formValue.comCountry;
 
       this.companyForm.setValue(formValue);
     }
   }
 
-  buildForm(): void{
-    this.companyForm = this.formBuilder.group({
-      comName : ['', Validators.required],
-      comAlias :'',
-      comPhone: ['', Validators.required],
-      comFax :'',
-      comTollFree :'',
-      comDistrict: ['', Validators.required],
-      comWeb:'',
-      comAddress :['', Validators.required],
-      comAddress2 :'',
-      comCity :['', Validators.required],
-      comState :['', Validators.required],
-      comZip :['', Validators.required],
-      comCountry :['', Validators.required],
-      comDirections :'',
-      comMailAddress1 :['', Validators.required],
-      comMailAddress2 :'',
-      comMailCity :['', Validators.required],
-      comMailState :['', Validators.required],
-      comMailZip :['', Validators.required],
-      comMailCountry :['', Validators.required],
-      comDeliveryAddress1 :'',
-      comDeliveryAddress2 :'',
-      comDeliveryCity :'',
-      comDeliveryState :'',
-      comDeliveryZip :'',
-      comDeliveryCountry :'',
-      comDeliveryDirections :'',
-      comDirectionComments :'',
-      cmcComment :'',
-      cmcPriority: false
-    });
-  }
-
   onSubmit() {
     debugger;
     let company: TblCompany = {};
     let comment: TblCompanyComment = {};
-    let companyEntity : CompanyEntity = {};
+    let companyEntity: CompanyEntity = {};
     company = this.companyForm.value;
     company.comInactive = false;
     comment = {
-     cmcComment: this.companyForm.value.cmcComment,
-     cmcPriority: this.companyForm.value.cmcPriority
+      cmcComment: this.companyForm.value.cmcComment,
+      cmcPriority: this.companyForm.value.cmcPriority
     };
     companyEntity.company = company;
     companyEntity.comments = [comment];
 
     this.companyService.createCompany(companyEntity)
-        .subscribe((data) => this.createSuccess(data),(error) => this.createError(error));
+      .subscribe((data) => this.createSuccess(data), (error) => this.createError(error));
     this.companyForm.markAsPristine();
     console.log(this.companyForm.value);
   }
 
-  createSuccess(companyEntity){
+  createSuccess(companyEntity) {
     this.companyService.companyEntity.company = companyEntity.company;
     this.router.navigate(['../../contacts/create'], { relativeTo: this.activeRoute });
   }
 
-  createError(error){
+  createError(error) {
     console.log(error);
+  }
+
+
+  buildForm(): void {
+    this.companyForm = this.formBuilder.group({
+      comName: ['', Validators.required],
+      comAlias: '',
+      comPhone: ['', Validators.required],
+      comFax: '',
+      comTollFree: '',
+      comDistrict: ['', Validators.required],
+      comWeb: '',
+      comAddress: ['', Validators.required],
+      comAddress2: '',
+      comCity: ['', Validators.required],
+      comState: ['', Validators.required],
+      comZip: ['', Validators.required],
+      comCountry: ['', Validators.required],
+      comDirections: '',
+      comMailAddress1: ['', Validators.required],
+      comMailAddress2: '',
+      comMailCity: ['', Validators.required],
+      comMailState: ['', Validators.required],
+      comMailZip: ['', Validators.required],
+      comMailCountry: ['', Validators.required],
+      comDeliveryAddress1: '',
+      comDeliveryAddress2: '',
+      comDeliveryCity: '',
+      comDeliveryState: '',
+      comDeliveryZip: '',
+      comDeliveryCountry: '',
+      comDeliveryDirections: '',
+      comDirectionComments: '',
+      cmcComment: '',
+      cmcPriority: false
+    });
   }
 
 }

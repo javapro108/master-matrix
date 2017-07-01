@@ -43,37 +43,32 @@ export class ContactsService {
     return this.appService.httpGet('contacts/get('+ conID + ')');
   }
 
+  newCheck(conFName, conLName){
+    let data = {
+      conFName: conFName.charAt(0) + '%',
+      conLName: conLName + '%'
+    };
+    return this.appService.httpPost('contacts/newcheck',data);
+  }
+
 
   createContact(contactEntity:ContactEntity){
     return this.appService.httpPost('contacts/create',contactEntity);
   }
 
+  changeContact(contactEntity:ContactEntity){
+    return this.appService.httpPut('contacts/change',contactEntity);
+  }
+
+  getContactDetails(params:any){
+    return this.appService.httpPost('contacts/details', params);
+  }
 
   findContactsAdvAll(contactEntity:any){
     return this.appService.httpPost('contacts/findcontactadvall', contactEntity);
-    /*
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
-      let options = new RequestOptions({ headers: headers });
-      return this.http.post(
-        'http://localhost:8080/restjpa/api/contacts/findcontactadvall',
-        contactEntity,
-        options
-      ).map(response => response.json());
-    */
   }
 
   findContactsAdv(contactEntity:any){
     return this.appService.httpPost('contacts/findcontactadv', contactEntity);
-    /*
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      headers.append('Authorization', window.localStorage.getItem("Auth-token"));
-      let options = new RequestOptions({ headers: headers });
-      return this.http.post(
-        'http://localhost:8080/restjpa/api/contacts/findcontactadv',
-        contactEntity,
-        options
-      ).map(response => response.json());
-    */
   }
 }
