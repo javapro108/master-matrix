@@ -42,9 +42,14 @@ export class CompanyService {
     this.rxService.next(data);
   }
 
-  getCompany(comID){
-
-    return this.appService.httpGet('company/get('+ comID + ')')
+  getCompany(comID, lock?:boolean){
+    let url:string;
+    if (lock == true){
+      url = 'company/get('+ comID + ')?lock=' + lock;
+    } else {
+      url = 'company/get('+ comID + ')';
+    }
+    return this.appService.httpGet(url)
 
     /*
       let headers = new Headers({ 'Content-Type': 'application/json' });

@@ -33,6 +33,38 @@ export class CreateComponent implements OnInit {
      this.buildForm();
    }
 
+   copyMainToMail(checked:boolean) {
+     if (checked) {
+       let formValue = this.companyForm.value;
+
+       formValue.comMailAddress1 = formValue.comAddress;
+       formValue.comMailAddress2 = formValue.comAddress2
+       formValue.comMailCity = formValue.comCity;
+       formValue.comMailState = formValue.comState;
+       formValue.comMailZip  = formValue.comZip;
+       formValue.comMailCountry = formValue.comCountry;
+
+       this.companyForm.setValue(formValue);
+     }
+
+   }
+
+  copyMainToDelv(checked:boolean) {
+    debugger;
+    if (checked) {
+      let formValue = this.companyForm.value;
+
+      formValue.comDeliveryAddress1 = formValue.comAddress;
+      formValue.comDeliveryAddress2 = formValue.comAddress2
+      formValue.comDeliveryCity = formValue.comCity;
+      formValue.comDeliveryState = formValue.comState;
+      formValue.comDeliveryZip  = formValue.comZip;
+      formValue.comDeliveryCountry = formValue.comCountry;
+
+      this.companyForm.setValue(formValue);
+    }
+  }
+
   buildForm(): void{
     this.companyForm = this.formBuilder.group({
       comName : ['', Validators.required],
@@ -55,12 +87,12 @@ export class CreateComponent implements OnInit {
       comMailState :['', Validators.required],
       comMailZip :['', Validators.required],
       comMailCountry :['', Validators.required],
-      comDeliveryAddress1 :['', Validators.required],
+      comDeliveryAddress1 :'',
       comDeliveryAddress2 :'',
-      comDeliveryCity :['', Validators.required],
-      comDeliveryState :['', Validators.required],
-      comDeliveryZip :['', Validators.required],
-      comDeliveryCountry :['', Validators.required],
+      comDeliveryCity :'',
+      comDeliveryState :'',
+      comDeliveryZip :'',
+      comDeliveryCountry :'',
       comDeliveryDirections :'',
       comDirectionComments :'',
       cmcComment :'',

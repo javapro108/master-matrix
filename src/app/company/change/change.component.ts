@@ -4,7 +4,10 @@ import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription'
 
+import { BaseComponent } from  '../../common/base.component';
+
 import { AppService } from '../../services/app.service';
+import { CanDeactivateRoute } from '../../services/route.service';
 import { CompanyService } from '../../services/company.service';
 import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/company.types';
 
@@ -12,7 +15,7 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
   selector: 'change-company-view',
   templateUrl: './change.component.html'
 })
-export class ChangeComponent implements OnInit{
+export class ChangeComponent extends BaseComponent implements OnInit{
 
   busy:Boolean = false;
   companyForm: FormGroup;
@@ -26,12 +29,15 @@ export class ChangeComponent implements OnInit{
     private formBuilder: FormBuilder,
     private appService: AppService,
     private companyService:CompanyService
-  ){}
+  ){
+    super();
+    debugger;
+  }
 
   ngOnInit(): void{
    this.buildForm();
    this.subRoute = this.activeRoute.params.subscribe( (params) => {
-     this.companyService.getCompany(params.id)
+     this.companyService.getCompany(params.id, true)
          .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
    });
    this.subscription = this.companyService.subscribe((data)=>this.rxUpdate(data));
@@ -50,7 +56,6 @@ export class ChangeComponent implements OnInit{
           .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
     }
   }
-
 
   buildForm(): void{
     this.companyForm = this.formBuilder.group({

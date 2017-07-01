@@ -7,7 +7,7 @@ const routes: Routes = [
       { path: 'company',  loadChildren: '../company/company.module#CompanyModule' } ,
       { path: 'contacts', loadChildren: '../contacts/contacts.module#ContactsModule'}
     ]
-  },
+  }
 ];
 
 

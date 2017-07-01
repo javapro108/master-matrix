@@ -4,12 +4,13 @@ import { CreateComponent } from './create/create.component';
 import { ChangeComponent } from './change/change.component';
 import { DisplayComponent } from './display/display.component';
 
+import { DeactivateRouteGuard } from '../services/route.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'find' },
   { path: 'find', component: SearchComponent },
   { path: 'create', component: CreateComponent },
-  { path: 'change/:id', component: ChangeComponent },
+  { path: 'change/:id', component: ChangeComponent, canDeactivate: [ DeactivateRouteGuard ] },
   { path: 'display/:id', component: DisplayComponent }
 ];
 

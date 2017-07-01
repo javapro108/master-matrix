@@ -54,6 +54,7 @@ export class CreateComponent {
 
   ngOnInit(): void {
     debugger;
+    this.rxSub = this.contactsService.subscribe((data)=>this.rxUpdate(data));
     this.buildForm();
   }
 
@@ -143,6 +144,8 @@ export class CreateComponent {
     this.repAffiliateOpts = this.affiliates.map((data) => {
       return this.appService.arrayFind(this.appService.affiliateOpts, 'value', data.cafAffialiateID);
     });
+
+    this.repAffiliateOpts.unshift({label:'', value:''});
   }
 
   buildForm(): void {

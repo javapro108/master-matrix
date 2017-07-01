@@ -10,7 +10,7 @@ import { AppRouting }  from './app.routing';
 import { AppService } from './services/app.service';
 import { CompanyService } from './services/company.service';
 import { ContactsService } from './services/contacts.service';
-
+import { DeactivateRouteGuard } from './services/route.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { ContactsService } from './services/contacts.service';
   providers: [
     AppService,
     CompanyService,
-    ContactsService
+    ContactsService,
+    DeactivateRouteGuard
   ],
 
   bootstrap: [
