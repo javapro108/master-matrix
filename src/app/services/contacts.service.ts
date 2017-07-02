@@ -64,6 +64,10 @@ export class ContactsService {
     return this.appService.httpPut('contacts/change',contactEntity);
   }
 
+  addComment(comment){
+    return this.appService.httpPost('contacts/addcomment', comment);
+  }
+
   getContactDetails(params:any){
     return this.appService.httpPost('contacts/details', params);
   }

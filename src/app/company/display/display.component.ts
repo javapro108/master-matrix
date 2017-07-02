@@ -82,6 +82,21 @@ export class DisplayComponent implements OnInit, OnDestroy{
 
   saveComments(cmcPriority,cmcComment){
     this.displayDialog = false;
+    let comment = {
+      cmcCompanyID: this.companyDetail.company.comID,
+      cmcPriority: cmcPriority,
+      cmcComment: cmcComment
+    }
+    this.companyService.addComment(comment)
+        .subscribe(data => this.successAddComment(data), error => this.errorAddComment(error));
+  }
+
+  successAddComment(comment){
+    this.companyDetail.comments.unshift(comment);
+  }
+
+  errorAddComment(error){
+
   }
 
 

@@ -76,4 +76,8 @@ export class CompanyService {
     return this.appService.httpPut('company/change', companyEntity);
   }
 
+  addComment(comment){
+    return this.appService.httpPost('company/addcomment', comment);
+  }
+
 }
