@@ -96,6 +96,7 @@ export class CreateComponent {
       if (rep.corRepID && rep.corAffialiateID){
         rep.mode = "I";
       }
+      return rep;
     });
 
     let contactEntity = {

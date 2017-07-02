@@ -83,7 +83,6 @@ export class AppService {
   }
 
   initApp(){
-    debugger;
     this.httpGet('app/states')
         .subscribe((states)=> this.setStates(states), (error)=> console.log(error));
     this.httpGet('app/countries')
@@ -219,7 +218,6 @@ export class AppService {
   }
 
   setDisciplines(disciplines) {
-    debugger;
     this.disciplines = disciplines;
     this.disciplineOpts = disciplines.filter(discipline => !discipline.dispInactive ).map((discipline)=>{
       return {

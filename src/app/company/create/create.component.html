@@ -1,198 +1,202 @@
-<form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
-  <div class="ui-g-12 ui-fluid content-area">
+<div class="ui-g ui-fluid content-area">
     <div class="ui-g-12 ui-widget-content header">
       <div class="ui-g-8">
         <button pButton type="button" class="ui-button-info" label="Create Company"></button>
       </div>
       <div class="ui-g-2">
-        <button pButton type="submit" icon="fa-check-square-o" label="Submit" [disabled]="!companyForm.valid"></button>
+        <button pButton type="button" icon="fa-check-square-o" label="Submit" [disabled]="!companyForm.valid" (click)="onSubmit()"></button>
       </div>
       <div class="ui-g-2">
         <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
       </div>
     </div>
-    <div class="ui-g-12 ui-widget-content content-area">
-      <div>
-        <div class="ui-g-6">
 
-          <div class="ui-g ui-widget-content">
-            <div class="ui-g-1"></div>
-            <div class="ui-g-11"><b>General Information</b></div>
+    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
+      <div class="ui-g-12 ui-widget-content content-area">
+        <div>
+          <div class="ui-g-6">
 
-            <div class="ui-g-2 align-right"> Name: </div>
-            <div class="ui-g-10"><input pInputText type="text" formControlName="comName" maxlength="50" placeholder="Required" (blur)="onBlurName()"></div>
+            <div class="ui-g ui-widget-content">
+              <div class="ui-g-1"></div>
+              <div class="ui-g-11"><b>General Information</b></div>
 
-            <div class="ui-g-2 align-right"> Alias: </div>
-            <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias" maxlength="100"></div>
+              <div class="ui-g-2 align-right"> Name: </div>
+              <div class="ui-g-10"><input pInputText type="text" formControlName="comName" maxlength="50" placeholder="Required" (blur)="onBlurName()"></div>
 
-            <div class="ui-g-2 align-right"> Phone: </div>
-            <div class="ui-g-5">
-              <p-inputMask formControlName="comPhone" mask="(999) 999-9999" unmask="true"  placeholder="Required"></p-inputMask>
+              <div class="ui-g-2 align-right"> Alias: </div>
+              <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias" maxlength="100"></div>
+
+              <div class="ui-g-2 align-right"> Phone: </div>
+              <div class="ui-g-5">
+                <p-inputMask formControlName="comPhone" mask="(999) 999-9999" unmask="true" placeholder="Required"></p-inputMask>
+              </div>
+              <div class="ui-g-2 align-right"> Toll Free: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="comTollFree" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+
+              <div class="ui-g-2 align-right"> Web Site: </div>
+              <div class="ui-g-5"><input pInputText type="text" formControlName="comWeb" maxlength="100"></div>
+
+              <div class="ui-g-2 align-right"> Fax: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="comFax" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-2 align-right"> District: </div>
+              <div class="ui-g-10">
+                <p-dropdown [options]="appService.districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}" maxlength="5" placeholder="Required">
+                </p-dropdown>
+              </div>
+
             </div>
-            <div class="ui-g-2 align-right"> Toll Free: </div>
-            <div class="ui-g-3">
-              <p-inputMask formControlName="comTollFree" mask="(999) 999-9999" unmask="true"></p-inputMask>
+          </div>
+
+          <div class="ui-g-6">
+            <div class="ui-g ui-widget-content">
+              <div class="ui-g-1"></div>
+              <div class="ui-g-11"><b>Main Address</b></div>
+
+              <div class="ui-g-3 align-right"> Address line 1: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress" maxlength="255" placeholder="Required"></div>
+
+              <div class="ui-g-3 align-right"> Address line 2: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress2" maxlength="255"></div>
+
+              <div class="ui-g-3 align-right"> City: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comCity" maxlength="50" placeholder="Required"></div>
+
+              <div class="ui-g-3 align-right"> State: </div>
+              <div class="ui-g-4">
+                <p-dropdown [options]="appService.states" formControlName="comState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
+                </p-dropdown>
+              </div>
+
+              <div class="ui-g-2 align-right"> Zip code:</div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="comZip" mask="99999?-9999" maxlength="10" placeholder="Required"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Country:</div>
+              <div class="ui-g-3">
+                <p-dropdown [options]="appService.countries" formControlName="comCountry" filter="filter" maxlength="3" placeholder="Required">
+                </p-dropdown>
+              </div>
             </div>
-
-
-            <div class="ui-g-2 align-right"> Web Site: </div>
-            <div class="ui-g-5"><input pInputText type="text" formControlName="comWeb" maxlength="100"></div>
-
-            <div class="ui-g-2 align-right"> Fax: </div>
-            <div class="ui-g-3">
-              <p-inputMask formControlName="comFax" mask="(999) 999-9999" unmask="true"></p-inputMask>
+          </div>
+          <div class="ui-g-12">
+            <div class="ui-g ui-widget-content">
+              <div class="ui-g-2 align-right">Main Directions:</div>
+              <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirections" rows="2" cols="50" maxlength="500"></textarea></div>
             </div>
-
-            <div class="ui-g-2 align-right"> District: </div>
-            <div class="ui-g-10">
-              <p-dropdown [options]="appService.districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}" maxlength="5"  placeholder="Required">
-              </p-dropdown>
-            </div>
-
           </div>
         </div>
 
-        <div class="ui-g-6">
-          <div class="ui-g ui-widget-content">
-             <div class="ui-g-1"></div>
-            <div class="ui-g-11"><b>Main Address</b></div>
+        <div>
+          <div class="ui-g-6">
+            <div class="ui-g ui-widget-content">
+              <span class="ui-g-1"></span>
+              <div class="ui-g-5">
+                <B>Mailing Address</B>
+              </div>
+              <div class="ui-g-6">
+                <p-checkbox name="group1" value="mainToMail" label="Same as main address" (onChange)="copyMainToMail($event)" binary="true"></p-checkbox>
+              </div>
 
-            <div class="ui-g-3 align-right"> Address line 1: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress" maxlength="255"  placeholder="Required"></div>
+              <div class="ui-g-3 align-right"> Address line 1: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress1" maxlength="255" placeholder="Required"></div>
 
-            <div class="ui-g-3 align-right"> Address line 2: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress2" maxlength="255" ></div>
+              <div class="ui-g-3 align-right"> Address line 2: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress2" maxlength="255"></div>
 
-            <div class="ui-g-3 align-right"> City: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comCity" maxlength="50"  placeholder="Required"></div>
+              <div class="ui-g-3 align-right"> City: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comMailCity" maxlength="50" placeholder="Required"></div>
 
-            <div class="ui-g-3 align-right"> State: </div>
-            <div class="ui-g-4">
-              <p-dropdown [options]="appService.states" formControlName="comState" filter="filter" [style]="{'width':'100%'}" maxlength="2"  placeholder="Required">
-              </p-dropdown>
+              <div class="ui-g-3 align-right"> State: </div>
+              <div class="ui-g-4">
+                <p-dropdown [options]="appService.states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
+                </p-dropdown>
+              </div>
+
+              <div class="ui-g-2 align-right"> Zip code:</div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="comMailZip" mask="99999?-9999" maxlength="10" placeholder="Required"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Country:</div>
+              <div class="ui-g-3">
+                <p-dropdown [options]="appService.countries" formControlName="comMailCountry" filter="filter" maxlength="3" placeholder="Required">
+                </p-dropdown>
+              </div>
             </div>
+          </div>
 
-            <div class="ui-g-3 align-right"> Zip code:</div>
-            <div class="ui-g-2">
-              <p-inputMask formControlName="comZip" mask="99999" maxlength="10"  placeholder="Required"></p-inputMask>
+          <div class="ui-g-6">
+            <div class="ui-g ui-widget-content">
+
+              <span class="ui-g-1"></span>
+              <div class="ui-g-5">
+                <B>Delivery Address</B>
+              </div>
+              <div class="ui-g-6">
+                <p-checkbox name="group1" value="mainToDelv" label="Same as main address" (onChange)="copyMainToDelv($event)" binary="true"></p-checkbox>
+              </div>
+
+
+              <div class="ui-g-3 align-right"> Address line 1: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress1" maxlength="255"></div>
+
+              <div class="ui-g-3 align-right"> Address line 2: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress2" maxlength="255"></div>
+
+              <div class="ui-g-3 align-right"> City: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryCity" maxlength="50"></div>
+
+              <div class="ui-g-3 align-right"> State: </div>
+              <div class="ui-g-4">
+                <p-dropdown [options]="appService.states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}" maxlength="2">
+                </p-dropdown>
+              </div>
+
+              <div class="ui-g-2 align-right"> Zip code:</div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="comDeliveryZip" mask="99999?-9999" maxlength="10"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Country:</div>
+              <div class="ui-g-3">
+                <p-dropdown [options]="appService.countries" formControlName="comDeliveryCountry" filter="filter" maxlength="3">
+                </p-dropdown>
+              </div>
+
             </div>
+          </div>
 
-            <div class="ui-g-3 align-right">Country:</div>
-            <div class="ui-g-3">
-              <p-dropdown [options]="appService.countries" formControlName="comCountry" filter="filter" maxlength="3"  placeholder="Required">
-              </p-dropdown>
+          <div class="ui-g-12">
+            <div class="ui-g ui-widget-content">
+              <div class="ui-g-2 align-right">Delivery Directions:</div>
+              <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDeliveryDirections" rows="2" cols="50" maxlength="500"></textarea></div>
+              <div class="ui-g-2 align-right">Delivery Comments:</div>
+              <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirectionComments" rows="2" cols="50" maxlength="500"></textarea></div>
             </div>
           </div>
         </div>
+
         <div class="ui-g-12">
-          <div class="ui-g ui-widget-content">
-            <div class="ui-g-2 align-right">Main Directions:</div>
-            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirections" rows="2" cols="50" maxlength="500"></textarea></div>
+          <div class="ui-g-12 ui-widget-content">
+            <div class="ui-g-2 align-right">Priority:</div>
+            <p-checkbox class="ui-g-10" formControlName="cmcPriority" binary="true"></p-checkbox>
+            <div class="ui-g-2 align-right">Comments:</div>
+            <div class="ui-g-10"> <textarea pInputTextarea formControlName="cmcComment" rows="2" cols="50" maxlength="500"></textarea></div>
           </div>
         </div>
       </div>
-
-      <div>
-        <div class="ui-g-6">
-          <div class="ui-g ui-widget-content">
-            <span class="ui-g-1"></span>
-            <div class="ui-g-5">
-              <B>Mailing Address</B>
-            </div>
-            <div class="ui-g-6">
-              <p-checkbox name="group1" value="mainToMail" label="Same as main address" (onChange)="copyMainToMail($event)" binary="true"></p-checkbox>
-            </div>
-
-            <div class="ui-g-3 align-right"> Address line 1: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress1" maxlength="255"  placeholder="Required"></div>
-
-            <div class="ui-g-3 align-right"> Address line 2: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress2" maxlength="255" ></div>
-
-            <div class="ui-g-3 align-right"> City: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comMailCity" maxlength="50"  placeholder="Required"></div>
-
-            <div class="ui-g-3 align-right"> State: </div>
-            <div class="ui-g-4">
-              <p-dropdown [options]="appService.states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}" maxlength="2"  placeholder="Required">
-              </p-dropdown>
-            </div>
-
-            <div class="ui-g-3 align-right"> Zip code:</div>
-            <div class="ui-g-2">
-              <p-inputMask formControlName="comMailZip" mask="99999" maxlength="10"  placeholder="Required"></p-inputMask>
-            </div>
-
-            <div class="ui-g-3 align-right">Country:</div>
-            <div class="ui-g-3">
-              <p-dropdown [options]="appService.countries" formControlName="comMailCountry" filter="filter" maxlength="3"  placeholder="Required">
-              </p-dropdown>
-            </div>
-          </div>
-        </div>
-
-        <div class="ui-g-6">
-          <div class="ui-g ui-widget-content">
-
-            <span class="ui-g-1"></span>
-            <div class="ui-g-5">
-              <B>Delivery Address</B>
-            </div>
-            <div class="ui-g-6">
-              <p-checkbox name="group1" value="mainToDelv" label="Same as main address" (onChange)="copyMainToDelv($event)" binary="true"></p-checkbox>
-            </div>
+  </form>
+</div>
 
 
-            <div class="ui-g-3 align-right"> Address line 1: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress1" maxlength="255"></div>
 
-            <div class="ui-g-3 align-right"> Address line 2: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress2" maxlength="255"></div>
-
-            <div class="ui-g-3 align-right"> City: </div>
-            <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryCity" maxlength="50"></div>
-
-            <div class="ui-g-3 align-right"> State: </div>
-            <div class="ui-g-4">
-              <p-dropdown [options]="appService.states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}" maxlength="2">
-              </p-dropdown>
-            </div>
-
-            <div class="ui-g-3 align-right"> Zip code:</div>
-            <div class="ui-g-2">
-              <p-inputMask formControlName="comDeliveryZip" mask="99999" maxlength="10"></p-inputMask>
-            </div>
-
-            <div class="ui-g-3 align-right">Country:</div>
-            <div class="ui-g-3">
-              <p-dropdown [options]="appService.countries" formControlName="comDeliveryCountry" filter="filter" maxlength="3">
-              </p-dropdown>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="ui-g-12">
-          <div class="ui-g ui-widget-content">
-            <div class="ui-g-2 align-right">Delivery Directions:</div>
-            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDeliveryDirections" rows="2" cols="50" maxlength="500"></textarea></div>
-            <div class="ui-g-2 align-right">Delivery Comments:</div>
-            <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirectionComments" rows="2" cols="50" maxlength="500"></textarea></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="ui-g-12">
-        <div class="ui-g-12 ui-widget-content">
-          <div class="ui-g-2 align-right">Priority:</div>
-          <p-checkbox class="ui-g-10" formControlName="cmcPriority" binary="true"></p-checkbox>
-          <div class="ui-g-2 align-right">Comments:</div>
-          <div class="ui-g-10"> <textarea pInputTextarea formControlName="cmcComment" rows="2" cols="50" maxlength="500"></textarea></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
 
 <p-dialog [(visible)]="showDuplicate" [width]="800">
   <p-header>
@@ -204,7 +208,7 @@
     </div>
     <div class="ui-g-12 content-area">
       <p-dataTable [value]="duplicateCompanies" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
-        <p-column field="comID" header="ID" [sortable]="true" [filter]="true" filterPlaceholder="Search" ></p-column>
+        <p-column field="comID" header="ID" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="comName" header="Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="comCity" header="City" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
         <p-column field="comState" header="State" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>

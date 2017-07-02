@@ -15,7 +15,7 @@ import { ContactDetail, ContactEntity, SpContactViewResult} from '../../services
 export class DisplayComponent implements OnInit, OnDestroy {
 
   busy: boolean = true;
-  //displayDialog:boolean=false;
+  displayDialog:boolean=false;
   contactForm: FormGroup;
   Subscription: Subscription;
   subRoute: Subscription;
@@ -42,7 +42,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
     debugger;
     this.busy = true;
     this.Subscription = this.contactService.subscribe((data) => this.rxupdate(data));
-    this.buildForm();
     this.subRoute = this.activeRoute.params.subscribe((params) => {
       this.conId = params.id;
       let getParams = {
@@ -75,159 +74,35 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.busy = false;
     this.contactDetail.contact = contactDetail.contact;
     this.contactDetail.projects = contactDetail.projects;
-    this.contactDetail.jobs= contactDetail.jobs;
-
-    this.setContactFormValue(this.contactDetail.contact)
-
-
+    this.contactDetail.jobs = contactDetail.jobs;
+    this.contactDetail.comments = contactDetail.comments;
   }
 
   changeContact(contact) {
     this.router.navigate(['../../change', this.conId], { relativeTo: this.activeRoute });
   }
 
-
-  buildForm(): void {
-    this.contactForm = this.formBuilder.group({
-      conName: '',
-      conFName: '',
-      conMI: '',
-      cLName: '',
-      conAlias: '',
-      conCourtesy: '',
-      conTitle: '',
-      conAssistantName: '',
-      conAssistPhone: '',
-      conAssistExt: '',
-      conExt: '',
-      conDirectPhone: '',
-      conCellPhone: '',
-      conFaxNum: '',
-      conEmail: '',
-      conRevisedDate: '',
-      conRevisedBy: '',
-      comPhone: '',
-      posPosition: '',
-      comName: '',
-      comAddress: '',
-      comAddress2: '',
-      comCity: '',
-      comState: '',
-      comZip: '',
-      comCountry: '',
-      comFax: '',
-      comTollFree: '',
-      comWeb: '',
-      comDeliveryAddress1: '',
-      comDeliveryAddress2: '',
-      comDeliveryCity: '',
-      comDeliveryState: '',
-      comDeliveryZip: '',
-      comDeliveryCountry: '',
-      comDeliveryDirections: '',
-      comMailAddress1: '',
-      comMailAddress2: '',
-      comMailCity: '',
-      comMailState: '',
-      comMailZip: '',
-      comMailCountry: '',
-      comDirectionComments: '',
-      conHomeAddress: '',
-      conHomeAddress2: '',
-      conHomeCity: '',
-      conHomeState: '',
-      conHomeZip: '',
-      conHomePhone: '',
-      conHomeEmail: '',
-      conHomeFax: '',
-      conBirthday: '',
-      conAnniversary: '',
-      conGuestName: '',
-      comDirections: '',
-      comID: '',
-      comDistrict: '',
-      terName: '',
-      conInactive: '',
-      conCompanyID: '',
-      conDate: '',
-      conCreatedBy: '',
-      conAssistEmail: ''
-    });
-  }
-
-  setContactFormValue(spContactTable: SpContactViewResult) {
-    let contactFormValue = {
-      conName: '',
-      conFName: '',
-      conMI: '',
-      cLName: '',
-      conAlias: '',
-      conCourtesy: '',
-      conTitle: '',
-      conAssistantName: '',
-      conAssistPhone: '',
-      conAssistExt: '',
-      conExt: '',
-      conDirectPhone: '',
-      conCellPhone: '',
-      conFaxNum: '',
-      conEmail: '',
-      conRevisedDate: '',
-      conRevisedBy: '',
-      comPhone: '',
-      posPosition: '',
-      comName: '',
-      comAddress: '',
-      comAddress2: '',
-      comCity: '',
-      comState: '',
-      comZip: '',
-      comCountry: '',
-      comFax: '',
-      comTollFree: '',
-      comWeb: '',
-      comDeliveryAddress1: '',
-      comDeliveryAddress2: '',
-      comDeliveryCity: '',
-      comDeliveryState: '',
-      comDeliveryZip: '',
-      comDeliveryCountry: '',
-      comDeliveryDirections: '',
-      comMailAddress1: '',
-      comMailAddress2: '',
-      comMailCity: '',
-      comMailState: '',
-      comMailZip: '',
-      comMailCountry: '',
-      comDirectionComments: '',
-      conHomeAddress: '',
-      conHomeAddress2: '',
-      conHomeCity: '',
-      conHomeState: '',
-      conHomeZip: '',
-      conHomePhone: '',
-      conHomeEmail: '',
-      conHomeFax: '',
-      conBirthday: '',
-      conAnniversary: '',
-      conGuestName: '',
-      comDirections: '',
-      comID: '',
-      comDistrict: '',
-      terName: '',
-      conInactive: '',
-      conCompanyID: '',
-      conDate: '',
-      conCreatedBy: '',
-      conAssistEmail: ''
+  saveComments(cmdPriority,cmdComment){
+    debugger;
+    this.displayDialog = false;
+    let comment = {
+      cocContactID: this.conId,
+      cmdPriority: cmdPriority,
+      cmdComment: cmdComment
     }
-    Object.keys(contactFormValue).forEach(function(key) {
-      if (spContactTable[key] != undefined) {
-        contactFormValue[key] = spContactTable[key];
-      }
-    });
-
-    this.contactForm.setValue(contactFormValue);
+    this.contactService.addComment(comment)
+        .subscribe(data => this.successAddComment(data), error => this.errorAddComment(error));
   }
+
+  successAddComment(comment){
+    comment.cmdPriority = comment.cmdPriority == true? '!':'';
+    this.contactDetail.comments.unshift(comment);
+    this.contactDetail.comments = this.contactDetail.comments.slice();
+  }
+
+  errorAddComment(error){
+
+  }
+
 
 }

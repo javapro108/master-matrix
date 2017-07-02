@@ -81,6 +81,7 @@ export class DisplayComponent implements OnInit, OnDestroy{
   }
 
   saveComments(cmcPriority,cmcComment){
+    debugger;
     this.displayDialog = false;
     let comment = {
       cmcCompanyID: this.companyDetail.company.comID,
@@ -92,13 +93,14 @@ export class DisplayComponent implements OnInit, OnDestroy{
   }
 
   successAddComment(comment){
+    comment.cmcPriority = comment.cmcPriority == true? '!':'';
     this.companyDetail.comments.unshift(comment);
+    this.companyDetail.comments = this.companyDetail.comments.slice();
   }
 
   errorAddComment(error){
 
   }
-
 
   buildForm(): void{
     this.companyForm = this.formBuilder.group({

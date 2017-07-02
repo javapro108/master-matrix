@@ -238,9 +238,13 @@ export interface SpContactViewResult {
 
 export interface ContactDetail {
   contact?: SpContactViewResult;
-  comments: any;
-  contactActivities: any;
-  marketings: any;
-  jobs: any;
-  projects: any;
+  comments?: any;
+  contactActivities?: any;
+  marketings?: any;
+  jobs?: any;
+  projects?: any;
+  disciplines?: Array<Discipline>,
+  affiliates?: Array<Affiliate>,
+  reps?: Array<Rep>,
+
 }

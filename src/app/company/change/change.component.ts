@@ -116,20 +116,30 @@ export class ChangeComponent extends BaseComponent implements OnInit{
 
 
   onSubmit() {
-    this.companyService.companyEntity.company = this.companyForm.value;
+
+
+    this.companyEntity.company = this.companyForm.value;
     if (this.comActive == true || this.comActive == false){
-      this.companyService.companyEntity.company.comInactive = !this.comActive;
+      this.companyEntity.company.comInactive = !this.comActive;
     }
-    console.log(this.companyService.companyEntity);
-    this.companyService.changeCompany(this.companyService.companyEntity)
+
+    let comment = {
+      cmcComment: this.companyForm.value.cmcComment,
+      cmcPriority: this.companyForm.value.cmcPriority
+    };
+    this.companyEntity.comments = [comment];
+
+    console.log(this.companyEntity);
+    this.companyService.changeCompany(this.companyEntity)
         .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
     this.companyForm.markAsPristine();
+
   }
 
 
   changeSuccess(companyEntity){
     this.companyService.companyEntity = companyEntity;
-    this.setCompanyFormValue(this.companyService.companyEntity.company);
+    //this.setCompanyFormValue(this.companyService.companyEntity.company);
     this.busy = false;
     this.location.back();
   }
