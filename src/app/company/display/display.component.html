@@ -1,3 +1,9 @@
+<p-blockUI [blocked]="busy" [target]="">
+  <div style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
+
 <div id="page" class="ui-g-12 ui-fluid content-area">
   <div class="ui-g-12 ui-widget-content header">
     <div class="ui-g-10">
@@ -6,96 +12,83 @@
     <div class="ui-g-2">
       <button pButton type="button" icon="fa-check-square-o" label="Change" (click)="changeCompany()"></button>
     </div>
+
+    <div class="ui-g-2">
+          Created by: <b>{{companyDetail.company.comCreatedBy}} </b>
+    </div>
+    <div class="ui-g-3">
+      Revised Date: <B>{{companyDetail.company.comRevisedDate | date:"longDate"}}</B>
+    </div>
+    <div class="ui-g-2">
+      Revised By:<B>{{companyDetail.company.comRevisedBy}}</B>
+    </div>
+
   </div>
   <div class="ui-g-12 ui-widget-content content-area">
 
 
-    <p-panel #details header="Company Details" [toggleable]="true">
-      <p-blockUI [blocked]="busy" [target]="details">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
-
+    <p-panel header="Company Details" [toggleable]="true">
 
       <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
         <div class="ui-g-12 content-area">
           <div>
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
-                <span class="ui-g-1"></span>
-                <H4 class="ui-g-11">General Information</H4>
+                <div class="ui-g-1"></div>
+                <div class="ui-g-11"><B> General Information</B></div>
 
                 <!-- Name:{{companyDetail.company.comName}}-->
 
-                <div class="ui-g-2 label-form"> Name: </div>
-                <div class="ui-g-10"><input pInputText type="text" formControlName="comName"></div>
+                <div class="ui-g-2 align-right"> Name: </div>
+                <div class="ui-g-10"><b>{{companyDetail.company.comName}}</b></div>
 
-                <div class="ui-g-2 label-form"> Alias: </div>
-                <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias"></div>
+                <div class="ui-g-2 align-right"> Alias: </div>
+                <div class="ui-g-10"><b>{{companyDetail.company.comAlias}}</b></div>
 
-                <div class="ui-g-2 label-form"> Phone: </div>
+                <div class="ui-g-2 align-right fa fa-phone"> Phone: </div>
                 <div class="ui-g-4">
-                  <p-inputMask formControlName="comPhone" mask="(999) 999-9999"></p-inputMask>
+                  <b>{{companyDetail.company.comPhone}}</b>
                 </div>
 
-                <div class="ui-g-2 label-form"> Fax: </div>
+                <div class="ui-g-2 align-right fa fa-fax"> Fax: </div>
                 <div class="ui-g-4">
-                  <p-inputMask formControlName="comFax" mask="(999) 999-9999"></p-inputMask>
+                  <b>{{companyDetail.company.comFax}}</b>
                 </div>
 
-                <div class="ui-g-2 label-form"> Toll Free: </div>
+                <div class="ui-g-2 align-right"> Toll Free: </div>
                 <div class="ui-g-4">
-                  <p-inputMask formControlName="comTollFree" mask="(999) 999-9999"></p-inputMask>
+                    <b>{{companyDetail.company.comTollFree}}</b>
                 </div>
-                <div class="ui-g-2 label-form"> District: </div>
+                <div class="ui-g-2 align-right"> District: </div>
                 <div class="ui-g-4">
-                  <p-dropdown [options]="appService.districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}">
-                  </p-dropdown>
+                  <b>{{companyDetail.company.comDistrict}}</b>
+
                 </div>
-                <div class="ui-g-2 label-form"> Web Site: </div>
-                <div class="ui-g-10"><input pInputText type="text" formControlName="comAlias"></div>
+                <div class="ui-g-2 align-right fa fa-globe"> Web Site: </div>
+                      <b>{{companyDetail.company.comWeb}}</b>
               </div>
             </div>
 
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
-                <span class="ui-g-1"></span>
-                <H4 class="ui-g-11">Main Address</H4>
+                <div class="ui-g-1"></div>
+                <div class="ui-g-11"><b>Main Address</b></div>
 
-                <div class="ui-g-3 label-form"> Address line 1: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress"></div>
-
-                <div class="ui-g-3 label-form"> Address line 2: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comAddress2"></div>
-
-                <div class="ui-g-3 label-form"> City: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comCity"></div>
-
-                <div class="ui-g-3 label-form"> State: </div>
-                <div class="ui-g-4">
-                  <p-dropdown [options]="appService.states" formControlName="comState" filter="filter" [style]="{'width':'100%'}">
-                  </p-dropdown>
+                <div class="ui-g-3 align-right"> Address: </div>
+                <div class="ui-g-9">
+                  <b>{{companyDetail.company.comAddress}}</b><br>
+                  <b>{{companyDetail.company.comAddress2}}</b><br>
+                  <b>{{companyDetail.company.comCity}}, {{companyDetail.company.comState}} {{companyDetail.company.comZip}}</b><br>
+                  <b>{{companyDetail.company.comCountry}}</b>
                 </div>
-
-                <div class="ui-g-3 label-form"> Zip code:</div>
-                <div class="ui-g-2">
-                  <p-inputMask formControlName="comZip" mask="99999"></p-inputMask>
-                </div>
-
-                <div class="ui-g-3 label-form">Country:</div>
-                <div class="ui-g-3">
-                  <p-dropdown [options]="appService.countries" formControlName="comCountry" filter="filter">
-                  </p-dropdown>
+                <div class="ui-g-3 align-right fa fa-map-marker">Main Directions:</div>
+                <div class="ui-g-9">
+                  <b>{{companyDetail.company.comDirections}}</b>
                 </div>
               </div>
+
             </div>
-            <div class="ui-g-12">
-              <div class="ui-g ui-widget-content">
-                <div class="ui-g-2 label-form">Main Directions:</div>
-                <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirections" rows="3" cols="50"></textarea></div>
-              </div>
-            </div>
+
           </div>
 
           <div>
@@ -107,82 +100,41 @@
                 </div>
                 <div class="ui-g-6">
                 </div>
-
-                <div class="ui-g-3 label-form"> Address line 1: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress1"></div>
-
-                <div class="ui-g-3 label-form"> Address line 2: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comMailAddress2"></div>
-
-                <div class="ui-g-3 label-form"> City: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comMailCity"></div>
-
-                <div class="ui-g-3 label-form"> State: </div>
-                <div class="ui-g-4">
-                  <p-dropdown [options]="appService.states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}">
-                  </p-dropdown>
-                </div>
-
-                <div class="ui-g-3 label-form"> Zip code:</div>
-                <div class="ui-g-2">
-                  <p-inputMask formControlName="comMailZip" mask="99999"></p-inputMask>
-                </div>
-
-                <div class="ui-g-3 label-form">Country:</div>
-                <div class="ui-g-3">
-                  <p-dropdown [options]="appService.countries" formControlName="comMailCountry" filter="filter">
-                  </p-dropdown>
+                <div class="ui-g-3 align-right"> Address: </div>
+                 <div class="ui-g-9">
+                      <b>{{companyDetail.company.comMailAddress1}}</b><br>
+                      <b>{{companyDetail.company.comMailAddress2}}</b><br>
+                      <b>{{companyDetail.company.comMailCity}}, {{companyDetail.company.comMailState}} {{companyDetail.company.comMailZip}}</b><br>
+                      <b>{{companyDetail.company.comMailCountry}}</b>
                 </div>
               </div>
             </div>
 
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
-
-                <span class="ui-g-1"></span>
+                <div class="ui-g-1"></div>
                 <div class="ui-g-5">
                   <B>Delivery Address</B>
                 </div>
-                <div class="ui-g-6">
-                </div>
+                <div class="ui-g-6"></div>
 
-                <div class="ui-g-3 label-form"> Address line 1: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress1"></div>
 
-                <div class="ui-g-3 label-form"> Address line 2: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryAddress2"></div>
-
-                <div class="ui-g-3 label-form"> City: </div>
-                <div class="ui-g-9"><input pInputText type="text" formControlName="comDeliveryCity"></div>
-
-                <div class="ui-g-3 label-form"> State: </div>
-                <div class="ui-g-4">
-                  <p-dropdown [options]="appService.states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}">
-                  </p-dropdown>
-                </div>
-
-                <div class="ui-g-3 label-form"> Zip code:</div>
-                <div class="ui-g-2">
-                  <p-inputMask formControlName="comDeliveryZip" mask="99999"></p-inputMask>
-                </div>
-
-                <div class="ui-g-3 label-form">Country:</div>
-                <div class="ui-g-3">
-                  <p-dropdown [options]="appService.countries" formControlName="comDeliveryCountry" filter="filter">
-                  </p-dropdown>
-                </div>
+                <div class="ui-g-3 align-right">Address: </div>
+                      <div class="ui-g-9">
+                            <b>{{companyDetail.company.comDeliveryAddress1}}</b><br>
+                            <b>{{companyDetail.company.comDeliveryAddress2}}</b><br>
+                            <b>{{companyDetail.company.comDeliveryCity}}, {{companyDetail.company.comDeliveryState}} {{companyDetail.company.comDeliveryZip}}</b><br>
+                            <b>{{companyDetail.company.comDeliveryCountry}}</b>
+                      </div>
+                      <div class="ui-g-3 align-right fa fa-map-marker">Delivery Directions:</div>
+                      <div class="ui-g-9"><b>{{companyDetail.company.comDeliveryDirections}}</b></div>
+                      <div class="ui-g-3 align-right">Delivery Comments:</div>
+                      <div class="ui-g-9"><b>{{companyDetail.company.comDirectionComments}}</b></div>
 
               </div>
             </div>
 
-            <div class="ui-g-12">
-              <div class="ui-g ui-widget-content">
-                <div class="ui-g-2 label-form">Delivery Directions:</div>
-                <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDeliveryDirections" rows="3" cols="50"></textarea></div>
-                <div class="ui-g-2 label-form">Delivery Comments:</div>
-                <div class="ui-g-10"> <textarea pInputTextarea formControlName="comDirectionComments" rows="3" cols="50"></textarea></div>
-              </div>
-            </div>
+
           </div>
         </div>
       </form>
@@ -191,12 +143,7 @@
 
 
 
-    <p-panel #contacts header="Contacts" [toggleable]="true">
-      <p-blockUI [blocked]="busy" [target]="contacts">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
+    <p-panel header="Contacts" [toggleable]="true">
       <p-dataTable [value]="companyDetail.contacts">
         <p-column field="conid" header="ID"></p-column>
         <p-column field="conName" header="Name"></p-column>
@@ -207,12 +154,7 @@
       </p-dataTable>
     </p-panel>
 
-    <p-panel #projects header="Projects" [toggleable]="true">
-      <p-blockUI [blocked]="busy" [target]="projects">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
+    <p-panel header="Projects" [toggleable]="true">
       <p-dataTable [value]="companyDetail.projects">
         <p-column field="proID" header="ID"></p-column>
         <p-column field="proNumber" header="Project No."></p-column>
@@ -230,12 +172,7 @@
     </p-panel>
 
 
-    <p-panel #jobs header="Jobs" [toggleable]="true">
-      <p-blockUI [blocked]="busy" [target]="jobs">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
+    <p-panel header="Jobs" [toggleable]="true">
       <p-dataTable [value]="companyDetail.jobs">
         <p-column field="proID" header="ID"></p-column>
         <p-column field="proNumber" header="Job No."></p-column>
@@ -250,13 +187,7 @@
       </p-dataTable>
     </p-panel>
 
-    <p-panel #comments header="Comments" [toggleable]="true">
-
-      <p-blockUI [blocked]="busy" [target]="comments">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
+    <p-panel header="Comments" [toggleable]="true">
 
       <p-dataTable [value]="companyDetail.comments">
         <p-column field="cmcPriority" header="Priority" [style]="{'width':'8%'}"></p-column>
@@ -274,12 +205,7 @@
 
     </p-panel>
 
-    <p-panel #marketings header="Marketings" [toggleable]="true">
-      <p-blockUI [blocked]="busy" [target]="marketings">
-        <div style="position:absolute;top:40%;left:45%">
-          <font size="5" color="black">Loading...</font>
-        </div>
-      </p-blockUI>
+    <p-panel header="Marketings" [toggleable]="true">
       <p-dataTable [value]="companyDetail.marketings">
         <p-column field="mrkID" header="ID"></p-column>
         <p-column field="mrkActivityCode" header="Act. Code"></p-column>
@@ -300,9 +226,9 @@
   </p-header>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12">
-      <div class="ui-g-2 label-form">Priority:</div>
+      <div class="ui-g-2 align-right">Priority:</div>
       <p-checkbox class="ui-g-10" binary="true" [(ngModel)]="cmcPriority" label=""></p-checkbox>
-      <div class="ui-g-2 label-form">Comments:</div>
+      <div class="ui-g-2 align-right">Comments:</div>
       <div class="ui-g-10"> <textarea pInputTextarea [(ngModel)]="cmcComment" rows="3" cols="50"></textarea></div>
 
       <div class="ui-g-2"><button pButton type="button" icon="fa-check-square-o" (click)="saveComments(cmcPriority,cmcComment);"></button></div>

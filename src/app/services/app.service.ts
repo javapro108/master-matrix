@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {SelectItem} from 'primeng/primeng';
 
-import { User } from './app.types';
+import { User, NameValue } from './app.types';
 
 @Injectable()
 export class AppService {
@@ -15,6 +15,10 @@ export class AppService {
   rxService: BehaviorSubject<any>;
   user:User;
   displaySideNav: string = 'show';
+
+  reps = [];
+  affiliates = [];
+  disciplines = [];
 
   districts: SelectItem[] = [];
   states: SelectItem[] = [];
@@ -89,15 +93,19 @@ export class AppService {
     this.httpGet('app/prefixes')
         .subscribe((prefixes)=> this.setPrefixes(prefixes), (error)=> console.log(error));
     this.httpGet('app/affiliatedropdown')
-        .subscribe((affiliates)=> this.setAffiliates(affiliates), (error)=> console.log(error));
+        .subscribe((affiliates)=> this.setAffiliateOpts(affiliates), (error)=> console.log(error));
     this.httpGet('app/positiondropdown')
         .subscribe((positions)=> this.setPositions(positions), (error)=> console.log(error));
     this.httpGet('app/disciplinedropdown')
         .subscribe((disciplines)=> this.setDisciplines(disciplines), (error)=> console.log(error));
     this.httpGet('app/repdropdown')
-        .subscribe((reps)=> this.setReps(reps), (error)=> console.log(error));
+        .subscribe((reps)=> this.setRepOpts(reps), (error)=> console.log(error));
     this.httpGet('app/affstatus')
         .subscribe((affStats)=> this.setAffStatus(affStats), (error)=> console.log(error));
+    this.httpGet('app/reps')
+        .subscribe((reps)=>{this.reps = reps;}, (error)=> console.log(error));
+    this.httpGet('app/affiliates')
+        .subscribe((affs)=>{this.affiliates = affs;}, (error)=> console.log(error));
 
   }
 
@@ -182,7 +190,7 @@ export class AppService {
     });
   }
 
-  setAffiliates(affiliates){
+  setAffiliateOpts(affiliates){
     this.affiliateOpts.push({
       value:'',
       label:''
@@ -210,22 +218,18 @@ export class AppService {
     });
   }
 
-  setDisciplines(disciplines){
-    /*
-    this.disciplineOpts.push({
-      value:'',
-      label:''
-    });
-    */
-    disciplines.forEach((discipline)=>{
-      this.disciplineOpts.push({
+  setDisciplines(disciplines) {
+    debugger;
+    this.disciplines = disciplines;
+    this.disciplineOpts = disciplines.filter(discipline => !discipline.dispInactive ).map((discipline)=>{
+      return {
         value: discipline.dispCode,
-        label: discipline.dispName
-      });
+        label: discipline.dispCode + " - " + discipline.dispName
+      };
     });
   }
 
-  setReps(reps){
+  setRepOpts(reps){
     this.repOpts.push({
       value:'',
       label:''
@@ -256,9 +260,15 @@ setAffStatus(affStats){
 
 /* UTILITY METHODS */
 
-  arrayFind(array=[], propertyName:string, value){
+  arrayFind(array=[], nameValue:NameValue[]){
     return array.find(function(element){
-      return element[propertyName] == value;
+      let found = true;
+      nameValue.forEach((nameValue:NameValue)=>{
+          if (element[nameValue.name] != nameValue.value){
+            found = false;
+          }
+      });
+      return found;
     });
   }
 

@@ -35,18 +35,18 @@ export class SearchComponent implements OnInit {
 
     this.cols = [
       //        {field: 'conID', header: 'ID', width:{'width':'5%'}},
-      { field: 'conID', header: 'ID', display: true },
-      { field: 'conFName', header: 'First Name', display: true },
-      { field: 'conLName', header: 'Last Name', display: true },
-      { field: 'conTitle', header: 'Title', display: true },
-      { field: 'conDirectPhone', header: 'Direct Phone', display: true },
-      { field: 'comName', header: 'Company Name', display: true },
-      { field: 'actDate', header: 'Last Contacted', display: true },
-      { field: 'comDistrict', header: 'District', display: true },
-      { field: 'comPhone', header: 'Company Phone' },
-      { field: 'conAlias', header: 'Alias' },
-      { field: 'conPosition', header: 'Position' },
-      { field: 'conEmail', header: 'Email', }
+      { field: 'conID', header: 'ID', display: true, width:{'width':'5%'}},
+      { field: 'conFName', header: 'First Name', display: true, width:{'width':'12%'} },
+      { field: 'conLName', header: 'Last Name', display: true,width:{'width':'12%'} },
+      { field: 'conTitle', header: 'Title', display: true,width:{'width':'10%'} },
+      { field: 'conDirectPhone', header: 'Direct Phone', display: true,width:{'width':'12%'} },
+      { field: 'comName', header: 'Company Name', display: true,width:{'width':'20%'} },
+      { field: 'actDate', header: 'Last Contacted', display: true,width:{'width':'12%'} },
+      { field: 'comDistrict', header: 'District', display: true,width:{'width':'12%'} },
+      { field: 'comPhone', header: 'Company Phone',width:{'width':'12%'} },
+      { field: 'conAlias', header: 'Alias',width:{'width':'12%'} },
+      { field: 'conPosition', header: 'Position',width:{'width':'10%'} },
+      { field: 'conEmail', header: 'Email',width:{'width':'12%'} }
     ];
 
     this.columnOptions = this.cols.map((column) => {
@@ -78,8 +78,9 @@ export class SearchComponent implements OnInit {
       }
       this.contactsService.findContactsAdv(this.contactsService.contactEntity)
         .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
-      this.busy = true;
+      
     }
+    this.busy = true;
   }
 
 

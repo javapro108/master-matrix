@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
     if (data.token != undefined) {
       window.localStorage.setItem("Auth-token", data.token);
       this.appService.user = data;
-      this.appService.initApp();
       this.router.navigate(['../home']);
     } else {
 

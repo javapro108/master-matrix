@@ -24,5 +24,6 @@ export class HomeComponent implements OnInit {
     private appService: AppService){}
 
   ngOnInit(){
+    this.appService.initApp();
   }
 }

@@ -1,0 +1,319 @@
+<p-blockUI [blocked]="busy" [target]="generalInfo">
+	<div style="position:absolute;top:40%;left:45%">
+		<font size="5" color="black">Loading...</font>
+	</div>
+</p-blockUI>
+<p-tabView #generalInfo>
+	<p-tabPanel header= "General Info" leftIcon="fa fa-address-card-o" >
+		<div class="ui-g-6">
+			<div class="ui-g ui-widget-content">
+				<div class="ui-g-3 align-right">
+					Company Name:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.comName}} {{conId}} </b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					Contact Name:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conCourtesy}} {{contactDetail.contact.conName}} </b>
+				</div>
+
+
+				<div class="ui-g-3 align-right">
+					Title:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conTitle}}</b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					Company Address:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.comAddress}}</b><br *ngIf="contactDetail.contact.comAddress2 != ''">
+					<b>{{contactDetail.contact.comAddress2}}</b><br>
+					<b>{{contactDetail.contact.comCity}}, {{contactDetail.contact.comState}} {{contactDetail.contact.comZip}}</b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					District:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.comDistrict}}</b>
+				</div>
+
+				<div class="ui-g-3 align-right fa fa-globe">
+					Web Page:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.comWeb}}</b>
+				</div>
+
+				<div class="ui-g-3 align-right fa fa-envelope-o">
+					Email:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conEmail}}</b>
+				</div>
+
+			</div >
+		</div >
+
+		<div class="ui-g-6 ">
+			<div class="ui-g ui-widget-content">
+
+				<div class="ui-g-3 align-right">
+					<div class="fa fa-phone"> Main Phone: </div>
+				</div>
+				<div class="ui-g-4">
+					<b>{{contactDetail.contact.comPhone}} </b>
+				</div>
+				<div class="ui-g-2">
+					Extension
+				</div>
+				<div class="ui-g-3">
+					<b>{{contactDetail.contact.conExt}} </b>
+				</div>
+
+
+				<div class="ui-g-3 align-right">
+					<div class="fa fa-fax"> Main Fax: </div>
+				</div>
+				<div class="ui-g-4">
+					<b>{{contactDetail.contact.comFax}} </b>
+				</div>
+				<div class="ui-g-2">
+					Toll Free
+				</div>
+				<div class="ui-g-3">
+					<b>{{contactDetail.contact.comTollFree}} </b>
+				</div>
+
+
+				<div class="ui-g-3 align-right">
+					<div> Direct Phone: </div>
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conDirectPhone}} </b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					<div class="fa fa-mobile"> Mobile: </div>
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conCellPhone}} </b>
+				</div>
+
+
+				<div class="ui-g-3 align-right">
+					<div> Alternate/Direct Fax: </div>
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conFaxNum}} </b>
+				</div>
+				<div class="ui-g-3 align-right">
+					<div class=""> Assistant Name: </div>
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conAssistantName}} </b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					<div class="fa fa-phone"> Assistant Phone: </div>
+				</div>
+				<div class="ui-g-4">
+					<b>{{contactDetail.contact.conAssistPhone}} </b>
+				</div>
+				<div class="ui-g-2">
+					Extension
+				</div>
+				<div class="ui-g-3">
+					<b>{{contactDetail.contact.conAssistExt}} </b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					<div class="fa fa-envelope-o"> Assistant email: </div>
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conAssistEmail}} </b>
+				</div>
+
+			</div >
+		</div >
+	</p-tabPanel>
+	<p-tabPanel header="Marketing" leftIcon="fa fa-bullhorn">
+		Coming soon in next release
+	</p-tabPanel>
+	<p-tabPanel header="Directions/Maps/Deliveries" leftIcon="fa fa-map">
+		<div class="ui-g">
+			<div class="ui-g-6 ">
+				<div class="ui-g ui-widget-content">
+
+					<div class="ui-g-3 align-right">
+						Contact Name:
+					</div>
+					<div class="ui-g-4">
+						<b>{{contactDetail.contact.conCourtesy}} {{contactDetail.contact.conName}} </b>
+					</div>
+
+					<div class="ui-g-2 align-right">
+						Alias Name:
+					</div>
+					<div class="ui-g-3">
+						<b>{{contactDetail.contact.conAlias}}</b>
+					</div>
+
+					<div class="ui-g-3 align-right">
+						<div class="fa fa-phone"> Main Phone: </div>
+					</div>
+					<div class="ui-g-4">
+						<b>{{contactDetail.contact.comPhone}} </b>
+					</div>
+					<div class="ui-g-2 align-right">
+						Extension
+					</div>
+					<div class="ui-g-3">
+						<b>{{contactDetail.contact.conExt}} </b>
+					</div>
+
+					<div class="ui-g-3 align-right">
+						<div> Direct Phone: </div>
+					</div>
+					<div class="ui-g-4">
+						<b>{{contactDetail.contact.conDirectPhone}} </b>
+					</div>
+					<div class="ui-g-2 align-right">
+						District:
+					</div>
+					<div class="ui-g-3">
+						<b>{{contactDetail.contact.comDistrict}} </b>
+					</div>
+
+				</div>
+			</div>
+			<div class="ui-g-6 ">
+				<div class="ui-g ui-widget-content">
+					<div class="ui-g-3 align-right">
+						Main Address:
+					</div>
+					<div class="ui-g-9">
+						<b>{{contactDetail.contact.comAddress}}</b><br *ngIf="contactDetail.contact.comAddress2 != ''">
+						<b>{{contactDetail.contact.comAddress2}}</b><br>
+						<b>{{contactDetail.contact.comCity}}, {{contactDetail.contact.comState}} {{contactDetail.contact.comZip}}</b>
+					</div>
+					<div class="ui-g-3 align-right">
+						Main Direction:
+					</div>
+					<div class="ui-g-9">
+						<b>{{contactDetail.contact.comDirections}}</b>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+		<div class="ui-g">
+			<div class="ui-g-6 ">
+				<div class="ui-g ui-widget-content">
+
+					<div class="ui-g-3 align-right">
+						Mailing Address:
+					</div>
+					<div class="ui-g-9">
+						<b>{{contactDetail.contact.comMailAddress1}}</b><br *ngIf="contactDetail.contact.comMailAddress2">
+						<b>{{contactDetail.contact.comMailAddress2}}</b><br>
+						<b>{{contactDetail.contact.comMailCity}}, {{contactDetail.contact.comMailState}} {{contactDetail.contact.comMailZip}}</b>
+					</div>
+
+				</div>
+			</div>
+			<div class="ui-g-6 ">
+				<div class="ui-g ui-widget-content">
+					<div class="ui-g-3 align-right">
+						Delivery Address:
+					</div>
+					<div class="ui-g-9">
+						<b>{{contactDetail.contact.comDeliveryAddress1}}</b><br *ngIf="contactDetail.contact.comDeliveryAddress2 != ''">
+						<b>{{contactDetail.contact.comDeliveryAddress2}}</b><br>
+						<b>{{contactDetail.contact.comDeliveryCity}}, {{contactDetail.contact.comDeliveryState}} {{contactDetail.contact.comDeliveryZip}}</b>
+					</div>
+					<div class="ui-g-3 align-right">
+						Delivery Direction:
+					</div>
+					<div class="ui-g-9">
+						<b>{{contactDetail.contact.comDeliveryDirections}}</b><br>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</p-tabPanel>
+
+	<p-tabPanel header="Personal Informatoin" leftIcon="fa-user">
+		<div class="ui-g-6">
+			<div class="ui-g ui-widget-content">
+				<div class="ui-g-3 align-right">
+					Home Address:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conHomeAddress}}</b><br *ngIf="contactDetail.contact.conHomeAddress2 != ''">
+					<b>{{contactDetail.contact.conHomeAddress2}}</b><br>
+					<b>{{contactDetail.contact.conHomeCity}}, {{contactDetail.contact.conHomeState}} {{contactDetail.contact.conHomeZip}}</b>
+				</div>
+				<div class="ui-g-3 align-right">
+					Guest Name:
+				</div>
+				<div class="ui-g-9">
+					<b>{{contactDetail.contact.conGuestName}}</b>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui-g-6">
+			<div class="ui-g ui-widget-content">
+				<div class="ui-g-3 align-right">
+					Home Phone:
+				</div>
+				<div class="ui-g-3">
+					<b>{{contactDetail.contact.conHomePhone}}</b>
+				</div>
+
+
+			<div class="ui-g-3 align-right">
+					Home Fax:
+			</div>
+			<div class="ui-g-3">
+				<b>{{contactDetail.contact.conHomeFax}}</b>
+			</div>
+
+			<div class="ui-g-3 align-right">
+				Personal Email:
+			</div>
+			<div class="ui-g-9">
+				<b>{{contactDetail.contact.conHomeEmail}}</b>
+			</div>
+
+			<div class="ui-g-3 align-right">
+				Birthday:
+			</div>
+			<div class="ui-g-3">
+				<b>{{contactDetail.contact.conBirthday}}</b>
+			</div>
+
+
+			<div class="ui-g-3 align-right">
+				Anniversary:
+			</div>
+			<div class="ui-g-3">
+				<b>{{contactDetail.contact.conAnniversary}}</b>
+			</div>
+		</div>
+	</div>
+
+</p-tabPanel>
+
+</p-tabView>

@@ -30,7 +30,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     private contactService: ContactsService) {
     this.contactDetail = {
       contact: {},
-		    comments: [],
+		  comments: [],
       contactActivities: [],
       marketings: [],
       jobs: [],
@@ -72,9 +72,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   contactReceived(contactDetail) {
     debugger;
-    this.contactDetail = contactDetail;
-    this.setContactFormValue(this.contactDetail.contact)
     this.busy = false;
+    this.contactDetail.contact = contactDetail.contact;
+    this.contactDetail.projects = contactDetail.projects;
+    this.contactDetail.jobs= contactDetail.jobs;
+
+    this.setContactFormValue(this.contactDetail.contact)
+
 
   }
 

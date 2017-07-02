@@ -1,4 +1,3 @@
-
 export interface User {
   userName?:String,
   firstName?:String,
@@ -10,4 +9,9 @@ export interface User {
 export interface DropDownOption {
   value: string;
   label: string;
+}
+
+export interface NameValue {
+  name:any,
+  value:any
 }

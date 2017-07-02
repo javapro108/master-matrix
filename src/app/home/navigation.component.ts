@@ -25,29 +25,29 @@ export class NavigationComponent implements OnInit {
     },
     {
       label:'Company',
-      icon:'',
+      icon:'fa fa-sitemap',
       items:[{
           label:'Find Company',
-          icon:'',
+          icon:'fa fa-search',
           routerLink: ['company/find']
         },
         {
           label:'Create Company',
-          icon:'',
+          icon:'fa fa-file',
           routerLink: ['company/create']
         }]
     },
     {
       label:'Contacts',
-      icon:'',
+      icon:'fa fa-users',
       items:[{
           label:'Find Contacts',
-          icon:'',
+          icon:'fa fa-search',
           routerLink: ['contacts/find']
         },
         {
           label:'Create Contacts',
-          icon:'',
+          icon:'fa fa-file',
           routerLink: ['contacts/create']
         }]
     }]

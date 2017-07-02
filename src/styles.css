@@ -59,7 +59,14 @@ html, body {
   flex: 0 1 auto;
 }
 
-create-company-view {
+.aligh-right {
+  text-align: right;
+}
+
+create-company-view,
+change-company-view,
+create-contact-view,
+change-contact-view {
   flex: 0 0 auto;
   height: 100%;
   display: flex;

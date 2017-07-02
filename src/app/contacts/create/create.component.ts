@@ -42,17 +42,6 @@ export class CreateComponent {
 
     this.contactsService.subscribe((data)=>this.rxUpdate(data));
 
-    this.disciplineOpts = [];
-    this.appService.disciplineOpts.forEach((option) => {
-      this.disciplineOpts.push({
-        label: option.label,
-        value: {
-          codDisciplineID: option.value,
-          name: option.label
-        }
-      });
-    });
-
   }
 
   ngOnInit(): void {
@@ -133,10 +122,16 @@ export class CreateComponent {
   }
 
 
-  onMultiselectChange(data) {
-    this.disciplines = this.contactsForm.value.codDisciplineID;
+  onMultiselectChange() {
+    this.disciplines = this.contactsForm.value.codDisciplineID.map((discipline)=>{
+        let disp = this.appService.arrayFind(this.appService.disciplines,[{name:'dispCode',value:discipline}]);
+        return {
+          codDisciplineID: discipline,
+          name: disp? disp.dispName: ''
+        }
+      }
+    );
   }
-
 
   onAffiliateSelect(selectedValue, row) {
     row.cafStatus = '3';
@@ -165,12 +160,7 @@ export class CreateComponent {
 
   addRepsrow() {
     this.reps = this.reps.slice();
-    this.reps.push({
-//      "corAffialiateID": "",
-//      "corContactID": "",
-//      "corRepID": "",
-//      "corStatus": ""
-    })
+    this.reps.push({})
   }
 
   removeRepsrow(row) {
@@ -181,7 +171,7 @@ export class CreateComponent {
 
   updateRepAffiliateOpts(){
     this.repAffiliateOpts = this.affiliates.map((data) => {
-      return this.appService.arrayFind(this.appService.affiliateOpts, 'value', data.cafAffialiateID);
+      return this.appService.arrayFind(this.appService.affiliateOpts, [{name:'value', value:data.cafAffialiateID}]);
     });
 
     this.repAffiliateOpts.unshift({label:'', value:''});
@@ -217,11 +207,7 @@ export class CreateComponent {
       conBirthday: '',
       conAnniversary: '',
       conGuestName: '',
-      codDisciplineID: [[]],
-
-      //cafAffialiateID:[[]],
-      cafstatus2: '',
-      cafStatus: '',
+      codDisciplineID: [[]]
     });
   }
 

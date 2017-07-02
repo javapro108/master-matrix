@@ -27,14 +27,15 @@
   </p-panel>
 
 
-  <div class="content-area">
-    <div>
-      <p-dataTable  [value]="contactsService.contactEntity.findResults"
+<div class="content-area">
+<div>
+  <p-dataTable  [value]="contactsService.contactEntity.findResults"
       [rows]="20"
       [paginator]="true"
       [pageLinks]="5"
       [rowsPerPageOptions]="[10,20,30,40]"
-      [scrollable] = "true">
+      [scrollable] = "true"
+      [responsive]="true">
 
       <p-header>
         <div style="text-align:left">
@@ -50,14 +51,14 @@
            </ng-template>
        </p-column>
 
-       <p-column *ngFor="let column of selectedColumns" font-size:small
+       <p-column *ngFor="let column of selectedColumns" font-size:small   
        [field]="column.field"
        [header]="column.header"
+       [style]="column.width"
        [filter]="true" filterPlaceholder="Search"
        [sortable]="true">
      </p-column>
    </p-dataTable>
  </div>
-
 </div>
 </div>

@@ -8,7 +8,7 @@ const noop = () => {
 
 const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => { debugger; return CompanySearchComponent;}),
+    useExisting: forwardRef(() => CompanySearchComponent),
     multi: true
 };
 

@@ -167,7 +167,7 @@
               <B>Add Discipline</B>
             </div>
             <div class="ui-g-9">
-              <p-multiSelect [options]="disciplineOpts" formControlName="codDisciplineID" (onChange)="onMultiselectChange(data)"></p-multiSelect>
+              <p-multiSelect [options]="appService.disciplineOpts" formControlName="codDisciplineID" (onChange)="onMultiselectChange(data)"></p-multiSelect>
             </div>
             <div class="ui-g-12">
               <p-dataTable [value]="disciplines" [rows]="5" [paginator]="true">

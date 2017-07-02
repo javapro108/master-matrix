@@ -9,11 +9,13 @@ export interface Affiliate {
   cafContactID?: string;
   cafStatus?: string;
   cafstatus2?: string;
+  mode?:string;
 }
 
 export interface Discipline {
   codContactID?: string;
   codDisciplineID?: string;
+  mode?:string;
 }
 
 
@@ -23,6 +25,7 @@ export interface Rep {
   corContactID?: string;
   corStatus?: string;
   corLastContact?: string;
+  mode?:string;
 }
 
 export interface TblContactComments {
@@ -53,8 +56,8 @@ export interface TblContacts {
   conFaxNum?: string;
   conEmail?: string;
   conPosition?: string;
-  conBirthday?: string;
-  conAnniversary?: string;
+  conBirthday?: Date;
+  conAnniversary?: Date;
   conGuestName?: string;
   conHomeAddress?: string;
   conHomeAddress2?: string;
@@ -64,12 +67,12 @@ export interface TblContacts {
   conHomePhone?: string;
   conHomeFax?: string;
   conHomeEmail?: string;
-  conRevisedDate?: string;
+  conRevisedDate?: Date;
   conRevisedBy?: string;
   conInactive?: boolean;
   conOldCompID?: string;
   conOldID?: string;
-  conDate?: string;
+  conDate?: Date;
   conCreatedBy?: string;
   conAssistEmail?: string;
 }

@@ -39,8 +39,12 @@ export class ContactsService {
     this.rxService.next(data);
   }
 
-  getContact(conID){
-    return this.appService.httpGet('contacts/get('+ conID + ')');
+  getContact(conID, lock){
+    if (lock == true){
+      return this.appService.httpGet('contacts/get('+ conID + ')?lock=' + lock);
+    } else {
+      return this.appService.httpGet('contacts/get('+ conID + ')');
+    }
   }
 
   newCheck(conFName, conLName){

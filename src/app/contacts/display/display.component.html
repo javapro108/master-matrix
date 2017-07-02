@@ -1,3 +1,68 @@
-<div class="company">
-   Display contacts Component
+<p-blockUI [blocked]="busy" [target]="">
+	<div style="position:absolute;top:40%;left:45%">
+		<font size="5" color="black">Loading...</font>
+	</div>
+</p-blockUI>
+
+<div id="page" class="ui-g-12 ui-fluid content-area">
+	<div class="ui-g-12 ui-widget-content header">
+		<div class="ui-g-10">
+			<button pButton type="button" class="ui-button-info" label="Display Contact"></button>
+		</div>
+		<div class="ui-g-2">
+			<button pButton type="button" icon="fa-check-square-o" label="Change" (click)="changeCompany()"></button>
+		</div>
+
+		<div class="ui-g-2">
+					Created by: <b>{{contactDetail.contact.conCreatedBy}} </b>
+		</div>
+		<div class="ui-g-3">
+			Revised Date: <B>{{contactDetail.contact.conRevisedDate | date:"longDate"}}</B>
+		</div>
+		<div class="ui-g-2">
+			Revised By:<B>{{contactDetail.contact.conRevisedBy}}</B>
+		</div>
+	</div>
+
+
+
+	<div class="ui-g-12">
+		<general-contacts-view [contactDetail]="contactDetail" ></general-contacts-view>
+	</div>
+
+	<div class="ui-g-12">
+	    <p-panel header="Projects" [toggleable]="true">
+      <p-dataTable [value]="contactDetail.projects">
+        <p-column field="proID" header="ID"></p-column>
+        <p-column field="proNumber" header="Project No."></p-column>
+        <p-column field="proName" header="Name"></p-column>
+        <p-column field="proAlias" header="Alias"></p-column>
+        <p-column field="proAffCode" header="Aff. code"></p-column>
+        <p-column field="proDistrictCode" header="District"></p-column>
+        <p-column field="proRepCode" header="Rep"></p-column>
+        <p-column field="proCity" header="City"></p-column>
+        <p-column field="proState" header="State"></p-column>
+        <p-column field="proZip" header="Zip"></p-column>
+        <p-column field="conCompanyID" header="Company"></p-column>
+        <p-column field="proDead" header="Dead"></p-column>
+      </p-dataTable>
+    </p-panel>
+	</div>
+
+<div class="ui-g-12">
+    <p-panel header="Jobs" [toggleable]="true">
+      <p-dataTable [value]="contactDetail.jobs">
+        <p-column field="proID" header="ID"></p-column>
+        <p-column field="proNumber" header="Job No."></p-column>
+        <p-column field="proName" header="Name"></p-column>
+        <p-column field="proAlias" header="Alias"></p-column>
+        <p-column field="proAffCode" header="Aff. Code"></p-column>
+        <p-column field="proDistrictCode" header="District"></p-column>
+        <p-column field="proRepCode" header="Rep."></p-column>
+        <p-column field="proCity" header="City"></p-column>
+        <p-column field="proState" header="State"></p-column>
+        <p-column field="proZip" header="Zip"></p-column>
+      </p-dataTable>
+    </p-panel>
+</div>
 </div>

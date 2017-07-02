@@ -1,3 +1,324 @@
-<div class="company">
-   Change Company Component
+<p-blockUI [blocked]="busy" [target]="">
+  <div style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
+
+<div class="ui-fluid content-area">
+
+  <div class="ui-g-12 ui-widget-content header">
+    <div class="ui-g-6">
+      <button pButton type="button" class="ui-button-info" [label]="'Change Contact:' + conID"></button>
+    </div>
+    <div class="ui-g-2">
+      <p-toggleButton onLabel="Active" offLabel="Inactive" [(ngModel)]="conActive"></p-toggleButton>
+    </div>
+    <div class="ui-g-2">
+      <button pButton type="button" icon="fa-check-square-o" label="Submit" (click)="onSubmit()" [disabled]="!contactsForm.valid"></button>
+    </div>
+    <div class="ui-g-2">
+      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
+    </div>
+  </div>
+
+
+  <div class="ui-g-12 ui-widget-content content-area">
+    <!--Below Div is for Contact General information -->
+    <form [formGroup]="contactsForm" (ngSubmit)="onSubmit()">
+      <div>
+        <div class="ui-g-6">
+          <div class="ui-g-12 ui-widget-content">
+            <div class="ui-g">
+              <span class="ui-g-1"></span>
+              <div class="ui-g-11"><b>General Information</b></div>
+
+              <div class="ui-g-3 align-right">Prefix: </div>
+              <div class="ui-g-9">
+                <p-dropdown [options]="appService.prefixOpts" formControlName="conCourtesy" placeholder="Required" maxlength="10"></p-dropdown>
+              </div>
+
+              <div class="ui-g-3 align-right">First name: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conFName" maxlength="30" placeholder="Required" (blur)="onBlurName()"></div>
+
+              <div class="ui-g-3 align-right">Middle Initial:</div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conMI" maxlength="2"></div>
+
+              <div class="ui-g-3 align-right">Last name: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conLName" maxlength="30" placeholder="Required" (blur)="onBlurName()"></div>
+
+              <div class="ui-g-3 align-right">Alias: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conAlias" maxlength="30"></div>
+
+              <div class="ui-g-3 align-right">Company: </div>
+              <div class="ui-g-9">
+                <company-with-search formControlName="conCompanyID" maxlength="9"></company-with-search>
+              </div>
+
+              <div class="ui-g-3 align-right">Title: </div>
+              <div class="ui-g-3">
+                <input pInputText type="text" formControlName="conTitle" maxlength="50">
+              </div>
+
+              <div class="ui-g-2 align-right">Position: </div>
+              <div class="ui-g-4">
+                <p-dropdown [options]="appService.positionOpts" formControlName="conPosition" [style]="{width:'95%'}" maxlength="10" placeholder="Required"></p-dropdown>
+              </div>
+
+
+              <div class="ui-g-3 align-right">Phone: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conDirectPhone" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Extension: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conExt" mask="99?99999999" unmask="true" maxlength="10"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Cell Phone: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conCellPhone" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Alternate/Direct Fax: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conFaxNum" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Email: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conEmail" maxlength="50"></div>
+            </div>
+          </div>
+          <!--Below ui-g-12 empty Div tag added to keep General Informatoin and Additional Information seperate-->
+          <div class="ui-g-12"></div>
+          <div class="ui-g-12 ui-widget-content">
+            <span class="ui-g-1"></span>
+            <div class="ui-g-11"><b>Assistant Information</b></div>
+
+            <div class="ui-g-3 align-right">Name</div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="conAssistantName" maxlength="50"></div>
+
+            <div class="ui-g-3 align-right">Email: </div>
+            <div class="ui-g-9"><input pInputText type="text" formControlName="conAssistEmail" maxlength="50"></div>
+
+            <div class="ui-g-3 align-right">Phone:</div>
+            <div class="ui-g-3">
+              <p-inputMask formControlName="conAssistPhone" mask="(999) 999-9999" unmask="true"></p-inputMask>
+            </div>
+
+            <div class="ui-g-3 align-right">Extension:</div>
+            <div class="ui-g-3">
+              <p-inputMask formControlName="conAssistExt" mask="99?99999999" unmask="true" maxlength="10"></p-inputMask>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!--Below Div is for Contact Personal information -->
+        <div class="ui-g-6">
+          <div class="ui-g-12 ui-widget-content">
+            <div class="ui-g">
+              <span class="ui-g-1"></span>
+              <div class="ui-g-11"><b>Personal Information</b></div>
+
+              <div class="ui-g-3 align-right">Address line 1</div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conHomeAddress" maxlength="100"></div>
+
+              <div class="ui-g-3 align-right">Address line 2</div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conHomeAddress2" maxlength="100"></div>
+
+              <div class="ui-g-3 align-right">City:</div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conHomeCity" maxlength="30"></div>
+
+              <div class="ui-g-3 align-right">State: </div>
+              <div class="ui-g-3">
+                <p-dropdown [options]="appService.states" formControlName="conHomeState" filter="filter" [style]="{width:'100%'}" maxlength="2"> </p-dropdown>
+              </div>
+
+              <div class="ui-g-3 align-right">Zip Code: </div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conHomeZip" mask="99999?-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Phone:</div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conHomePhone" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Fax:</div>
+              <div class="ui-g-3">
+                <p-inputMask formControlName="conHomeFax" mask="(999) 999-9999" unmask="true"></p-inputMask>
+              </div>
+
+              <div class="ui-g-3 align-right">Birthday: </div>
+              <div class="ui-g-3">
+                <p-calendar formControlName="conBirthday" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2050"></p-calendar>
+              </div>
+
+              <div class="ui-g-3 align-right">Anniversary: </div>
+              <div class="ui-g-3">
+                <p-calendar formControlName="conAnniversary" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2050"></p-calendar>
+              </div>
+
+              <div class="ui-g-3 align-right">Personal Email: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conHomeEmail" maxlength="30"></div>
+
+              <div class="ui-g-3 align-right">Guest Name: </div>
+              <div class="ui-g-9"><input pInputText type="text" formControlName="conGuestName" maxlength="30"></div>
+            </div>
+          </div>
+          <!--Below ui-g-12 empty Div tag added to keep Personal Informatoin and Discipline seperate-->
+          <div class="ui-g-12"></div>
+          <div class="ui-g ui-widget-content">
+
+            <div class="ui-g-3">
+              <B>Add Discipline</B>
+            </div>
+            <div class="ui-g-9">
+
+              <p-multiSelect [options]="appService.disciplineOpts" formControlName="codDisciplineID" (onChange)="onMultiselectChange()"></p-multiSelect>
+
+            </div>
+            <div class="ui-g-12">
+              <p-dataTable [value]="disciplines" [rows]="5" [paginator]="true">
+                <p-column field="codDisciplineID" header="Discipline ID"></p-column>
+                <p-column field="name" header="Discipline Name"></p-column>
+              </p-dataTable>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+    <!--Below Div is for Add Affiliate editable data table -->
+    <div>
+      <div class="ui-g-12">
+        <div class="ui-g ui-widget-content">
+          <span class="ui-g-1"></span>
+          <div class="ui-g-3">
+            <B>Add Affiliate</B>
+          </div>
+          <div class="ui-g-6">
+          </div>
+          <div class="ui-g-2">
+            <button pButton type="button" icon="fa-plus-square" iconPos="left" (click)="addAffiliaterow()"></button>
+          </div>
+
+          <div class="ui-g-12">
+            <p-dataTable [value]="affiliates" [editable]="true">
+              <p-column header="" [style]="{'width':'5%'}">
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <button pButton type="button" icon="fa-trash-o" iconPos="left" (click)="removeAffiliaterow(row)"></button>
+                </ng-template>
+              </p-column>
+
+              <p-column field="cafAffialiateID" header="Affiliate" [editable]="true" [style]="{'overflow':'visible', 'width': '40%'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="selectedValue" [options]="appService.affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+              </p-column>
+
+              <p-column field="cafStatus" header="Affiliate Status" [style]="{'overflow':'visible', 'width': '20%'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+              </p-column>
+
+              <p-column field="cafstatus2" header="Product Status" [editable]="true" [style]="{'overflow':'visible', 'width': '35%'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+        </div>
+      </div>
+
+      <!--Below Div is for Add Reps editable data table -->
+
+      <div class="ui-g-12">
+        <div class="ui-g ui-widget-content">
+          <span class="ui-g-1"></span>
+          <div class="ui-g-3">
+            <B>Add Reps</B>
+          </div>
+          <div class="ui-g-6">
+          </div>
+          <div class="ui-g-2">
+            <button pButton type="button" icon="fa-plus-square" iconPos="left" (click)="addRepsrow()"></button>
+          </div>
+          <div class="ui-g-12">
+            <p-dataTable [value]="reps" [editable]="true">
+              <p-column header="" [style]="{'width':'5%'}">
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <button pButton type="button" icon="fa-trash-o" iconPos="left" (click)="removeRepsrow(row)"></button>
+                </ng-template>
+              </p-column>
+
+              <p-column field="corAffialiateID" header="Affiliate ID" [editable]="true" [style]="{'overflow':'visible'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repAffiliateOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repAffiliateOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+              </p-column>
+              <p-column field="corRepID" header="Reps" [editable]="true" [style]="{'overflow':'visible'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+              </p-column>
+              <p-column field="corStatus" header="RepsStatus" [editable]="true" [style]="{'overflow':'visible'}">
+                <ng-template let-col let-row="rowData" pTemplate="editor">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+                <ng-template let-col let-row="rowData" pTemplate="body">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  </p-dropdown>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<p-dialog [(visible)]="showDuplicate" [width]="800">
+  <p-header>
+    Contacts With Similar Name
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 content-area">
+      <B>Please review below contacts with similar name to avoide duplicate contact.</B>
+    </div>
+    <div class="ui-g-12 content-area">
+      <p-dataTable [value]="duplicateContacts" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
+        <p-column field="coID" header="ID" [sortable]="true" [filter]="true" filterPlaceholder="Search" ></p-column>
+        <p-column field="conFName" header="First Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="conLName" header="Last Name" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+        <p-column field="comName" header="Company" [sortable]="true" [filter]="true" filterPlaceholder="Search"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</p-dialog>

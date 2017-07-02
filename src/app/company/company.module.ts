@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {InputTextModule, InputTextareaModule, DataTableModule, ButtonModule,
   DialogModule, MultiSelectModule, DropdownModule, PanelModule, CheckboxModule,
-  BlockUIModule, InputMaskModule
+  BlockUIModule, InputMaskModule, ToggleButtonModule
 } from 'primeng/primeng';
 
 import { CompanyRouting } from './company.routing';
@@ -20,7 +20,7 @@ import { DisplayComponent } from './display/display.component';
 
     InputTextModule, InputTextareaModule, DataTableModule, ButtonModule, DialogModule,
     MultiSelectModule, DropdownModule, PanelModule, CheckboxModule, BlockUIModule,
-    InputMaskModule,
+    InputMaskModule, ToggleButtonModule,
 
     CompanyRouting
   ],

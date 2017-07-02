@@ -27,7 +27,6 @@ export class SearchComponent implements OnInit {
       comName:     [this.companyService.companyEntity.findParams.comName,     Validators.required],
       comInactive: [this.companyService.companyEntity.findParams.comInactive]
     });
-
   }
 
   onFind(){

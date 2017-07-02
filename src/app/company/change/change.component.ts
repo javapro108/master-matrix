@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
@@ -17,14 +18,18 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
 })
 export class ChangeComponent extends BaseComponent implements OnInit{
 
-  busy:Boolean = false;
+  busy:boolean = false;
+  error:boolean = false;
   companyForm: FormGroup;
   subscription: Subscription;
   subRoute: Subscription;
   companyEntity: CompanyEntity;
+  comActive: boolean;
+
 
   constructor(
     private router: Router,
+    private location:Location,
     private activeRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
@@ -34,6 +39,7 @@ export class ChangeComponent extends BaseComponent implements OnInit{
     debugger;
   }
 
+
   ngOnInit(): void{
    this.buildForm();
    this.subRoute = this.activeRoute.params.subscribe( (params) => {
@@ -41,12 +47,15 @@ export class ChangeComponent extends BaseComponent implements OnInit{
          .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
    });
    this.subscription = this.companyService.subscribe((data)=>this.rxUpdate(data));
+   this.busy = true;
   }
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
     this.subRoute.unsubscribe();
   }
+
 
   rxUpdate(data){
     if (data.type == 'CHANGE-FROM-CREATE'){
@@ -56,6 +65,81 @@ export class ChangeComponent extends BaseComponent implements OnInit{
           .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
     }
   }
+
+
+  getSuccess(companyEntity){
+    console.log('get company');
+    console.log(companyEntity.company);
+    this.setCompanyFormValue(companyEntity.company);
+    this.comActive = !companyEntity.company.comInactive;
+    this.busy = false;
+  }
+
+
+  getError(error){
+    this.error = true;
+    this.busy = false;
+  }
+
+
+  copyMainToMail(checked: boolean) {
+    if (checked) {
+      let formValue = this.companyForm.value;
+
+      formValue.comMailAddress1 = formValue.comAddress;
+      formValue.comMailAddress2 = formValue.comAddress2
+      formValue.comMailCity = formValue.comCity;
+      formValue.comMailState = formValue.comState;
+      formValue.comMailZip = formValue.comZip;
+      formValue.comMailCountry = formValue.comCountry;
+
+      this.companyForm.setValue(formValue);
+    }
+
+  }
+
+
+  copyMainToDelv(checked: boolean) {
+    if (checked) {
+      let formValue = this.companyForm.value;
+
+      formValue.comDeliveryAddress1 = formValue.comAddress;
+      formValue.comDeliveryAddress2 = formValue.comAddress2
+      formValue.comDeliveryCity = formValue.comCity;
+      formValue.comDeliveryState = formValue.comState;
+      formValue.comDeliveryZip = formValue.comZip;
+      formValue.comDeliveryCountry = formValue.comCountry;
+
+      this.companyForm.setValue(formValue);
+    }
+  }
+
+
+  onSubmit() {
+    this.companyService.companyEntity.company = this.companyForm.value;
+    if (this.comActive == true || this.comActive == false){
+      this.companyService.companyEntity.company.comInactive = !this.comActive;
+    }
+    console.log(this.companyService.companyEntity);
+    this.companyService.changeCompany(this.companyService.companyEntity)
+        .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
+    this.companyForm.markAsPristine();
+  }
+
+
+  changeSuccess(companyEntity){
+    this.companyService.companyEntity = companyEntity;
+    this.setCompanyFormValue(this.companyService.companyEntity.company);
+    this.busy = false;
+    this.location.back();
+  }
+
+
+  changeError(error){
+    this.busy = false;
+    this.error = true;
+  }
+
 
   buildForm(): void{
     this.companyForm = this.formBuilder.group({
@@ -81,44 +165,17 @@ export class ChangeComponent extends BaseComponent implements OnInit{
       comMailState :['', Validators.required],
       comMailZip :['', Validators.required],
       comMailCountry :['', Validators.required],
-      comDeliveryAddress1 :['', Validators.required],
+      comDeliveryAddress1 :'',
       comDeliveryAddress2 :'',
-      comDeliveryCity :['', Validators.required],
-      comDeliveryState :['', Validators.required],
-      comDeliveryZip :['', Validators.required],
-      comDeliveryCountry :['', Validators.required],
+      comDeliveryCity :'',
+      comDeliveryState :'',
+      comDeliveryZip :'',
+      comDeliveryCountry :'',
       comDeliveryDirections :'',
       comDirectionComments :'',
       cmcComment :'',
       cmcPriority: ''
     });
-  }
-
-  onSubmit() {
-    this.companyService.companyEntity.company = this.companyForm.value;
-    console.log(this.companyService.companyEntity);
-    this.companyService.changeCompany(this.companyService.companyEntity)
-        .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
-    this.companyForm.markAsPristine();
-  }
-
-  changeSuccess(companyEntity){
-    this.companyService.companyEntity = companyEntity;
-    this.setCompanyFormValue(this.companyService.companyEntity.company);
-  }
-
-  changeError(error){
-
-  }
-
-  getSuccess(companyEntity){
-    console.log('get company');
-    console.log(companyEntity.company);
-    this.setCompanyFormValue(companyEntity.company);
-  }
-
-  getError(error){
-
   }
 
   setCompanyFormValue(company:TblCompany) {
