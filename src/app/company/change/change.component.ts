@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
   selector: 'change-company-view',
   templateUrl: './change.component.html'
 })
-export class ChangeComponent extends BaseComponent implements OnInit{
+export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy {
 
   busy:boolean = false;
   error:boolean = false;
@@ -37,6 +37,7 @@ export class ChangeComponent extends BaseComponent implements OnInit{
   ){
     super();
     debugger;
+    this.companyEntity = {};
   }
 
 
@@ -73,6 +74,7 @@ export class ChangeComponent extends BaseComponent implements OnInit{
     this.setCompanyFormValue(companyEntity.company);
     this.comActive = !companyEntity.company.comInactive;
     this.busy = false;
+    this.companyEntity = companyEntity;
   }
 
 
@@ -116,21 +118,23 @@ export class ChangeComponent extends BaseComponent implements OnInit{
 
 
   onSubmit() {
+    let companyEntity:CompanyEntity = {};
 
-
-    this.companyEntity.company = this.companyForm.value;
+    companyEntity.company = this.companyForm.value;
     if (this.comActive == true || this.comActive == false){
-      this.companyEntity.company.comInactive = !this.comActive;
+      companyEntity.company.comInactive = !this.comActive;
     }
 
     let comment = {
       cmcComment: this.companyForm.value.cmcComment,
       cmcPriority: this.companyForm.value.cmcPriority
     };
-    this.companyEntity.comments = [comment];
+    companyEntity.comments = [comment];
+    companyEntity.company.comDate = this.companyEntity.company.comDate;
+    companyEntity.company.comCreatedBy = this.companyEntity.company.comCreatedBy;
 
     console.log(this.companyEntity);
-    this.companyService.changeCompany(this.companyEntity)
+    this.companyService.changeCompany(companyEntity)
         .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
     this.companyForm.markAsPristine();
 

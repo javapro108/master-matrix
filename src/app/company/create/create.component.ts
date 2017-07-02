@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { BaseComponent } from  '../../common/base.component';
 
 import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
@@ -10,7 +12,7 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
   selector: 'create-company-view',
   templateUrl: './create.component.html'
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent extends BaseComponent implements OnInit, OnDestroy {
 
   busy: Boolean = false;
   companyForm: FormGroup;
@@ -24,6 +26,7 @@ export class CreateComponent implements OnInit {
     private appService: AppService,
     private companyService: CompanyService
   ) {
+    super();
     debugger;
   }
 
@@ -31,13 +34,19 @@ export class CreateComponent implements OnInit {
     this.buildForm();
   }
 
+  ngOnDestroy(){
+
+  }
+
   addCompany() {
     this.buildForm();
   }
 
   onBlurName() {
-    this.companyService.newCheck(this.companyForm.value.comName)
-      .subscribe((data) => this.newCheckResults(data))
+    if (this.companyForm.value.comName){
+      this.companyService.newCheck(this.companyForm.value.comName)
+          .subscribe((data) => this.newCheckResults(data))
+    }
   }
 
   newCheckResults(duplicateCompanies) {

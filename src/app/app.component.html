@@ -2,3 +2,20 @@
 <div class="root-component">
   <router-outlet></router-outlet>
 </div>
+
+<p-dialog [(visible)]="showMessages" [width]="800">
+  <p-header>
+    System Message
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 content-area">
+      <B>{{appService.latestMessage}}</B>
+    </div>
+    <div class="ui-g-12 content-area">
+      <p-dataTable [value]="appService.messages" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
+        <p-column field="type" header="Message Type"></p-column>
+        <p-column field="message" header="Message"></p-column>
+      </p-dataTable>
+    </div>
+  </div>
+</p-dialog>

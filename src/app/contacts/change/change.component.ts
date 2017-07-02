@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { TblContacts, ContactEntity } from '../../services/contacts.types';
   selector: 'change-contact-view',
   templateUrl: './change.component.html'
 })
-export class ChangeComponent extends BaseComponent implements OnInit {
+export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy {
 
   busy: boolean = false;
   error: boolean = false;
@@ -45,8 +45,6 @@ export class ChangeComponent extends BaseComponent implements OnInit {
     private companyService: CompanyService
   ) {
     super();
-    this.contactsService.subscribe((data) => this.rxUpdate(data));
-
   }
 
   ngOnInit(): void {
@@ -264,6 +262,9 @@ export class ChangeComponent extends BaseComponent implements OnInit {
       affiliates: affiliatesSend,
       reps: repsSend
     };
+
+    contactEntity.contact.conDate = this.contactEntity.contact.conDate;
+    contactEntity.contact.conCreatedBy = this.contactEntity.contact.conCreatedBy;
 
     if (this.conActive == true || this.conActive == false ){
       contactEntity.contact.conInactive = !this.conActive;

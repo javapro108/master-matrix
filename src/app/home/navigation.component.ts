@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MenuItem } from 'primeng/primeng';
@@ -9,7 +9,7 @@ import { AppService } from '../services/app.service';
   selector: 'navigation-view',
   templateUrl: './navigation.component.html'
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent implements OnInit, OnDestroy {
   private navItems: MenuItem[];
 
   constructor(
@@ -51,6 +51,10 @@ export class NavigationComponent implements OnInit {
           routerLink: ['contacts/create']
         }]
     }]
+  }
+
+  ngOnDestroy(){
+    
   }
 
 }

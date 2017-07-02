@@ -144,12 +144,12 @@
 
               <div class="ui-g-3 align-right">Birthday: </div>
               <div class="ui-g-3">
-                <p-calendar formControlName="conBirthday" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readOnlyInput="true"></p-calendar>
+                <p-calendar formControlName="conBirthday" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readonlyInput="true"></p-calendar>
               </div>
 
               <div class="ui-g-3 align-right">Anniversary: </div>
               <div class="ui-g-3">
-                <p-calendar formControlName="conAnniversary" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readOnlyInput="true"></p-calendar>
+                <p-calendar formControlName="conAnniversary" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readonlyInput="true"></p-calendar>
               </div>
 
               <div class="ui-g-3 align-right">Personal Email: </div>
@@ -299,7 +299,7 @@
   </p-header>
   <div class="ui-g ui-fluid">
     <div class="ui-g-12 content-area">
-      <B>Please review below contacts with similar name to avoide duplicate contact.</B>
+      <B>Please review below contacts with similar name to avoid duplicate contact.</B>
     </div>
     <div class="ui-g-12 content-area">
       <p-dataTable [value]="duplicateContacts" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">

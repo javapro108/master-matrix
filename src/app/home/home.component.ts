@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../services/app.service';
 
@@ -18,12 +18,16 @@ import { AppService } from '../services/app.service';
     ])
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private appService: AppService){}
 
   ngOnInit(){
     this.appService.initApp();
+  }
+
+  ngOnDestroy(){
+
   }
 }

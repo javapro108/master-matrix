@@ -7,6 +7,8 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRouting }  from './app.routing';
 
+import { DataTableModule,ButtonModule,DialogModule, PanelModule } from 'primeng/primeng';
+
 import { AppService } from './services/app.service';
 import { CompanyService } from './services/company.service';
 import { ContactsService } from './services/contacts.service';
@@ -18,11 +20,10 @@ import { DeactivateRouteGuard } from './services/route.service';
   ],
 
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpModule,
-    FormsModule,
-    ReactiveFormsModule,
+    BrowserModule, BrowserAnimationsModule, HttpModule, FormsModule,ReactiveFormsModule,
+
+    DataTableModule,ButtonModule,DialogModule, PanelModule,
+
     AppRouting,
   ],
 

@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
 
 import { SelectItem } from 'primeng/primeng';
+
+import { BaseComponent } from  '../../common/base.component';
 
 import { AppService } from  '../../services/app.service';
 import { ContactsService } from '../../services/contacts.service';
@@ -14,7 +16,7 @@ import { CompanySearchComponent } from '../../common/companysearch.component';
   selector: 'create-contact-view',
   templateUrl: './create.component.html'
 })
-export class CreateComponent {
+export class CreateComponent extends BaseComponent implements OnInit, OnDestroy {
 
   busy: boolean = false;
   contactsForm: FormGroup;
@@ -38,8 +40,7 @@ export class CreateComponent {
     private contactsService: ContactsService,
     private companyService:CompanyService
   ) {
-    debugger;
-
+    super();
     this.contactsService.subscribe((data)=>this.rxUpdate(data));
 
   }

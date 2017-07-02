@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ContactsService } from '../../services/contacts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -9,7 +9,7 @@ import {SelectItem} from 'primeng/primeng';
   selector: 'search-company-view',
   templateUrl: './search.component.html'
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   busy: Boolean = false;
   cols: any[];
@@ -61,6 +61,10 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    
+  }
+
   onFind() {
 
     this.contactsService.contactEntity.findParams = this.searchForm.value;
@@ -78,7 +82,7 @@ export class SearchComponent implements OnInit {
       }
       this.contactsService.findContactsAdv(this.contactsService.contactEntity)
         .subscribe(this.findSuccess.bind(this), this.findError.bind(this));
-      
+
     }
     this.busy = true;
   }

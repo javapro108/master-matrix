@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { AppService } from '../services/app.service';
   templateUrl: './login.component.html',
   styleUrls: ['/login.styles.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   username = new FormControl('');
   password = new FormControl('');
@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+  }
+
+  ngOnDestroy() {
+
   }
 
   buildForm() {

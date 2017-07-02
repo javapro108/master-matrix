@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { CompanyService } from '../../services/company.service';
   selector: 'search-company-view',
   templateUrl: './search.component.html'
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   busy:Boolean = false;
   searchForm: FormGroup;
@@ -27,6 +27,10 @@ export class SearchComponent implements OnInit {
       comName:     [this.companyService.companyEntity.findParams.comName,     Validators.required],
       comInactive: [this.companyService.companyEntity.findParams.comInactive]
     });
+  }
+
+  ngOnDestroy(){
+    
   }
 
   onFind(){
