@@ -46,7 +46,6 @@ export class DisplayComponent implements OnInit, OnDestroy{
     this.busy = true;
     this.buildForm();
     this.subRoute = this.activeRoute.params.subscribe( (params) => {
-      debugger;
       let getParams = {
         comID: params.id,
         getCompanyDetail: true,

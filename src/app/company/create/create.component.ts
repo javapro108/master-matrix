@@ -88,7 +88,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onSubmit() {
-    debugger;
+    this.busy = true;
     let company: TblCompany = {};
     let comment: TblCompanyComment = {};
     let companyEntity: CompanyEntity = {};
@@ -109,11 +109,15 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
 
   createSuccess(companyEntity) {
     this.companyService.companyEntity.company = companyEntity.company;
+    this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " created successfully", "Success");
     this.router.navigate(['../../contacts/create'], { relativeTo: this.activeRoute });
+    this.busy = false;
   }
 
   createError(error) {
     console.log(error);
+    this.appService.showMessage("Error while creating company, please try again.");
+    this.busy = false;
   }
 
 

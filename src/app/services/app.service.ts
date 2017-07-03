@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {SelectItem} from 'primeng/primeng';
 
-import { User, NameValue } from './app.types';
+import { User, AppMessage, NameValue } from './app.types';
 
 @Injectable()
 export class AppService {
@@ -13,7 +13,10 @@ export class AppService {
   serverUrl = 'http://localhost:8080/restjpa/api/';
 
   rxService: BehaviorSubject<any>;
-  user:User;
+  user:User = {};
+  latestMessage: AppMessage = {};
+  appMessages: AppMessage[] = [];
+
   displaySideNav: string = 'show';
 
   reps = [];
@@ -52,11 +55,10 @@ export class AppService {
     this.repStatusOpts.push({ label: 'Excellent', value: 'X' });
     this.repStatusOpts.push({ label: 'Good', value: 'Y' });
     this.repStatusOpts.push({ label: 'Improving', value: 'Z' });
-
   }
 
-  subscribe(observer){
-    return this.rxService.subscribe(observer);
+  subscribe(success:any, error?:any, complete?:any){
+    return this.rxService.subscribe(success, error, complete);
   }
 
   pushData(data) {
@@ -257,6 +259,20 @@ setAffStatus(affStats){
 
 
 /* UTILITY METHODS */
+
+  showMessage(message:string, type?:string){
+    let data = {
+      type: "NEW-MESSAGE",
+      data: {
+        type: type? type:"Error",
+        message: message
+      }
+    }
+    this.appMessages.unshift(data.data);
+    this.appMessages = this.appMessages.slice();
+    this.latestMessage = data.data;
+    this.pushData(data);
+  }
 
   arrayFind(array=[], nameValue:NameValue[]){
     return array.find(function(element){

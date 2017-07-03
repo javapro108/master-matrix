@@ -20,4 +20,13 @@ export class HeaderComponent {
     debugger;
     this.appService.toggleSideNav();
   }
+
+  showMessages(){
+    this.appService.pushData({type:"SHOW-MESSAGE"});
+  }
+
+  logOff(){
+    window.localStorage.removeItem("Auth-token");
+    this.router.navigate(['login']);
+  }
 }

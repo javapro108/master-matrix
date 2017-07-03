@@ -142,16 +142,18 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
 
   changeSuccess(companyEntity){
-    this.companyService.companyEntity = companyEntity;
+    this.companyService.companyEntity.company = companyEntity.company;
     //this.setCompanyFormValue(this.companyService.companyEntity.company);
     this.busy = false;
     this.location.back();
+    this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " changed successfully.", "Success");
   }
 
 
   changeError(error){
     this.busy = false;
     this.error = true;
+    this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " change error.");
   }
 
 

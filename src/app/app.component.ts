@@ -13,7 +13,8 @@ import { Subscription } from 'rxjs/Subscription'
 export class AppComponent implements OnInit, OnDestroy{
 
   title = 'app';
-  showMessages: boolean;
+  showMessages: boolean = false;
+  timeOutHandle: any;
   appServiceSub : Subscription;
 
   constructor(
@@ -29,9 +30,17 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   appServiceUpdate(data){
-    if (data && data.type == "MESSAGE"){
-      
+    if (data && data.type == "NEW-MESSAGE"){
+      this.showMessages = true;
+      if (this.timeOutHandle){
+        clearTimeout(this.timeOutHandle);
+      }
+      this.timeOutHandle = setTimeout(() => this.showMessages = false, 5000 );
     }
+    if (data && data.type == "SHOW-MESSAGE"){
+      this.showMessages = true;
+    }
+
   }
 
 }

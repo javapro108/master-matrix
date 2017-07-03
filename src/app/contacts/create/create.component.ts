@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription'
@@ -34,6 +35,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
 
   constructor(
     private router: Router,
+    private location: Location,
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
@@ -46,7 +48,6 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    debugger;
     this.rxSub = this.contactsService.subscribe((data)=>this.rxUpdate(data));
     this.buildForm();
   }
@@ -73,7 +74,6 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onSubmit() {
-    debugger;
     this.contactsForm.markAsPristine();
     let disciplinesSend: any[];
     let affiliatesSend: any[];
@@ -117,10 +117,13 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   createSuccess(contactEntity){
     console.log('create contact success');
     console.log(contactEntity);
+    this.appService.showMessage("Contact " + contactEntity.contact.conID + " changed successfully.", "Success");
+    this.location.back();
   }
 
   createError(error){
     console.log(error);
+    this.appService.showMessage("Contact create error.");
   }
 
 

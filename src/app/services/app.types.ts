@@ -6,6 +6,14 @@ export interface User {
   email?:String
 }
 
+export interface AppMessage {
+  type?: string,
+  message?: string,
+  objType?: string,
+  objID?:string,
+  time?:Date
+}
+
 export interface DropDownOption {
   value: string;
   label: string;

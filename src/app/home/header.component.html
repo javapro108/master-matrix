@@ -7,7 +7,8 @@
 
       <div class="ui-toolbar-group-right">
           <button pButton type="button" icon="fa-user-circle-o" [label]="appService.user.firstName" ></button>
-          <button pButton type="button" icon="fa-power-off" ></button>
+          <button pButton type="button" icon="fa-exclamation" (click)="showMessages()"></button>
+          <button pButton type="button" icon="fa-power-off" (click)="logOff()"></button>
       </div>
   </p-toolbar>
 </div>

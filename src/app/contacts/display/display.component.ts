@@ -39,9 +39,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
 	 }
 
   ngOnInit() {
-    debugger;
     this.busy = true;
-    this.Subscription = this.contactService.subscribe((data) => this.rxupdate(data));
+    this.Subscription = this.contactService.subscribe((data) => this.rxUpdate(data));
     this.subRoute = this.activeRoute.params.subscribe((params) => {
       this.conId = params.id;
       let getParams = {
@@ -56,7 +55,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
         getDiscipline: true
       }
       this.contactService.getContactDetails(getParams)
-        .subscribe((data) => this.contactReceived(data));
+        .subscribe((data) => this.contactReceived(data), (error) => this.getContactError(error));
     });
   }
 
@@ -67,10 +66,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
 
-  rxupdate(data) { debugger; }
+  rxUpdate(data) {
+  }
 
   contactReceived(contactDetail) {
-    debugger;
     this.busy = false;
     this.contactDetail.contact = contactDetail.contact;
     this.contactDetail.projects = contactDetail.projects;
@@ -78,12 +77,16 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.contactDetail.comments = contactDetail.comments;
   }
 
+  getContactError(error){
+    console.log(error);
+    this.appService.showMessage("Contact read error, please try again");
+  }
+
   changeContact(contact) {
     this.router.navigate(['../../change', this.conId], { relativeTo: this.activeRoute });
   }
 
   saveComments(cmdPriority,cmdComment){
-    debugger;
     this.displayDialog = false;
     let comment = {
       cocContactID: this.conId,

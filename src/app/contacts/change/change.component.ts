@@ -48,7 +48,6 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    debugger;
     this.busy = true;
     this.rxSub = this.contactsService.subscribe((data) => this.rxUpdate(data));
     this.buildForm();
@@ -67,7 +66,6 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   getSuccess(contactEntity) {
-    debugger;
     this.initValues(contactEntity);
     this.busy = false;
   }
@@ -75,6 +73,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   getError(error) {
     this.busy = true;
     this.error = true;
+    this.appService.showMessage("Error reading contact data.");
   }
 
   initValues(contactEntity){
@@ -167,8 +166,6 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
 
   onSubmit() {
-    debugger;
-
     this.busy = true;
 
     this.contactsForm.markAsPristine();
@@ -278,17 +275,17 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   changeSuccess(contactEntity) {
-    console.log('Change contact success');
     console.log(contactEntity);
-    //this.initValues(contactEntity);
     this.conID = contactEntity.contact.conID;
     this.busy = false;
+    this.appService.showMessage("Contact " + this.conID + " changed successfully.", "Success");
     this.location.back();
   }
 
   changeError(error) {
     this.error = true;
     this.busy = false;
+    this.appService.showMessage("Contact " + this.conID + " change error.");
     console.log(error);
   }
 

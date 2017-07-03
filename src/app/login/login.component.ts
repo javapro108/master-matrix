@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       {
         username: ['', Validators.required],
         password: ['', Validators.required]
-
       })
 
   };
@@ -45,27 +44,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    //this.router.navigate(['../home']);
-    debugger;
     this.loginForm.value.username;
     this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe(this.loginSuccess.bind(this), this.loginError.bind(this));
-
+      .subscribe((data)=> this.loginSuccess(data), (error)=>this.loginError(error));
   }
 
   loginSuccess(data) {
-    debugger;
     if (data.token != undefined) {
       window.localStorage.setItem("Auth-token", data.token);
       this.appService.user = data;
       this.router.navigate(['../home']);
     } else {
-
+      this.appService.showMessage("Invalid valid username or password.");
     }
   }
 
-  loginError() {
-    //show error
+  loginError(error) {
+    console.log(error);
+    this.appService.showMessage("Login error, please try again");
   }
-
 }
