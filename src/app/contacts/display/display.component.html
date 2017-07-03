@@ -30,6 +30,38 @@
 		<general-contacts-view [contactDetail]="contactDetail" ></general-contacts-view>
 	</div>
 
+    <div class="ui-g-12">
+        <p-panel  header="Discipline" [toggleable]="true">
+               <p-dataTable [value]="contactDetail.disciplines">
+               <p-column field="codDisciplineID" header="Discipline ID"></p-column>
+               <p-column field="name" header="Discipline Name"></p-column>
+            </p-dataTable>
+        </p-panel>
+    </div>
+
+     <div class="ui-g-12">
+        <p-panel header="Affiliates" [toggleable]="true">
+            <p-dataTable [value]="contactDetail.affiliates">
+               <p-column field="cafAffialiateID" header="Affiliate"></p-column>
+               <p-column field="cafStatus" header="Affiliate Status"></p-column>
+               <p-column field="cafstatus2" header="Product Status"></p-column>
+            </p-dataTable>
+        </p-panel>
+    </div>
+
+     <div class="ui-g-12">
+        <p-panel header="Reps" [toggleable]="true">
+            <p-dataTable [value]="contactDetail.reps">
+               <p-column field="corAffialiateID" header="Affiliate ID"></p-column>
+               <p-column field="corRepID" header="Reps"></p-column>
+               <p-column field="corStatus" header="RepsStatus"></p-column>
+            </p-dataTable>
+        </p-panel>
+    </div>
+
+
+
+
 	<div class="ui-g-12">
 	    <p-panel header="Projects" [toggleable]="true">
       <p-dataTable [value]="contactDetail.projects">

@@ -34,13 +34,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
       contactActivities: [],
       marketings: [],
       jobs: [],
-      projects: []
+      projects: [],
+      disciplines:[],
+      affiliates:[],
+      reps:[]
     };
 	 }
 
   ngOnInit() {
+    debugger;
     this.busy = true;
-    this.Subscription = this.contactService.subscribe((data) => this.rxUpdate(data));
+    this.Subscription = this.contactService.subscribe((data) => this.rxupdate(data));
     this.subRoute = this.activeRoute.params.subscribe((params) => {
       this.conId = params.id;
       let getParams = {
@@ -55,7 +59,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
         getDiscipline: true
       }
       this.contactService.getContactDetails(getParams)
-        .subscribe((data) => this.contactReceived(data), (error) => this.getContactError(error));
+        .subscribe((data) => this.contactReceived(data));
     });
   }
 
@@ -66,20 +70,19 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
 
-  rxUpdate(data) {
-  }
+  rxupdate(data) { debugger; }
 
   contactReceived(contactDetail) {
+    debugger;
     this.busy = false;
     this.contactDetail.contact = contactDetail.contact;
     this.contactDetail.projects = contactDetail.projects;
     this.contactDetail.jobs = contactDetail.jobs;
     this.contactDetail.comments = contactDetail.comments;
-  }
+    this.contactDetail.disciplines= contactDetail.disciplines;
+    this.contactDetail.affiliates= contactDetail.affiliates;
+    this.contactDetail.reps= contactDetail.reps;
 
-  getContactError(error){
-    console.log(error);
-    this.appService.showMessage("Contact read error, please try again");
   }
 
   changeContact(contact) {
@@ -87,6 +90,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
   saveComments(cmdPriority,cmdComment){
+    debugger;
     this.displayDialog = false;
     let comment = {
       cocContactID: this.conId,
@@ -106,6 +110,5 @@ export class DisplayComponent implements OnInit, OnDestroy {
   errorAddComment(error){
 
   }
-
 
 }
