@@ -91,7 +91,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     //Deep copy arrays so that can be compared while submit
     this.affiliates = contactEntity.affiliates.map((data) => Object.assign({},data));
     this.reps = contactEntity.reps.map((data) => Object.assign({},data));
-    this.updateRepAffiliateOpts();
+    this.updateRepAffiliate();
     if (!this.contactEntity.disciplines) {
       this.contactEntity.disciplines = [];
     }
@@ -122,7 +122,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   onAffiliateSelect(selectedValue, row) {
     row.cafStatus = '3';
     row.cafAffialiateID = selectedValue;
-    this.updateRepAffiliateOpts();
+    this.updateRepAffiliate();
   }
 
   addAffiliaterow() {
@@ -134,14 +134,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       "affName": " ",
       "cafContactID": " "
     });
-    this.updateRepAffiliateOpts();
   }
 
   removeAffiliaterow(row) {
     let index = this.affiliates.indexOf(row);
     this.affiliates.splice(index, 1);
     this.affiliates = this.affiliates.slice();
-    this.updateRepAffiliateOpts();
+    this.updateRepAffiliate();
   }
 
   addRepsrow() {
@@ -155,7 +154,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.reps = this.reps.slice();
   }
 
-  updateRepAffiliateOpts() {
+  updateRepAffiliate() {
     this.repAffiliateOpts = this.affiliates.map((affiliate) => {
       return this.appService.arrayFind(this.appService.affiliateOpts, [{ name: 'value', value: affiliate.cafAffialiateID }]);
     }).filter((affiliateOpt) => {
@@ -165,8 +164,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
         return false;
       }
     });
-
     this.repAffiliateOpts.unshift({ label: '', value: '' });
+
   }
 
 

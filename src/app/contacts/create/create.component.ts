@@ -159,7 +159,6 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
       "cafStatus": " ",
       "cafstatus2": " ",
       "cafAffialiateID": " ",
-      "affName": " ",
       "cafContactID": " "
     });
     this.updateRepAffiliateOpts();

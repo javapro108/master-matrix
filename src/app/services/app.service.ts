@@ -28,14 +28,16 @@ export class AppService {
   states: SelectItem[] = [];
   countries: SelectItem[] = [];
   repOpts: SelectItem[] = [];
+  repOptsAll: SelectItem[] = [];
   prefixOpts: SelectItem[] = [];
   disciplineOpts: SelectItem[] = [];
+  disciplineOptsAll: SelectItem[] = [];
   positionOpts: SelectItem[] = [];
   affiliateOpts: SelectItem[] = [];
+  affiliateOptsAll: SelectItem[] = [];
   affStatusOpts: SelectItem[] = [];
   productStatusOpts: SelectItem[];
   repStatusOpts: SelectItem[];
-
 
 
   constructor(
@@ -67,7 +69,7 @@ export class AppService {
     this.rxService.next(data);
   }
 
-  getDocument(){
+  getDocument() {
     return this.document;
   }
 
@@ -97,31 +99,49 @@ export class AppService {
 
 
   initApp() {
-    debugger;
+
+    this.reps = [];
+    this.affiliates = [];
+    this.districts = [];
+    this.states = [];
+    this.disciplines = [];
+    this.countries = [];
+    this.repOpts = [];
+    this.repOptsAll = [];
+    this.prefixOpts = [];
+    this.disciplineOpts = [];
+    this.disciplineOptsAll = [];
+    this.positionOpts = [];
+    this.affiliateOpts = [];
+    this.affiliateOptsAll = [];
+    this.affStatusOpts = [];
+
     try {
-      this.user = JSON.parse(atob(window.localStorage.getItem("current-user")));
-      this.httpGet('app/states')
-        .subscribe((states) => this.setStates(states), (error) => this.serverError(error));
-      this.httpGet('app/countries')
-        .subscribe((countries) => this.setCountries(countries), (error) => console.log(error));
-      this.httpGet('employee/getdistricts')
-        .subscribe((districts) => this.setDistricts(districts), (error) => console.log(error));
-      this.httpGet('app/prefixes')
-        .subscribe((prefixes) => this.setPrefixes(prefixes), (error) => console.log(error));
-      this.httpGet('app/affiliatedropdown')
-        .subscribe((affiliates) => this.setAffiliateOpts(affiliates), (error) => console.log(error));
-      this.httpGet('app/positiondropdown')
-        .subscribe((positions) => this.setPositions(positions), (error) => console.log(error));
-      this.httpGet('app/disciplinedropdown')
-        .subscribe((disciplines) => this.setDisciplines(disciplines), (error) => console.log(error));
-      this.httpGet('app/repdropdown')
-        .subscribe((reps) => this.setRepOpts(reps), (error) => console.log(error));
-      this.httpGet('app/affstatus')
-        .subscribe((affStats) => this.setAffStatus(affStats), (error) => console.log(error));
-      this.httpGet('app/reps')
-        .subscribe((reps) => { this.reps = reps; }, (error) => console.log(error));
-      this.httpGet('app/affiliates')
-        .subscribe((affs) => { this.affiliates = affs; }, (error) => console.log(error));
+      let newUser = JSON.parse(atob(window.localStorage.getItem("current-user")));
+      if (this.user.token != newUser.token) {
+        this.httpGet('app/states')
+          .subscribe((states) => this.setStates(states), (error) => this.serverError(error));
+        this.httpGet('app/countries')
+          .subscribe((countries) => this.setCountries(countries), (error) => console.log(error));
+        this.httpGet('employee/getdistricts')
+          .subscribe((districts) => this.setDistricts(districts), (error) => console.log(error));
+        this.httpGet('app/prefixes')
+          .subscribe((prefixes) => this.setPrefixes(prefixes), (error) => console.log(error));
+        this.httpGet('app/affiliatedropdown')
+          .subscribe((affiliates) => this.setAffiliateOpts(affiliates), (error) => console.log(error));
+        this.httpGet('app/positiondropdown')
+          .subscribe((positions) => this.setPositions(positions), (error) => console.log(error));
+        this.httpGet('app/disciplinedropdown')
+          .subscribe((disciplines) => this.setDisciplines(disciplines), (error) => console.log(error));
+        this.httpGet('app/repdropdown')
+          .subscribe((reps) => this.setRepOpts(reps), (error) => console.log(error));
+        this.httpGet('app/affstatus')
+          .subscribe((affStats) => this.setAffStatus(affStats), (error) => console.log(error));
+        this.httpGet('app/reps')
+          .subscribe((reps) => this.setRepOptsAll(reps), (error) => console.log(error));
+        this.httpGet('app/affiliates')
+          .subscribe((affs) => this.setAffiliateOptsAll(affs), (error) => console.log(error));
+      }
     } catch (error) {
       this.pushData({ type: "SHOW-LOGIN" });
     }
@@ -230,6 +250,20 @@ export class AppService {
     });
   }
 
+  setAffiliateOptsAll(affiliates) {
+    this.affiliates = affiliates;
+    this.affiliateOptsAll.push({
+      value: '',
+      label: ''
+    });
+    affiliates.forEach((affiliate) => {
+      this.affiliateOptsAll.push({
+        value: affiliate.affID,
+        label: affiliate.affName
+      });
+    });
+  }
+
   setPositions(positions) {
     this.positionOpts.push({
       value: '',
@@ -246,12 +280,21 @@ export class AppService {
 
   setDisciplines(disciplines) {
     this.disciplines = disciplines;
+
+    this.disciplineOptsAll = disciplines.map((discipline) => {
+      return {
+        value: discipline.dispCode,
+        label: discipline.dispCode + " - " + discipline.dispName
+      };
+    });
+
     this.disciplineOpts = disciplines.filter(discipline => !discipline.dispInactive).map((discipline) => {
       return {
         value: discipline.dispCode,
         label: discipline.dispCode + " - " + discipline.dispName
       };
     });
+
   }
 
   setRepOpts(reps) {
@@ -264,6 +307,21 @@ export class AppService {
       this.repOpts.push({
         value: rep.empUserName,
         label: rep.empDescription
+      });
+    });
+  }
+
+  setRepOptsAll(reps) {
+    this.reps = reps;
+    this.repOptsAll.push({
+      value: '',
+      label: ''
+    });
+
+    reps.forEach((rep) => {
+      this.repOptsAll.push({
+        value: rep.empUserName,
+        label: rep.empUserName + " - " + rep.empName
       });
     });
   }

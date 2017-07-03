@@ -218,7 +218,7 @@
                   <p-dropdown [(ngModel)]="selectedValue" [options]="appService.affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOptsAll" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
               </p-column>
 
@@ -281,7 +281,7 @@
                   </p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
               </p-column>

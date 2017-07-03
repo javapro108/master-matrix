@@ -21,7 +21,8 @@ import { AppService } from '../services/app.service';
 export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
-    private appService: AppService){}
+    private appService: AppService
+  ){ }
 
   ngOnInit(){
     this.appService.initApp();

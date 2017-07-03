@@ -67,8 +67,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   loginSuccess(data) {
     if (data.token != undefined) {
-      window.localStorage.setItem("Auth-token", data.token);
-      this.appService.user = data;
+      this.appService.setLoginUser(data);
       this.showLogin = false;
     } else {
       this.loginMessage = "Invalid valid username or password.";
