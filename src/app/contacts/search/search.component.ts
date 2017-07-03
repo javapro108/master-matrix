@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ContactsService } from '../../services/contacts.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import {SelectItem} from 'primeng/primeng';
+
+import { AppService } from  '../../services/app.service';
+import { ContactsService } from '../../services/contacts.service';
 
 @Component({
   selector: 'search-company-view',
@@ -21,6 +23,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private builder: FormBuilder,
+    private appService: AppService,
     private contactsService: ContactsService
   ) {
     this.searchForm = this.builder.group({
@@ -62,7 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    
+
   }
 
   onFind() {
@@ -98,15 +101,24 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['../change', contact.conID], { relativeTo: this.activeRoute });
   }
 
+
   findSuccess(findResult) {
 
     this.busy = false;
     this.contactsService.contactEntity.findResults = findResult.findResults;
   }
+
+
   findError(error) {
 
     this.busy = false;
-    console.log(error);
+
+    if (error.status = 401) {
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      console.log(error);
+    }
+
   }
 
 }

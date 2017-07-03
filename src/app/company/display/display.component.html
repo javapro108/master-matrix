@@ -14,13 +14,15 @@
     </div>
 
     <div class="ui-g-2">
-          Created by: <b>{{companyDetail.company.comCreatedBy}} </b>
+      Created by: <b>{{companyDetail.company.comCreatedBy}} </b>
     </div>
     <div class="ui-g-3">
-      Revised Date: <B>{{companyDetail.company.comRevisedDate | date:"longDate"}}</B>
+      Revised Date:
+      <B>{{companyDetail.company.comRevisedDate | date:"longDate"}}</B>
     </div>
     <div class="ui-g-2">
-      Revised By:<B>{{companyDetail.company.comRevisedBy}}</B>
+      Revised By:
+      <B>{{companyDetail.company.comRevisedBy}}</B>
     </div>
 
   </div>
@@ -35,7 +37,9 @@
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
                 <div class="ui-g-1"></div>
-                <div class="ui-g-11"><B> General Information</B></div>
+                <div class="ui-g-11">
+                  <B> General Information</B>
+                </div>
 
                 <!-- Name:{{companyDetail.company.comName}}-->
 
@@ -57,7 +61,7 @@
 
                 <div class="ui-g-2 align-right"> Toll Free: </div>
                 <div class="ui-g-4">
-                    <b>{{companyDetail.company.comTollFree}}</b>
+                  <b>{{companyDetail.company.comTollFree}}</b>
                 </div>
                 <div class="ui-g-2 align-right"> District: </div>
                 <div class="ui-g-4">
@@ -65,7 +69,7 @@
 
                 </div>
                 <div class="ui-g-2 align-right fa fa-globe"> Web Site: </div>
-                      <b>{{companyDetail.company.comWeb}}</b>
+                <b>{{companyDetail.company.comWeb}}</b>
               </div>
             </div>
 
@@ -76,7 +80,7 @@
 
                 <div class="ui-g-3 align-right"> Address: </div>
                 <div class="ui-g-9">
-                  <b>{{companyDetail.company.comAddress}}</b><br>
+                  <b>{{companyDetail.company.comAddress}}</b><br *ngIf="companyDetail.company.comAddress2">
                   <b>{{companyDetail.company.comAddress2}}</b><br>
                   <b>{{companyDetail.company.comCity}}, {{companyDetail.company.comState}} {{companyDetail.company.comZip}}</b><br>
                   <b>{{companyDetail.company.comCountry}}</b>
@@ -101,11 +105,11 @@
                 <div class="ui-g-6">
                 </div>
                 <div class="ui-g-3 align-right"> Address: </div>
-                 <div class="ui-g-9">
-                      <b>{{companyDetail.company.comMailAddress1}}</b><br>
-                      <b>{{companyDetail.company.comMailAddress2}}</b><br>
-                      <b>{{companyDetail.company.comMailCity}}, {{companyDetail.company.comMailState}} {{companyDetail.company.comMailZip}}</b><br>
-                      <b>{{companyDetail.company.comMailCountry}}</b>
+                <div class="ui-g-9">
+                  <b>{{companyDetail.company.comMailAddress1}}</b><br *ngIf="companyDetail.company.comMailAddress2">
+                  <b>{{companyDetail.company.comMailAddress2}}</b><br>
+                  <b>{{companyDetail.company.comMailCity}}, {{companyDetail.company.comMailState}} {{companyDetail.company.comMailZip}}</b><br>
+                  <b>{{companyDetail.company.comMailCountry}}</b>
                 </div>
               </div>
             </div>
@@ -118,18 +122,17 @@
                 </div>
                 <div class="ui-g-6"></div>
 
-
                 <div class="ui-g-3 align-right">Address: </div>
-                      <div class="ui-g-9">
-                            <b>{{companyDetail.company.comDeliveryAddress1}}</b><br>
-                            <b>{{companyDetail.company.comDeliveryAddress2}}</b><br>
-                            <b>{{companyDetail.company.comDeliveryCity}}, {{companyDetail.company.comDeliveryState}} {{companyDetail.company.comDeliveryZip}}</b><br>
-                            <b>{{companyDetail.company.comDeliveryCountry}}</b>
-                      </div>
-                      <div class="ui-g-3 align-right fa fa-map-marker">Delivery Directions:</div>
-                      <div class="ui-g-9"><b>{{companyDetail.company.comDeliveryDirections}}</b></div>
-                      <div class="ui-g-3 align-right">Delivery Comments:</div>
-                      <div class="ui-g-9"><b>{{companyDetail.company.comDirectionComments}}</b></div>
+                <div class="ui-g-9">
+                  <b>{{companyDetail.company.comDeliveryAddress1}}</b><br *ngIf="companyDetail.company.comDeliveryAddress2">
+                  <b>{{companyDetail.company.comDeliveryAddress2}}</b><br>
+                  <b>{{companyDetail.company.comDeliveryCity}}, {{companyDetail.company.comDeliveryState}} {{companyDetail.company.comDeliveryZip}}</b><br>
+                  <b>{{companyDetail.company.comDeliveryCountry}}</b>
+                </div>
+                <div class="ui-g-3 align-right fa fa-map-marker">Delivery Directions:</div>
+                <div class="ui-g-9"><b>{{companyDetail.company.comDeliveryDirections}}</b></div>
+                <div class="ui-g-3 align-right">Delivery Comments:</div>
+                <div class="ui-g-9"><b>{{companyDetail.company.comDirectionComments}}</b></div>
 
               </div>
             </div>

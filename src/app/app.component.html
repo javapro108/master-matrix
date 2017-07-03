@@ -19,3 +19,35 @@
     </div>
   </div>
 </p-dialog>
+
+<p-dialog [(visible)]="showLogin" [width]="400">
+  <p-header>
+    Login
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12" *ngIf="loginMessage != null">
+      <b style="color:red;">{{loginMessage}}</b>
+    </div>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="ui-g-12 ui-fluid center-div">
+        <div class="ui-g container">
+          <div class="ui-g">
+            <div class="ui-g-1"></div>
+            <div class="ui-g-4 align-right label-color"><b>User name</b></div>
+            <div class="ui-g-4"><input pInputText type="text" placeholder="Required" formControlName="username"></div>
+            <div class="ui-g-3"></div>
+
+            <div class="ui-g-1"></div>
+            <div class="ui-g-4 align-right label-color"><b>Password</b></div>
+            <div class="ui-g-4"><input pInputText type="password" placeholder="Required" formControlName="password"></div>
+            <div class="ui-g-3"></div>
+
+            <div class="ui-g-4"></div>
+            <div class="ui-g-4"><button pButton type="submit" [disabled]="!loginForm.valid" icon="fa-sign-in" label="Log In" iconPos="left"></button></div>
+            <div class="ui-g-4"></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>

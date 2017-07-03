@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
 
 
@@ -18,6 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private router: Router,
     private activeRoute:ActivatedRoute,
     private builder: FormBuilder,
+    private appService: AppService,
     private companyService:CompanyService
   ){
   }
@@ -30,7 +32,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    
+
   }
 
   onFind(){
@@ -59,7 +61,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
   findError(error){
     this.busy = false;
-    console.log(error);
+    if (error.status = 401){
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      console.log(error);
+    }
   }
 
 }

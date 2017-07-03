@@ -73,7 +73,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   getError(error) {
     this.busy = true;
     this.error = true;
-    this.appService.showMessage("Error reading contact data.");
+    if (error.status = 401) {
+      this.location.back();
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      this.appService.showMessage("Error reading contact data.");
+    }
   }
 
   initValues(contactEntity){
@@ -285,8 +290,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   changeError(error) {
     this.error = true;
     this.busy = false;
-    this.appService.showMessage("Contact " + this.conID + " change error.");
-    console.log(error);
+    if (error.status = 401) {
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      this.appService.showMessage("Contact " + this.conID + " change error.");
+      console.log(error);
+    }
   }
 
 

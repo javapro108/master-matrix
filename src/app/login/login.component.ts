@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   username = new FormControl('');
   password = new FormControl('');
   loginForm: FormGroup;
+  loginMessage: string;
+
   constructor(
     private builder: FormBuilder,
     private router: Router,
@@ -50,17 +52,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginSuccess(data) {
-    if (data.token != undefined) {
-      window.localStorage.setItem("Auth-token", data.token);
-      this.appService.user = data;
+    if (data.token) {
+      debugger;
+      this.appService.setLoginUser(data);
       this.router.navigate(['../home']);
     } else {
-      this.appService.showMessage("Invalid valid username or password.");
+      this.loginMessage = "Invalid valid username or password.";
+      //this.appService.showMessage("Invalid valid username or password.");
     }
   }
 
   loginError(error) {
     console.log(error);
-    this.appService.showMessage("Login error, please try again");
+    this.loginMessage = "Login error, please try again" ;
+    //this.appService.showMessage("Login error, please try again");
   }
 }

@@ -56,7 +56,7 @@ export class DisplayComponent implements OnInit, OnDestroy{
         getMarketing: true
       }
       this.companyService.getCompanyDetails(getParams)
-          .subscribe((data) => this.companyReceived(data));
+          .subscribe((data) => this.getCompanySuccess(data), (error) => this.getCompanyError(error));
     });
   }
 
@@ -66,13 +66,19 @@ export class DisplayComponent implements OnInit, OnDestroy{
   }
 
   rxUpdate(data){
-    debugger;
   }
 
-  companyReceived(companyDetail){
+  getCompanySuccess(companyDetail){
     this.companyDetail = companyDetail;
     this.setCompanyFormValue(this.companyDetail.company);
     this.busy = false;
+  }
+  getCompanyError(error){
+    if (error.status = 401){
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      // Show error
+    }
   }
 
   changeCompany(company) {

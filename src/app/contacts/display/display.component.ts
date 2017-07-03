@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -23,11 +25,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
   contactDetail: ContactDetail;
   conId: string;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
+    private location: Location,
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
-    private contactService: ContactsService) {
+    private contactService: ContactsService
+  ) {
     this.contactDetail = {
       contact: {},
 		  comments: [],
@@ -59,7 +64,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
         getDiscipline: true
       }
       this.contactService.getContactDetails(getParams)
-        .subscribe((data) => this.contactReceived(data));
+        .subscribe((data) => this.getContactSuccess(data), (error) => this.getContactError(error));
     });
   }
 
@@ -72,7 +77,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   rxupdate(data) { debugger; }
 
-  contactReceived(contactDetail) {
+  getContactSuccess(contactDetail) {
     debugger;
     this.busy = false;
     this.contactDetail.contact = contactDetail.contact;
@@ -83,6 +88,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.contactDetail.affiliates= contactDetail.affiliates;
     this.contactDetail.reps= contactDetail.reps;
 
+  }
+
+  getContactError(error) {
+    if (error.status = 401) {
+      this.location.back();
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+    }
   }
 
   changeContact(contact) {

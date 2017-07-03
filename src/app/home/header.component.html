@@ -6,7 +6,7 @@
       </div>
 
       <div class="ui-toolbar-group-right">
-          <button pButton type="button" icon="fa-user-circle-o" [label]="appService.user.firstName" ></button>
+          <p-splitButton [label]="appService.user.firstName" icon="fa-user-circle-o" [model]="infoItems"></p-splitButton>
           <button pButton type="button" icon="fa-exclamation" (click)="showMessages()"></button>
           <button pButton type="button" icon="fa-power-off" (click)="logOff()"></button>
       </div>

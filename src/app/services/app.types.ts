@@ -1,9 +1,10 @@
 export interface User {
-  userName?:String,
-  firstName?:String,
-  lastName?:String,
-  department?:String,
-  email?:String
+  userName?:string,
+  firstName?:string,
+  lastName?:string,
+  department?:string,
+  email?:string
+  token?:string
 }
 
 export interface AppMessage {

@@ -20,6 +20,7 @@ import { CompanySearchComponent } from '../../common/companysearch.component';
 export class CreateComponent extends BaseComponent implements OnInit, OnDestroy {
 
   busy: boolean = false;
+  error: boolean = false;
   contactsForm: FormGroup;
   rxSub: Subscription;
 
@@ -74,6 +75,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onSubmit() {
+    this.busy = true;
     this.contactsForm.markAsPristine();
     let disciplinesSend: any[];
     let affiliatesSend: any[];
@@ -115,15 +117,22 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   createSuccess(contactEntity){
+    this.busy = false;
     console.log('create contact success');
     console.log(contactEntity);
-    this.appService.showMessage("Contact " + contactEntity.contact.conID + " changed successfully.", "Success");
+    this.appService.showMessage("Contact " + contactEntity.contact.conID + " created successfully.", "Success");
     this.location.back();
   }
 
   createError(error){
-    console.log(error);
-    this.appService.showMessage("Contact create error.");
+    this.busy = false;
+    this.error = true;
+    if (error.status = 401) {
+      this.appService.pushData({type:"SHOW-LOGIN"});
+    } else {
+      console.log(error);
+      this.appService.showMessage("Contact create error.");
+    }
   }
 
 
