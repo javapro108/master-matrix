@@ -81,7 +81,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   getError(error){
     this.error = true;
     this.busy = false;
-    if (error.status = 401){
+    if (error.status == 401){
       this.location.back();
       this.appService.pushData({type:"SHOW-LOGIN"});
     }
@@ -157,7 +157,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   changeError(error){
     this.busy = false;
     this.error = true;
-    if (error.status = 401){
+    if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {
       this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " change error.");

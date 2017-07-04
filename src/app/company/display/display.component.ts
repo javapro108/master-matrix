@@ -53,7 +53,7 @@ export class DisplayComponent implements OnInit, OnDestroy{
         getContacts: true,
         getJobs: true,
         getProjects: true,
-        getMarketing: true
+        getMarketing: false
       }
       this.companyService.getCompanyDetails(getParams)
           .subscribe((data) => this.getCompanySuccess(data), (error) => this.getCompanyError(error));
@@ -69,12 +69,17 @@ export class DisplayComponent implements OnInit, OnDestroy{
   }
 
   getCompanySuccess(companyDetail){
+    debugger;
     this.companyDetail = companyDetail;
+
+    let distName = this.appService.arrayFind(this.appService.districts, [{name:'value', value: this.companyDetail.company.comDistrict }] );
+    this.companyDetail.company.comDistrict = distName? distName.label : this.companyDetail.company.comDistrict;
+
     this.setCompanyFormValue(this.companyDetail.company);
     this.busy = false;
   }
   getCompanyError(error){
-    if (error.status = 401){
+    if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {
       // Show error

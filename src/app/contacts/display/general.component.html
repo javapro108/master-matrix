@@ -145,7 +145,25 @@
 		</div >
 	</p-tabPanel>
 	<p-tabPanel header="Marketing" leftIcon="fa fa-bullhorn">
-		Coming soon in next release
+		<div class="ui-g-12">
+		      <p-dataTable [value]="contactDetail.marketings">
+		        <p-column field="mrkID" header="ID"></p-column>
+						<p-column field="mrkName" header="Name"></p-column>
+		        <p-column field="mrkActivityCode" header="Act. Code"></p-column>
+		        <p-column field="mrkActivitySubcode" header="Sub. Code"></p-column>
+		        <p-column field="mrkDate" header="Date">
+							<ng-template let-col let-row="rowData" pTemplate="body">
+								{{row[col.field] | date:"longDate"}}
+							</ng-template>
+						</p-column>
+		        <p-column field="mrkRep" header="Rep"></p-column>
+		        <p-column field="comName" header="Company Name">
+							<ng-template let-col let-row="rowData" pTemplate="body">
+		            <a>{{row[col.field]}}</a>
+		          </ng-template>							
+						</p-column>
+		      </p-dataTable>
+		</div>
 	</p-tabPanel>
 	<p-tabPanel header="Directions/Maps/Deliveries" leftIcon="fa fa-map">
 		<div class="ui-g">

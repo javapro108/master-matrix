@@ -14,91 +14,126 @@
 		</div>
 
 		<div class="ui-g-2">
-					Created by: <b>{{contactDetail.contact.conCreatedBy}} </b>
+			Created by: <b>{{contactDetail.contact.conCreatedBy}} </b>
 		</div>
 		<div class="ui-g-3">
-			Revised Date: <B>{{contactDetail.contact.conRevisedDate | date:"longDate"}}</B>
+			Revised Date:
+			<B>{{contactDetail.contact.conRevisedDate | date:"longDate"}}</B>
 		</div>
 		<div class="ui-g-2">
-			Revised By:<B>{{contactDetail.contact.conRevisedBy}}</B>
+			Revised By:
+			<B>{{contactDetail.contact.conRevisedBy}}</B>
 		</div>
 	</div>
 
 
 
 	<div class="ui-g-12">
-		<general-contacts-view [contactDetail]="contactDetail" ></general-contacts-view>
+		<general-contacts-view [contactDetail]="contactDetail"></general-contacts-view>
 	</div>
-
-    <div class="ui-g-12">
-        <p-panel  header="Discipline" [toggleable]="true">
-               <p-dataTable [value]="disciplines">
-               <p-column field="codDisciplineID" header="Discipline ID"></p-column>
-               <p-column field="name" header="Discipline Name"></p-column>
-            </p-dataTable>
-        </p-panel>
-    </div>
-
-     <div class="ui-g-12">
-        <p-panel header="Affiliates" [toggleable]="true">
-            <p-dataTable [value]="affiliates">
-
-							<p-column field="affName" header="Affiliate" [editable]="true" [style]="{'overflow':'visible', 'width': '40%'}"></p-column>
-              <p-column field="stsText" header="Affiliate Status" [style]="{'overflow':'visible', 'width': '20%'}"></p-column>
-              <p-column field="stsText2" header="Product Status" [editable]="true" [style]="{'overflow':'visible', 'width': '35%'}"></p-column>
-
-            </p-dataTable>
-        </p-panel>
-    </div>
-
-     <div class="ui-g-12">
-        <p-panel header="Reps" [toggleable]="true">
-            <p-dataTable [value]="reps">
-
-							<p-column field="affName" header="Affiliate ID" [editable]="true" [style]="{'overflow':'visible'}"></p-column>
-              <p-column field="repName" header="Reps" [editable]="true" [style]="{'overflow':'visible'}"></p-column>
-              <p-column field="stsText" header="RepsStatus" [editable]="true" [style]="{'overflow':'visible'}"></p-column>
-
-            </p-dataTable>
-        </p-panel>
-    </div>
-
-
-
 
 	<div class="ui-g-12">
-	    <p-panel header="Projects" [toggleable]="true">
-      <p-dataTable [value]="contactDetail.projects">
-        <p-column field="proID" header="ID"></p-column>
-        <p-column field="proNumber" header="Project No."></p-column>
-        <p-column field="proName" header="Name"></p-column>
-        <p-column field="proAlias" header="Alias"></p-column>
-        <p-column field="proAffCode" header="Aff. code"></p-column>
-        <p-column field="proDistrictCode" header="District"></p-column>
-        <p-column field="proRepCode" header="Rep"></p-column>
-        <p-column field="proCity" header="City"></p-column>
-        <p-column field="proState" header="State"></p-column>
-        <p-column field="proZip" header="Zip"></p-column>
-        <p-column field="conCompanyID" header="Company"></p-column>
-        <p-column field="proDead" header="Dead"></p-column>
-      </p-dataTable>
-    </p-panel>
+		<p-panel header="Discipline" [toggleable]="true">
+			<p-dataTable [value]="disciplines">
+				<p-column field="codDisciplineID" header="Discipline ID" [style]="{'width': '34%'}"></p-column>
+				<p-column field="name" header="Discipline Name" [style]="{'width': '66%'}"></p-column>
+			</p-dataTable>
+		</p-panel>
 	</div>
 
-<div class="ui-g-12">
-    <p-panel header="Jobs" [toggleable]="true">
-      <p-dataTable [value]="contactDetail.jobs">
-        <p-column field="proID" header="ID"></p-column>
-        <p-column field="proNumber" header="Job No."></p-column>
-        <p-column field="proName" header="Name"></p-column>
-        <p-column field="proAlias" header="Alias"></p-column>
-        <p-column field="proAffCode" header="Aff. Code"></p-column>
-        <p-column field="proDistrictCode" header="District"></p-column>
-        <p-column field="proRepCode" header="Rep."></p-column>
-        <p-column field="proCity" header="City"></p-column>
-        <p-column field="proState" header="State"></p-column>
-        <p-column field="proZip" header="Zip"></p-column>
-      </p-dataTable>
-    </p-panel>
+	<div class="ui-g-12">
+		<p-panel header="Affiliates" [toggleable]="true">
+			<p-dataTable [value]="affiliates">
+
+				<p-column field="affName" header="Affiliate" [editable]="true" [style]="{'width': '34%'}"></p-column>
+				<p-column field="stsText" header="Affiliate Status" [style]="{'width': '33%'}"></p-column>
+				<p-column field="stsText2" header="Product Status" [editable]="true" [style]="{'width': '33%'}"></p-column>
+
+			</p-dataTable>
+		</p-panel>
+	</div>
+
+	<div class="ui-g-12">
+		<p-panel header="Reps" [toggleable]="true">
+			<p-dataTable [value]="reps">
+
+				<p-column field="affName" header="Affiliate ID" [editable]="true" [style]="{'width': '34%'}"></p-column>
+				<p-column field="repName" header="Reps" [editable]="true" [style]="{'width': '33%'}"></p-column>
+				<p-column field="stsText" header="RepsStatus" [editable]="true" [style]="{'width': '33%'}"></p-column>
+
+			</p-dataTable>
+		</p-panel>
+	</div>
+
+	<div class="ui-g-12">
+		<p-panel header="Projects" [toggleable]="true">
+			<p-dataTable [value]="contactDetail.projects">
+				<p-column field="proID" header="ID"></p-column>
+				<p-column field="proNumber" header="Project No."></p-column>
+				<p-column field="proName" header="Name"></p-column>
+				<p-column field="proAlias" header="Alias"></p-column>
+				<p-column field="proAffCode" header="Aff. code"></p-column>
+				<p-column field="proDistrictCode" header="District"></p-column>
+				<p-column field="proRepCode" header="Rep"></p-column>
+				<p-column field="proCity" header="City"></p-column>
+				<p-column field="proState" header="State"></p-column>
+				<p-column field="proZip" header="Zip"></p-column>
+				<p-column field="conCompanyID" header="Company"></p-column>
+				<p-column field="proDead" header="Dead"></p-column>
+			</p-dataTable>
+		</p-panel>
+	</div>
+
+	<div class="ui-g-12">
+		<p-panel header="Jobs" [toggleable]="true">
+			<p-dataTable [value]="contactDetail.jobs">
+				<p-column field="proID" header="ID"></p-column>
+				<p-column field="proNumber" header="Job No."></p-column>
+				<p-column field="proName" header="Name"></p-column>
+				<p-column field="proAlias" header="Alias"></p-column>
+				<p-column field="proAffCode" header="Aff. Code"></p-column>
+				<p-column field="proDistrictCode" header="District"></p-column>
+				<p-column field="proRepCode" header="Rep."></p-column>
+				<p-column field="proCity" header="City"></p-column>
+				<p-column field="proState" header="State"></p-column>
+				<p-column field="proZip" header="Zip"></p-column>
+			</p-dataTable>
+		</p-panel>
+	</div>
+
+	<div class="ui-g-12">
+		<p-panel header="Comments" [toggleable]="true">
+			<p-dataTable [value]="contactDetail.comments">
+				<p-column field="cmdPriority" header="Priority" [style]="{'width': '10%'}"></p-column>
+				<p-column field="cmdComment" header="Comment" [style]="{'width': '65%'}"></p-column>
+				<p-column field="cocUser" header="User" [style]="{'width': '10%'}"></p-column>
+				<p-column field="cocDate" header="Date" [style]="{'width': '15%'}">
+					<ng-template let-col let-row="rowData" pTemplate="body">
+						{{row[col.field] | date:"longDate"}}
+					</ng-template>
+				</p-column>
+			</p-dataTable>
+			<p-footer>
+        <div class="ui-helper-clearfix">
+          <div class="ui-panel-title ui-g-11" style="font-size:16px;display:inline-block;margin-top:2px"></div>
+          <div class="ui-g-1"><button pButton type="button" icon="fa-plus-square" label="Add" iconPos="left" [style]="{'float':'right', 'width':'10%'}" (click)="displayDialog=true;cmdPriority='';cmdComment='';"></button> </div>
+        </div>
+      </p-footer>
+		</p-panel>
+	</div>
 </div>
-</div>
+
+<p-dialog [(visible)]="displayDialog" [width]="800">
+  <p-header>
+    Add Comments
+  </p-header>
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <div class="ui-g-2 align-right">Priority:</div>
+      <p-checkbox class="ui-g-10" binary="true" [(ngModel)]="cmdPriority" label=""></p-checkbox>
+      <div class="ui-g-2 align-right">Comments:</div>
+      <div class="ui-g-10"> <textarea pInputTextarea [(ngModel)]="cmdComment" rows="3" cols="50"></textarea></div>
+      <div class="ui-g-2"><button pButton type="button" label="Save" (click)="saveComments(cmdPriority, cmdComment);"></button></div>
+    </div>
+  </div>
+</p-dialog>

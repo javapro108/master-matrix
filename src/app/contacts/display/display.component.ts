@@ -86,6 +86,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.contactDetail.projects = contactDetail.projects;
     this.contactDetail.jobs = contactDetail.jobs;
     this.contactDetail.comments = contactDetail.comments;
+    this.contactDetail.marketings = contactDetail.marketings;
     this.contactDetail.disciplines = contactDetail.disciplines;
     this.contactDetail.affiliates= contactDetail.affiliates;
     this.contactDetail.reps= contactDetail.reps;
@@ -101,7 +102,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
       }
     );
 
-
     this.affiliates = this.contactDetail.affiliates.map((affiliate)=>{
       let newAffiliate:any = affiliate;
 
@@ -116,6 +116,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
       return newAffiliate;
     });
+
     this.reps = this.contactDetail.reps.map((rep)=>{
       let newRep: any = rep;
 
@@ -131,13 +132,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
       return newRep;
     });
 
-
-
+    let distName = this.appService.arrayFind(this.appService.districts, [{name:'value', value: this.contactDetail.contact.comDistrict}] );
+    this.contactDetail.contact.comDistrict = distName? distName.label : this.contactDetail.contact.comDistrict;
 
   }
 
   getContactError(error) {
-    if (error.status = 401) {
+    this.busy = false;
+    if (error.status == 401) {
       this.location.back();
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {

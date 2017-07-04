@@ -148,7 +148,11 @@
 
     <p-panel header="Contacts" [toggleable]="true">
       <p-dataTable [value]="companyDetail.contacts">
-        <p-column field="conid" header="ID"></p-column>
+        <p-column field="conid" header="ID">
+          <ng-template let-col let-row="rowData" pTemplate="body">
+            <a routerLink="../../../contacts/display/{{row[col.field]}}">{{row[col.field]}}</a>
+          </ng-template>
+        </p-column>
         <p-column field="conName" header="Name"></p-column>
         <p-column field="conPosition" header="Position"></p-column>
         <p-column field="conDirectPhone" header="Phone"></p-column>
@@ -196,7 +200,11 @@
         <p-column field="cmcPriority" header="Priority" [style]="{'width':'8%'}"></p-column>
         <p-column field="cmcComment" header="Comment" [style]="{'width':'70%'}"></p-column>
         <p-column field="cmcUser" header="User" [style]="{'width':'8%'}"></p-column>
-        <p-column field="cmcDate" header="Date" [style]="{'width':'14%'}"></p-column>
+        <p-column field="cmcDate" header="Date" [style]="{'width':'14%'}">
+          <ng-template let-col let-row="rowData" pTemplate="body">
+            {{row[col.field] | date:"longDate"}}
+          </ng-template>
+        </p-column>
       </p-dataTable>
 
       <p-footer>
@@ -207,19 +215,27 @@
       </p-footer>
 
     </p-panel>
-
+<!--
     <p-panel header="Marketings" [toggleable]="true">
       <p-dataTable [value]="companyDetail.marketings">
         <p-column field="mrkID" header="ID"></p-column>
         <p-column field="mrkActivityCode" header="Act. Code"></p-column>
         <p-column field="mrkActivitySubcode" header="Act. Sub Code"></p-column>
-        <p-column field="mrkDate" header="Date"></p-column>
+        <p-column field="mrkDate" header="Date">
+          <ng-template let-col let-row="rowData" pTemplate="body">
+            {{row[col.field] | date:"longDate"}}
+          </ng-template>
+        </p-column>
         <p-column field="mrkRep" header="Rep."></p-column>
         <p-column field="mrkName" header="Name"></p-column>
-        <p-column field="recnCompanyID" header="Rec. Company"></p-column>
-        <p-column field="recnContactID" header="Rec. Contact"></p-column>
+        <p-column field="recnContactID" header="Contact">
+          <ng-template let-col let-row="rowData" pTemplate="body">
+            <a>{{row[col.field]}}</a>
+          </ng-template>
+        </p-column>
       </p-dataTable>
     </p-panel>
+-->
   </div>
 </div>
 
@@ -233,8 +249,7 @@
       <p-checkbox class="ui-g-10" binary="true" [(ngModel)]="cmcPriority" label=""></p-checkbox>
       <div class="ui-g-2 align-right">Comments:</div>
       <div class="ui-g-10"> <textarea pInputTextarea [(ngModel)]="cmcComment" rows="3" cols="50"></textarea></div>
-
-      <div class="ui-g-2"><button pButton type="button" icon="fa-check-square-o" (click)="saveComments(cmcPriority,cmcComment);"></button></div>
+      <div class="ui-g-2"><button pButton type="button" label="Save" (click)="saveComments(cmcPriority,cmcComment);"></button></div>
     </div>
   </div>
 </p-dialog>

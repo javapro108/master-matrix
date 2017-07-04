@@ -66,6 +66,7 @@ export class AppService {
   }
 
   pushData(data) {
+    debugger;
     this.rxService.next(data);
   }
 
@@ -119,6 +120,7 @@ export class AppService {
     try {
       let newUser = JSON.parse(atob(window.localStorage.getItem("current-user")));
       if (this.user.token != newUser.token) {
+        this.user = newUser;
         this.httpGet('app/states')
           .subscribe((states) => this.setStates(states), (error) => this.serverError(error));
         this.httpGet('app/countries')

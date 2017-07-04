@@ -117,7 +117,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   createError(error) {
     console.log(error);
     this.busy = false;
-    if (error.status = 401){
+    if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {
       this.appService.showMessage("Error while creating company, please try again.");
