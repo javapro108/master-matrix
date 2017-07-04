@@ -1,18 +1,18 @@
-<p-blockUI [blocked]="busy" [target]="page">
+<p-blockUI [blocked]="busy" [target]="">
   <div style="position:absolute;top:40%;left:45%">
     <font size="5" color="black">Loading...</font>
   </div>
 </p-blockUI>
 
 <div class="content-area">
-  <p-panel #page header="Find Company" [toggleable]="true">
+  <p-panel header="Find Company" [toggleable]="true">
     <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
 
           <div class="ui-g-2">Company Name:</div>
           <div class="ui-g-4">
-            <input pInputText type="text" name="comName" id="comName" formControlName="comName" >
+            <input pInputText type="text" name="comName" id="comName" placeholder="Use % for wildcard serch" formControlName="comName" >
           </div>
           <div class="ui-g-2">
             <p-checkbox name="comInactive" label="Inactive:" id="comInactive" formControlName="comInactive" binary="true"></p-checkbox>
@@ -32,7 +32,7 @@
                    [rows]="20"
                    [paginator]="true"
                    [pageLinks]="5"
-                   [rowsPerPageOptions]="[10,20,30,40]" >
+                   [rowsPerPageOptions]="[10,20,30,40,50]" >
 
         <p-column styleClass="col-button"  [style]="{'width':'7%'}">
            <ng-template let-company="rowData" pTemplate="body">

@@ -38,6 +38,7 @@ export class AppService {
   affStatusOpts: SelectItem[] = [];
   productStatusOpts: SelectItem[];
   repStatusOpts: SelectItem[];
+  monthNames = {};
 
 
   constructor(
@@ -59,6 +60,21 @@ export class AppService {
     this.repStatusOpts.push({ label: 'Excellent', value: 'X' });
     this.repStatusOpts.push({ label: 'Good', value: 'Y' });
     this.repStatusOpts.push({ label: 'Improving', value: 'Z' });
+
+    this.monthNames = {
+      "01": "January",
+      "02": "February",
+      "03": "March",
+      "04": "April",
+      "05": "May",
+      "06": "June",
+      "07": "July",
+      "08": "August",
+      "09": "September",
+      "10": "October",
+      "11": "November",
+      "12": "December"
+    };
   }
 
   subscribe(success: any, error?: any, complete?: any) {
@@ -259,10 +275,12 @@ export class AppService {
       label: ''
     });
     affiliates.forEach((affiliate) => {
-      this.affiliateOptsAll.push({
-        value: affiliate.affID,
-        label: affiliate.affName
-      });
+      if (affiliate.affID){
+        this.affiliateOptsAll.push({
+          value: affiliate.affID,
+          label: affiliate.affID + " - " + affiliate.affName
+        });
+      }
     });
   }
 
@@ -369,6 +387,17 @@ export class AppService {
       });
       return found;
     });
+  }
+
+  formatDate(date: string): string {
+    let formattedDate: string = "";
+    if (date) {
+      let monthName = this.monthNames[date.substring(7, 5)];
+      let year = date.substring(0, 4);
+      let day = date.substring(10, 8);
+      formattedDate = monthName + " " + day + ", " + year;
+    }
+    return formattedDate;
   }
 
 }

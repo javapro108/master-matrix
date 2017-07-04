@@ -71,6 +71,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   onFind() {
 
     this.contactsService.contactEntity.findParams = this.searchForm.value;
+    
     // if both active and inactive selected then call findContactsAdvAll
     if (this.contactsService.contactEntity.findParams.conInactive == true
       && this.contactsService.contactEntity.findParams.conActive == true) {
@@ -105,7 +106,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   findSuccess(findResult) {
 
     this.busy = false;
-    this.contactsService.contactEntity.findResults = findResult.findResults;
+    this.contactsService.contactEntity.findResults = findResult.findResults.map((contact)=>{
+      contact.actDate = this.appService.formatDate(contact.actDate);
+      return contact;
+    });
   }
 
 

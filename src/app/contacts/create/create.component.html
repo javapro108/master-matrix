@@ -8,7 +8,7 @@
       <button pButton type="button" icon="fa-check-square-o" label="Submit" (click)="onSubmit()" [disabled]="!contactsForm.valid"></button>
     </div>
     <div class="ui-g-2">
-      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
+      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel" (click)="onCancel()"></button>
     </div>
   </div>
 
@@ -129,7 +129,7 @@
 
               <div class="ui-g-3 align-right">Zip Code: </div>
               <div class="ui-g-3">
-                <p-inputMask formControlName="conHomeZip" mask="99999?-9999" unmask="true"></p-inputMask>
+                <p-inputMask formControlName="conHomeZip" mask="99999?-9999"></p-inputMask>
               </div>
 
               <div class="ui-g-3 align-right">Phone:</div>

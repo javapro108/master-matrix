@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onFind(){
     this.companyService.companyEntity.findParams = this.searchForm.value;
+    
     if (this.companyService.companyEntity.findParams.comInactive != true ) {
       this.companyService.companyEntity.findParams.comInactive = false;
     }

@@ -45,6 +45,14 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     private companyService: CompanyService
   ) {
     super();
+    this.contactEntity = {
+      contact: {
+        conCourtesy: "",
+        conFName: "",
+        conLName: "",
+      }
+    };
+
   }
 
   ngOnInit(): void {
@@ -82,6 +90,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   initValues(contactEntity){
+    debugger;
     this.contactEntity = contactEntity;
 
     this.conID = this.contactEntity.contact.conID;
@@ -99,7 +108,6 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     if (contactEntity.contact.conBirthday != undefined && contactEntity.contact.conBirthday != ""){
       formValue.contact.conBirthday = new Date(Date.parse(contactEntity.contact.conBirthday));
     }
-    formValue.contact.conBirthday = new Date(Date.parse(contactEntity.contact.conBirthday));
     if (contactEntity.contact.conAnniversary != undefined && contactEntity.contact.conAnniversary != ""){
       formValue.contact.conAnniversary = new Date(Date.parse(contactEntity.contact.conAnniversary));
     }
@@ -120,20 +128,18 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onAffiliateSelect(selectedValue, row) {
-    row.cafStatus = '3';
-    row.cafAffialiateID = selectedValue;
-    this.updateRepAffiliate();
+    if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:selectedValue}])){
+      this.appService.showMessage("Affiliate already selected");
+    } else {
+      row.cafStatus = '3';
+      row.cafAffialiateID = selectedValue;
+      this.updateRepAffiliate();
+    }
   }
 
   addAffiliaterow() {
     this.affiliates = this.affiliates.slice();
-    this.affiliates.push({
-      "cafStatus": " ",
-      "cafstatus2": " ",
-      "cafAffialiateID": " ",
-      "affName": " ",
-      "cafContactID": " "
-    });
+    this.affiliates.push({});
   }
 
   removeAffiliaterow(row) {
@@ -158,6 +164,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.repAffiliateOpts = this.affiliates.map((affiliate) => {
       return this.appService.arrayFind(this.appService.affiliateOpts, [{ name: 'value', value: affiliate.cafAffialiateID }]);
     }).filter((affiliateOpt) => {
+      // we need this filter in change mode, because old contact can have inactive affilirated wich are not part of the
+      // affiliateOpts in this case affiliateOpt will be undefined. filer such options
       if (affiliateOpt) {
         return (affiliateOpt.value ? true : false);
       } else {
@@ -166,16 +174,26 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     });
     this.repAffiliateOpts.unshift({ label: '', value: '' });
 
+    // remove reps of the deleted/removed affiliates
+    this.reps = this.reps.filter((rep)=>{
+      if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:rep.corAffialiateID}])){
+        return true;
+      } else {
+        return false;
+      }
+    });
+
   }
 
 
   onSubmit() {
-    this.busy = true;
-
     this.contactsForm.markAsPristine();
     let disciplinesSend: any[] = [];
     let affiliatesSend: any[] = [];
     let repsSend: any[] = [];
+    let dispOk: boolean = false;
+    let affOk: boolean = false;
+    let repOk: boolean = false;
 
     //Find disciplines deleted
     this.contactEntity.disciplines.forEach((discipline) => {
@@ -192,11 +210,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       let oldDiscipline = "";
       oldDiscipline = this.appService.arrayFind(this.contactEntity.disciplines, [{ name: 'codDisciplineID', value: discipline.codDisciplineID }]);
       if (oldDiscipline) {
+        dispOk = true;
         discipline.mode = "U";
         discipline.codContactID = this.conID;
         disciplinesSend.push(discipline);
       }
       else if (discipline.codDisciplineID) {
+        dispOk = true;
         discipline.mode = "I";
         discipline.codContactID = this.conID;
         disciplinesSend.push(discipline);
@@ -218,10 +238,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.affiliates.forEach((affiliate) => {
       let oldAffiliate = this.appService.arrayFind(this.contactEntity.affiliates, [{ name: 'cafAffialiateID', value: affiliate.cafAffialiateID }]);
       if (oldAffiliate) {
+        affOk = true;
         affiliate.mode = "U";
         affiliate.cafContactID = this.conID;
         affiliatesSend.push(affiliate);
-      } else {
+      } else if (affiliate.cafAffialiateID) {
+        affOk = true;
         affiliate.mode = "I";
         affiliate.cafContactID = this.conID;
         affiliatesSend.push(affiliate);
@@ -247,15 +269,32 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
         [{ name: 'corRepID', value: rep.corRepID },
          { name: 'corAffialiateID', value: rep.corAffialiateID }]);
       if (oldRep) {
+        repOk = true;
         rep.mode = "U";
         rep.corContactID = this.conID;
         repsSend.push(rep);
-      } else {
+      } else if (rep.corRepID && rep.corAffialiateID){
+        repOk = true;
         rep.mode = "I";
         rep.corContactID = this.conID;
         repsSend.push(rep);
       }
     });
+
+    if(!dispOk){
+      this.appService.showMessage("Please enter disciplines");
+      return;
+    }
+
+    if(!affOk){
+      this.appService.showMessage("Please enter affiliates");
+      return;
+    }
+
+    if(!repOk){
+      this.appService.showMessage("Please enter reps");
+      return;
+    }
 
     let contactEntity = {
       contact: this.contactsForm.value,
@@ -271,8 +310,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       contactEntity.contact.conInactive = !this.conActive;
     }
 
-    console.log(contactEntity);
-
+    this.busy = true;
     this.contactsService.changeContact(contactEntity)
         .subscribe((data)=>this.changeSuccess(data), (error)=>this.changeError(error));
 
@@ -299,6 +337,9 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
+  onCancel(){
+    this.location.back();
+  }
 
   buildForm(): void {
     this.contactsForm = this.formBuilder.group({

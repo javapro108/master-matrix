@@ -45,7 +45,6 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   ) {
     super();
     this.contactsService.subscribe((data)=>this.rxUpdate(data));
-
   }
 
   ngOnInit(): void {
@@ -75,32 +74,40 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onSubmit() {
-    this.busy = true;
     this.contactsForm.markAsPristine();
     let disciplinesSend: any[];
     let affiliatesSend: any[];
     let repsSend: any[];
 
-    disciplinesSend = this.disciplines.map((discipline)=>{
-      if (discipline.codDisciplineID){
-        discipline.mode = "I";
-      }
+    disciplinesSend = this.disciplines.filter( (discipline)=> discipline.codDisciplineID ).map((discipline)=>{
+      discipline.mode = "I";
       return discipline
     });
 
-    affiliatesSend = this.affiliates.map((affiliate)=>{
-      if(affiliate.cafAffialiateID){
-        affiliate.mode = "I";
-      }
+    affiliatesSend = this.affiliates.filter((affiliate)=> affiliate.cafAffialiateID).map((affiliate)=>{
+      affiliate.mode = "I";
       return affiliate;
     });
 
-    repsSend = this.reps.map((rep)=>{
-      if (rep.corRepID && rep.corAffialiateID){
-        rep.mode = "I";
-      }
+    repsSend = this.reps.filter((rep)=>rep.corRepID && rep.corAffialiateID ).map((rep)=>{
+      rep.mode = "I";
       return rep;
     });
+
+    if(disciplinesSend.length == 0){
+      this.appService.showMessage("Please enter disciplines");
+      return;
+    }
+
+    if(affiliatesSend.length == 0){
+      this.appService.showMessage("Please enter affiliates");
+      return;
+    }
+
+    if(repsSend.length == 0){
+      this.appService.showMessage("Please enter reps");
+      return;
+    }
 
     let contactEntity = {
       contact: this.contactsForm.value,
@@ -109,7 +116,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
       reps: repsSend
     };
 
-    console.log(contactEntity);
+    this.busy = true;
 
     this.contactsService.createContact(contactEntity)
         .subscribe((data)=>this.createSuccess(data), (error)=>this.createError(error));
@@ -121,7 +128,12 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     console.log('create contact success');
     console.log(contactEntity);
     this.appService.showMessage("Contact " + contactEntity.contact.conID + " created successfully.", "Success");
-    this.location.back();
+
+    this.affiliates = [];
+    this.disciplines = [];
+    this.reps = [];
+    this.buildForm();
+//    this.location.back();
   }
 
   createError(error){
@@ -137,6 +149,9 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
+  onCancel(){
+    this.location.back();
+  }
 
   onMultiselectChange() {
     this.disciplines = this.contactsForm.value.codDisciplineID.map((discipline)=>{
@@ -150,27 +165,25 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   onAffiliateSelect(selectedValue, row) {
-    row.cafStatus = '3';
-    row.cafAffialiateID = selectedValue;
-    this.updateRepAffiliateOpts();
+    if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:selectedValue}])){
+      this.appService.showMessage("Affiliate already selected");
+    } else {
+      row.cafStatus = '3';
+      row.cafAffialiateID = selectedValue;
+      this.updateRepAffiliate();
+    }
   }
 
   addAffiliaterow() {
     this.affiliates = this.affiliates.slice();
-    this.affiliates.push({
-      "cafStatus": " ",
-      "cafstatus2": " ",
-      "cafAffialiateID": " ",
-      "cafContactID": " "
-    });
-    this.updateRepAffiliateOpts();
+    this.affiliates.push({});
   }
 
   removeAffiliaterow(row) {
     let index = this.affiliates.indexOf(row);
     this.affiliates.splice(index, 1);
     this.affiliates = this.affiliates.slice();
-    this.updateRepAffiliateOpts();
+    this.updateRepAffiliate();
   }
 
   addRepsrow() {
@@ -184,12 +197,20 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     this.reps = this.reps.slice();
   }
 
-  updateRepAffiliateOpts(){
+  updateRepAffiliate(){
     this.repAffiliateOpts = this.affiliates.map((data) => {
       return this.appService.arrayFind(this.appService.affiliateOpts, [{name:'value', value:data.cafAffialiateID}]);
     });
-
     this.repAffiliateOpts.unshift({label:'', value:''});
+
+    // remove reps of the deleted/removed affiliates
+    this.reps = this.reps.filter((rep)=>{
+      if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:rep.corAffialiateID}])){
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
   buildForm(): void {

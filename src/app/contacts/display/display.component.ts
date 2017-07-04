@@ -11,7 +11,7 @@ import { ContactsService } from '../../services/contacts.service';
 import { ContactDetail, ContactEntity, SpContactViewResult} from '../../services/contacts.types';
 
 @Component({
-  selector: 'display-contacts-view',
+  selector: 'display-contact-view',
   templateUrl: './display.component.html'
 })
 export class DisplayComponent implements OnInit, OnDestroy {
@@ -23,7 +23,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   subRoute: Subscription;
   spContactView: SpContactViewResult;
   contactDetail: ContactDetail;
-  conId: string;
+  conID: string;
   disciplines: any[];
   affiliates: any[];
   reps: any[];
@@ -53,7 +53,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.busy = true;
     this.Subscription = this.contactService.subscribe((data) => this.rxupdate(data));
     this.subRoute = this.activeRoute.params.subscribe((params) => {
-      this.conId = params.id;
+      this.conID = params.id;
       let getParams = {
         conID: params.id,
         getContactDetail: true,
@@ -147,14 +147,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
   changeContact(contact) {
-    this.router.navigate(['../../change', this.conId], { relativeTo: this.activeRoute });
+    this.router.navigate(['../../change', this.conID], { relativeTo: this.activeRoute });
   }
 
   saveComments(cmdPriority,cmdComment){
     debugger;
     this.displayDialog = false;
     let comment = {
-      cocContactID: this.conId,
+      cocContactID: this.conID,
       cmdPriority: cmdPriority,
       cmdComment: cmdComment
     }

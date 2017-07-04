@@ -79,4 +79,8 @@ export class AppComponent implements OnInit, OnDestroy{
     this.loginMessage = "Login error, please try again" ;
   }
 
+  clearMessages(){
+    this.appService.appMessages = [];
+  }
+
 }

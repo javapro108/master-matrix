@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -21,6 +22,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
 
   constructor(
     private router: Router,
+    private location:Location,
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
@@ -134,6 +136,9 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
+  onCancel(){
+    this.location.back();
+  }
 
   buildForm(): void {
     this.companyForm = this.formBuilder.group({

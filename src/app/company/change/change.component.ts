@@ -37,7 +37,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   ){
     super();
     debugger;
-    this.companyEntity = {};
+    this.companyEntity = {
+      company: {
+        comID: "",
+        comName: ""
+      }
+    };
   }
 
 
@@ -164,6 +169,10 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     } else {
       this.appService.showMessage("Company " + this.companyForm.value.comID + " change error.");
     }
+  }
+
+  onCancel(){
+    this.location.back();
   }
 
 

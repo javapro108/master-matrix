@@ -6,7 +6,9 @@
 <div class="ui-g ui-fluid content-area">
   <div class="ui-g-12 ui-widget-content header">
     <div class="ui-g-6">
-      <button pButton type="button" class="ui-button-info" label="Change Company"></button>
+      <button pButton type="button" class="ui-button-info"
+      [label]="'Change Company: ' + companyEntity.company.comID + ' - ' + companyEntity.company.comName">
+      </button>
     </div>
     <div class="ui-g-2">
       <p-toggleButton onLabel="Active" offLabel="Inactive" [(ngModel)]="comActive"></p-toggleButton>
@@ -15,7 +17,7 @@
       <button pButton type="button" icon="fa-check-square-o" label="Submit" [disabled]="!companyForm.valid" (click)="onSubmit()"></button>
     </div>
     <div class="ui-g-2">
-      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
+      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel" (click)="onCancel()"></button>
     </div>
   </div>
   <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">

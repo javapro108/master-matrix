@@ -7,32 +7,34 @@
 <div id="page" class="ui-g-12 ui-fluid content-area">
   <div class="ui-g-12 ui-widget-content header">
     <div class="ui-g-10">
-      <button pButton type="button" class="ui-button-info" label="Display Company"></button>
+      <button pButton type="button" class="ui-button-info"
+        [label]="'Display Company: ' + companyDetail.company.comID + ' - ' + companyDetail.company.comName">
+      </button>
     </div>
     <div class="ui-g-2">
       <button pButton type="button" icon="fa-check-square-o" label="Change" (click)="changeCompany()"></button>
     </div>
-
-    <div class="ui-g-2">
-      Created by: <b>{{companyDetail.company.comCreatedBy}} </b>
-    </div>
-    <div class="ui-g-3">
-      Revised Date:
-      <B>{{companyDetail.company.comRevisedDate | date:"longDate"}}</B>
-    </div>
-    <div class="ui-g-2">
-      Revised By:
-      <B>{{companyDetail.company.comRevisedBy}}</B>
-    </div>
-
   </div>
+
   <div class="ui-g-12 ui-widget-content content-area">
-
-
     <p-panel header="Company Details" [toggleable]="true">
-
       <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
         <div class="ui-g-12 content-area">
+          <div class="ui-g-12">
+          <div class="ui-g-2">
+            Created By: <b>{{companyDetail.company.comCreatedBy}} </b>
+          </div>
+          <div class="ui-g-4">
+            Created Date: <b>{{companyDetail.company.comDate}} </b>
+          </div>
+          <div class="ui-g-2">
+            Revised By: <b>{{companyDetail.company.comRevisedBy}}</b>
+          </div>
+          <div class="ui-g-4">
+            Revised Date: <b>{{companyDetail.company.comRevisedDate | date:"longDate"}}</b>
+          </div>
+
+        </div>
           <div>
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
@@ -215,7 +217,7 @@
       </p-footer>
 
     </p-panel>
-<!--
+    <!--
     <p-panel header="Marketings" [toggleable]="true">
       <p-dataTable [value]="companyDetail.marketings">
         <p-column field="mrkID" header="ID"></p-column>

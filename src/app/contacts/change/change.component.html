@@ -8,7 +8,9 @@
 
   <div class="ui-g-12 ui-widget-content header">
     <div class="ui-g-6">
-      <button pButton type="button" class="ui-button-info" [label]="'Change Contact:' + conID"></button>
+      <button pButton type="button" class="ui-button-info"
+        [label]="'Change Contact: ' + conID + ' - ' + contactEntity.contact.conCourtesy + ' ' + contactEntity.contact.conFName + ' '+ contactEntity.contact.conLName">
+      </button>
     </div>
     <div class="ui-g-2">
       <p-toggleButton onLabel="Active" offLabel="Inactive" [(ngModel)]="conActive"></p-toggleButton>
@@ -17,7 +19,7 @@
       <button pButton type="button" icon="fa-check-square-o" label="Submit" (click)="onSubmit()" [disabled]="!contactsForm.valid"></button>
     </div>
     <div class="ui-g-2">
-      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel"></button>
+      <button pButton type="button" icon="fa-times-rectangle-o" label="Cancel" (click)="onCancel()"></button>
     </div>
   </div>
 
@@ -138,7 +140,7 @@
 
               <div class="ui-g-3 align-right">Zip Code: </div>
               <div class="ui-g-3">
-                <p-inputMask formControlName="conHomeZip" mask="99999?-9999" unmask="true"></p-inputMask>
+                <p-inputMask formControlName="conHomeZip" mask="99999?-9999"></p-inputMask>
               </div>
 
               <div class="ui-g-3 align-right">Phone:</div>
@@ -271,7 +273,7 @@
                   </p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repAffiliateOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
               </p-column>
