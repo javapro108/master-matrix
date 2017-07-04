@@ -27,20 +27,23 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     private companyService: CompanyService
   ) {
     super();
-    debugger;
   }
+
 
   ngOnInit(): void {
     this.buildForm();
   }
 
+
   ngOnDestroy(){
 
   }
 
+
   addCompany() {
     this.buildForm();
   }
+
 
   onBlurName() {
     if (this.companyForm.value.comName){
@@ -49,12 +52,14 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
+
   newCheckResults(duplicateCompanies) {
     this.duplicateCompanies = duplicateCompanies;
     if (this.duplicateCompanies.length > 0){
       this.showDuplicate = true;
     }
   }
+
 
   copyMainToMail(checked: boolean) {
     if (checked) {
@@ -69,8 +74,8 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
 
       this.companyForm.setValue(formValue);
     }
-
   }
+
 
   copyMainToDelv(checked: boolean) {
     if (checked) {
@@ -86,6 +91,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
       this.companyForm.setValue(formValue);
     }
   }
+
 
   onSubmit() {
     this.busy = true;
@@ -107,6 +113,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     console.log(this.companyForm.value);
   }
 
+
   createSuccess(companyEntity) {
     this.companyService.companyEntity.company = companyEntity.company;
     this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " created successfully", "Success");
@@ -114,11 +121,14 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     this.busy = false;
   }
 
+
   createError(error) {
     console.log(error);
     this.busy = false;
     if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
+    } else if (error.status == 403) {
+      this.appService.showMessage("You are not authorized to create company.");
     } else {
       this.appService.showMessage("Error while creating company, please try again.");
     }

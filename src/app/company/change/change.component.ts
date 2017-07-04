@@ -159,8 +159,10 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.error = true;
     if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
+    } else if (error.status == 403) {
+      this.appService.showMessage("You are not authorized to change company.");
     } else {
-      this.appService.showMessage("Company " + this.companyService.companyEntity.company.comID + " change error.");
+      this.appService.showMessage("Company " + this.companyForm.value.comID + " change error.");
     }
   }
 

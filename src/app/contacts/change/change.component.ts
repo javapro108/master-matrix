@@ -291,6 +291,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.busy = false;
     if (error.status == 401) {
       this.appService.pushData({type:"SHOW-LOGIN"});
+    } else if (error.status == 403) {
+      this.appService.showMessage("You are not authorized to change contact.");
     } else {
       this.appService.showMessage("Contact " + this.conID + " change error.");
       console.log(error);
