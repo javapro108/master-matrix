@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { Subscription } from 'rxjs/Subscription'
+
 import { AppService } from '../services/app.service';
 
 @Component({
@@ -19,16 +22,37 @@ import { AppService } from '../services/app.service';
   ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  appService: AppService;
+  appSub: Subscription;
+  displaySideNav: string = 'show';
+
   constructor(
     private router: Router,
-    private appService: AppService
-  ){ }
+    appService: AppService
+  ){
+    this.appService = appService;
+    this.displaySideNav = 'show';
+  }
 
   ngOnInit(){
     this.appService.initApp();
+    this.appSub = this.appService.subscribe((data)=>this.rxUpdate(data));
   }
 
   ngOnDestroy(){
-
+    this.appSub.unsubscribe();
   }
+
+
+  rxUpdate(data){
+    if (data.type == 'TOGGLE-SIDE-NAV'){
+      if (this.displaySideNav == 'show') {
+        this.displaySideNav = 'hide';
+      } else {
+        this.displaySideNav = 'show';
+      }
+    }
+  }
+
 }

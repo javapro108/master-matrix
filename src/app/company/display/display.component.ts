@@ -21,7 +21,8 @@ export class DisplayComponent implements OnInit, OnDestroy{
   subRoute: Subscription;
   spCompanyTable: SpCompanyTableResult;
   companyDetail: CompanyDetail;
-
+  cmcPriority: boolean;
+  cmcComment: string;
 
   constructor(
     private router: Router,
@@ -79,6 +80,7 @@ export class DisplayComponent implements OnInit, OnDestroy{
     this.busy = false;
   }
   getCompanyError(error){
+    this.busy = false;
     if (error.status == 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {
@@ -86,12 +88,11 @@ export class DisplayComponent implements OnInit, OnDestroy{
     }
   }
 
-  changeCompany(company) {
+  changeCompany() {
     this.router.navigate(['../../change', this.companyDetail.company.comID], { relativeTo: this.activeRoute });
   }
 
   saveComments(cmcPriority,cmcComment){
-    debugger;
     this.displayDialog = false;
     let comment = {
       cmcCompanyID: this.companyDetail.company.comID,

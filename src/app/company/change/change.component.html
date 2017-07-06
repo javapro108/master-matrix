@@ -56,7 +56,7 @@
 
               <div class="ui-g-2 align-right"> District: </div>
               <div class="ui-g-10">
-                <p-dropdown [options]="appService.districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}" maxlength="5" placeholder="Required">
+                <p-dropdown [options]="districts" formControlName="comDistrict" filter="filter" [style]="{'width':'100%'}" maxlength="5" placeholder="Required">
                 </p-dropdown>
               </div>
 
@@ -79,7 +79,7 @@
 
               <div class="ui-g-3 align-right"> State: </div>
               <div class="ui-g-4">
-                <p-dropdown [options]="appService.states" formControlName="comState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
+                <p-dropdown [options]="states" formControlName="comState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
                 </p-dropdown>
               </div>
 
@@ -90,7 +90,7 @@
 
               <div class="ui-g-3 align-right">Country:</div>
               <div class="ui-g-3">
-                <p-dropdown [options]="appService.countries" formControlName="comCountry" filter="filter" maxlength="3" placeholder="Required">
+                <p-dropdown [options]="countries" formControlName="comCountry" filter="filter" maxlength="3" placeholder="Required">
                 </p-dropdown>
               </div>
             </div>
@@ -125,7 +125,7 @@
 
               <div class="ui-g-3 align-right"> State: </div>
               <div class="ui-g-4">
-                <p-dropdown [options]="appService.states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
+                <p-dropdown [options]="states" formControlName="comMailState" filter="filter" [style]="{'width':'100%'}" maxlength="2" placeholder="Required">
                 </p-dropdown>
               </div>
 
@@ -136,7 +136,7 @@
 
               <div class="ui-g-3 align-right">Country:</div>
               <div class="ui-g-3">
-                <p-dropdown [options]="appService.countries" formControlName="comMailCountry" filter="filter" maxlength="3" placeholder="Required">
+                <p-dropdown [options]="countries" formControlName="comMailCountry" filter="filter" maxlength="3" placeholder="Required">
                 </p-dropdown>
               </div>
             </div>
@@ -165,7 +165,7 @@
 
               <div class="ui-g-3 align-right"> State: </div>
               <div class="ui-g-4">
-                <p-dropdown [options]="appService.states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}" maxlength="2">
+                <p-dropdown [options]="states" formControlName="comDeliveryState" filter="filter" [style]="{'width':'100%'}" maxlength="2">
                 </p-dropdown>
               </div>
 
@@ -176,7 +176,7 @@
 
               <div class="ui-g-3 align-right">Country:</div>
               <div class="ui-g-3">
-                <p-dropdown [options]="appService.countries" formControlName="comDeliveryCountry" filter="filter" maxlength="3">
+                <p-dropdown [options]="countries" formControlName="comDeliveryCountry" filter="filter" maxlength="3">
                 </p-dropdown>
               </div>
 

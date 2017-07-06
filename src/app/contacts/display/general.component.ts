@@ -9,6 +9,7 @@ import { ContactDetail } from '../../services/contacts.types';
 export class GeneralComponent {
 
 	@Input() contactDetail : ContactDetail;
+  @Input() conID:string;
   @Input() busy : boolean;
 
 }

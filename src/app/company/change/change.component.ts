@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription'
 
+import {SelectItem} from 'primeng/primeng';
+
 import { BaseComponent } from  '../../common/base.component';
 
 import { AppService } from '../../services/app.service';
@@ -25,6 +27,9 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   subRoute: Subscription;
   companyEntity: CompanyEntity;
   comActive: boolean;
+  districts: SelectItem[];
+  states: SelectItem[];
+  countries: SelectItem[];
 
 
   constructor(
@@ -36,7 +41,11 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     private companyService:CompanyService
   ){
     super();
-    debugger;
+
+    this.districts = appService.districts;
+    this.states = appService.states;
+    this.countries = appService.countries;
+
     this.companyEntity = {
       company: {
         comID: "",
@@ -74,12 +83,15 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
 
   getSuccess(companyEntity){
-    console.log('get company');
-    console.log(companyEntity.company);
-    this.setCompanyFormValue(companyEntity.company);
-    this.comActive = !companyEntity.company.comInactive;
     this.busy = false;
-    this.companyEntity = companyEntity;
+    if (companyEntity.messages.length > 0){
+      this.appService.showMessage(companyEntity.messages[0].message);
+      this.location.back();
+    } else {
+      this.setCompanyFormValue(companyEntity.company);
+      this.comActive = !companyEntity.company.comInactive;
+      this.companyEntity = companyEntity;
+    }
   }
 
 
@@ -256,6 +268,11 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     });
 
     this.companyForm.setValue(companyFormValue);
+  }
+
+  canDeactivateRoute(){
+    this.appService.unLockObject("COMPANY", this.companyEntity.company.comID).subscribe((data)=>{}, (error)=>console.log(error));
+    return true;
   }
 
 }

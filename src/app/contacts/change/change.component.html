@@ -36,7 +36,7 @@
 
               <div class="ui-g-3 align-right">Prefix: </div>
               <div class="ui-g-9">
-                <p-dropdown [options]="appService.prefixOpts" formControlName="conCourtesy" placeholder="Required" maxlength="10"></p-dropdown>
+                <p-dropdown [options]="prefixOpts" formControlName="conCourtesy" placeholder="Required" maxlength="10"></p-dropdown>
               </div>
 
               <div class="ui-g-3 align-right">First name: </div>
@@ -63,7 +63,7 @@
 
               <div class="ui-g-2 align-right">Position: </div>
               <div class="ui-g-4">
-                <p-dropdown [options]="appService.positionOpts" formControlName="conPosition" [style]="{width:'95%'}" maxlength="10" placeholder="Required"></p-dropdown>
+                <p-dropdown [options]="positionOpts" formControlName="conPosition" [style]="{width:'95%'}" maxlength="10" placeholder="Required"></p-dropdown>
               </div>
 
 
@@ -135,7 +135,7 @@
 
               <div class="ui-g-3 align-right">State: </div>
               <div class="ui-g-3">
-                <p-dropdown [options]="appService.states" formControlName="conHomeState" filter="filter" [style]="{width:'100%'}" maxlength="2"> </p-dropdown>
+                <p-dropdown [options]="states" formControlName="conHomeState" filter="filter" [style]="{width:'100%'}" maxlength="2"> </p-dropdown>
               </div>
 
               <div class="ui-g-3 align-right">Zip Code: </div>
@@ -179,7 +179,7 @@
             </div>
             <div class="ui-g-9">
 
-              <p-multiSelect [options]="appService.disciplineOpts" formControlName="codDisciplineID" (onChange)="onMultiselectChange()"></p-multiSelect>
+              <p-multiSelect [options]="disciplineOpts" formControlName="codDisciplineID" (onChange)="onMultiselectChange()"></p-multiSelect>
 
             </div>
             <div class="ui-g-12">
@@ -215,30 +215,30 @@
                 </ng-template>
               </p-column>
 
-              <p-column field="cafAffialiateID" header="Affiliate" [editable]="true" [style]="{'overflow':'visible', 'width': '40%'}">
+              <p-column field="cafAffialiateID" header="Affiliate" [editable]="true" [style]="{'overflow':'visible', 'width': '32%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="selectedValue" [options]="appService.affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="selectedValue" [options]="affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOptsAll" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affiliateOptsAll" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
               </p-column>
 
-              <p-column field="cafStatus" header="Affiliate Status" [style]="{'overflow':'visible', 'width': '20%'}">
+              <p-column field="cafStatus" header="Affiliate Status" [style]="{'overflow':'visible', 'width': '32%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affStatusOpts" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
               </p-column>
 
-              <p-column field="cafstatus2" header="Product Status" [editable]="true" [style]="{'overflow':'visible', 'width': '35%'}">
+              <p-column field="cafstatus2" header="Product Status" [editable]="true" [style]="{'overflow':'visible', 'width': '31%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="productStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
               </p-column>
             </p-dataTable>
@@ -267,33 +267,33 @@
                 </ng-template>
               </p-column>
 
-              <p-column field="corAffialiateID" header="Affiliate ID" [editable]="true" [style]="{'overflow':'visible'}">
+              <p-column field="corAffialiateID" header="Affiliate ID" [editable]="true" [style]="{'overflow':'visible', 'width': '32%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
                   <p-dropdown [(ngModel)]="row[col.field]" [options]="repAffiliateOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.affiliateOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affiliateOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
               </p-column>
-              <p-column field="corRepID" header="Reps" [editable]="true" [style]="{'overflow':'visible'}">
+              <p-column field="corRepID" header="Reps" [editable]="true" [style]="{'overflow':'visible' , 'width': '32%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repOptsAll" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
               </p-column>
-              <p-column field="corStatus" header="RepsStatus" [editable]="true" [style]="{'overflow':'visible'}">
+              <p-column field="corStatus" header="RepsStatus" [editable]="true" [style]="{'overflow':'visible', 'width': '31%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="appService.repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="repStatusOpts" [autoWidth]="false" panelStyleClass="fixed" [style]="{'width':'100%'}">
                   </p-dropdown>
                 </ng-template>
               </p-column>
@@ -305,7 +305,7 @@
   </div>
 
 </div>
-
+<!--
 <p-dialog [(visible)]="showDuplicate" [width]="800">
   <p-header>
     Contacts With Similar Name
@@ -324,3 +324,4 @@
     </div>
   </div>
 </p-dialog>
+-->

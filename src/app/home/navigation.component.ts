@@ -10,7 +10,7 @@ import { AppService } from '../services/app.service';
   templateUrl: './navigation.component.html'
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  private navItems: MenuItem[];
+  navItems: MenuItem[];
 
   constructor(
     private router: Router,
@@ -19,11 +19,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.navItems = [{
-      label:'Overview',
-      icon:'',
-      routerLink: ['overview']
-    },
-    {
       label:'Company',
       icon:'fa fa-sitemap',
       items:[{
@@ -54,7 +49,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    
+
   }
 
 }

@@ -11,7 +11,7 @@
 					Company Name:
 				</div>
 				<div class="ui-g-9">
-					<b>{{contactDetail.contact.comName}} {{conId}} </b>
+					<b>{{contactDetail.contact.comName}}</b>
 				</div>
 
 				<div class="ui-g-3 align-right">
@@ -49,7 +49,7 @@
 					Web Page:
 				</div>
 				<div class="ui-g-9">
-					<b>{{contactDetail.contact.comWeb}}</b>
+					<b><a [href]="'http://'+contactDetail.contact.comWeb" target="_blank">{{contactDetail.contact.comWeb}}</a></b>
 				</div>
 
 				<div class="ui-g-3 align-right fa fa-envelope-o">
@@ -57,6 +57,13 @@
 				</div>
 				<div class="ui-g-9">
 					<b>{{contactDetail.contact.conEmail}}</b>
+				</div>
+
+				<div class="ui-g-3 align-right">
+					Internet password:
+				</div>
+				<div class="ui-g-9">
+					<b>{{conID}}</b>
 				</div>
 
 			</div >
@@ -160,7 +167,7 @@
 		        <p-column field="comName" header="Company Name">
 							<ng-template let-col let-row="rowData" pTemplate="body">
 		            <a>{{row[col.field]}}</a>
-		          </ng-template>							
+		          </ng-template>
 						</p-column>
 		      </p-dataTable>
 		</div>
@@ -271,7 +278,7 @@
 
 	</p-tabPanel>
 
-	<p-tabPanel header="Personal Informatoin" leftIcon="fa-user">
+	<p-tabPanel header="Personal Information" leftIcon="fa-user">
 		<div class="ui-g-6">
 			<div class="ui-g ui-widget-content">
 				<div class="ui-g-3 align-right">

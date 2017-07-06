@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,11 +28,25 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   conID:string;
   conActive: boolean;
 
+  @ViewChild(CompanySearchComponent) companySearchComp: CompanySearchComponent;
+
   affiliates = [];
   disciplines = [];
   reps = [];
 
-  disciplineOpts: SelectItem[];
+  states: SelectItem[] = [];
+  countries: SelectItem[] = [];
+  repOpts: SelectItem[] = [];
+  repOptsAll: SelectItem[] = [];
+  prefixOpts: SelectItem[] = [];
+  disciplineOpts: SelectItem[] = [];
+  disciplineOptsAll: SelectItem[] = [];
+  positionOpts: SelectItem[] = [];
+  affiliateOpts: SelectItem[] = [];
+  affiliateOptsAll: SelectItem[] = [];
+  affStatusOpts: SelectItem[] = [];
+  productStatusOpts: SelectItem[];
+  repStatusOpts: SelectItem[];
   repAffiliateOpts: SelectItem[];
 
   constructor(
@@ -52,6 +66,20 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
         conLName: "",
       }
     };
+
+    this.states = appService.states ;
+    this.countries = appService.countries ;
+    this.repOptsAll = appService.repOptsAll ;
+    this.repOpts = appService.repOpts ;
+    this.prefixOpts = appService.prefixOpts ;
+    this.disciplineOpts = appService.disciplineOpts ;
+    this.disciplineOptsAll = appService.disciplineOptsAll ;
+    this.positionOpts = appService.positionOpts ;
+    this.affiliateOpts = appService.affiliateOpts ;
+    this.affiliateOptsAll = appService.affiliateOptsAll ;
+    this.affStatusOpts = appService.affStatusOpts ;
+    this.productStatusOpts = appService.productStatusOpts ;
+    this.repStatusOpts = appService.repStatusOpts ;
 
   }
 
@@ -74,8 +102,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
   getSuccess(contactEntity) {
-    this.initValues(contactEntity);
     this.busy = false;
+    if (contactEntity.messages.length > 0){
+      this.appService.showMessage(contactEntity.messages[0].message);
+      this.location.back();
+    } else {
+      this.initValues(contactEntity);
+    }
   }
 
   getError(error) {
@@ -185,6 +218,9 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
   }
 
+  onBlurName(){
+
+  }
 
   onSubmit() {
     this.contactsForm.markAsPristine();
@@ -417,5 +453,11 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     });
     this.contactsForm.setValue(contactFormValue);
   }
+
+  canDeactivateRoute(){
+    this.appService.unLockObject("CONTACT", this.conID).subscribe((data)=>{}, (error)=>console.log(error));
+    return true;
+  }
+
 
 }

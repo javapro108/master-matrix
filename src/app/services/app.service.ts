@@ -11,14 +11,14 @@ import { User, AppMessage, NameValue } from './app.types';
 @Injectable()
 export class AppService {
 
-  serverUrl = 'http://localhost:8080/restjpa/api/';
+  //serverUrl = 'http://localhost:8080/restjpa/api/';
+  serverUrl = 'api/';
+  //serverUrl = 'http://localhost:8080/master-matrix/api/';
 
   rxService: BehaviorSubject<any>;
   user: User = {};
   latestMessage: AppMessage = {};
   appMessages: AppMessage[] = [];
-
-  displaySideNav: string = 'show';
 
   reps = [];
   affiliates = [];
@@ -47,7 +47,6 @@ export class AppService {
   ) {
     this.rxService = new BehaviorSubject({});
     this.user = { firstName: 'Guest' };
-    this.displaySideNav = 'show';
 
     this.productStatusOpts = [];
     this.productStatusOpts.push({ label: '', value: '' });
@@ -90,24 +89,33 @@ export class AppService {
     return this.document;
   }
 
-  toggleSideNav() {
-    if (this.displaySideNav == 'show') {
-      this.displaySideNav = 'hide';
-    } else {
-      this.displaySideNav = 'show';
-    }
-  }
-
   login(uName: String, pass: String) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(
-      'http://localhost:8080/restjpa/api/login',
+      this.serverUrl + 'login',
       { uNamePass: btoa(uName + ':' + pass) },
       options
     ).map(response => response.json());
   }
+
+  lockObject(objectType:string, objectId:string){
+    let lock = {
+      objectType: objectType,
+      objectId: objectId
+    };
+    return this.httpPost('app/lock', lock);
+  }
+
+  unLockObject(objectType:string, objectId:string){
+    let lock = {
+      objectType: objectType,
+      objectId: objectId
+    };
+    return this.httpPost('app/unlock', lock);
+  }
+
 
   setLoginUser(data) {
     window.localStorage.setItem("current-user", btoa(JSON.stringify(data)));
@@ -136,7 +144,17 @@ export class AppService {
     try {
       let newUser = JSON.parse(atob(window.localStorage.getItem("current-user")));
       if (this.user.token != newUser.token) {
-        this.user = newUser;
+        debugger;
+        this.user.firstName = newUser.firstName;
+        this.user.lastName = newUser.lastName;
+        this.user.department = newUser.department;
+        this.user.email = newUser.email;
+        this.user.token = newUser.token;
+        this.user.userName = newUser.userName;
+
+        this.httpGet('app/initapp')
+          .subscribe((appData)=>this.setAppData(appData), (error) => this.serverError(error));
+/*
         this.httpGet('app/states')
           .subscribe((states) => this.setStates(states), (error) => this.serverError(error));
         this.httpGet('app/countries')
@@ -159,17 +177,10 @@ export class AppService {
           .subscribe((reps) => this.setRepOptsAll(reps), (error) => console.log(error));
         this.httpGet('app/affiliates')
           .subscribe((affs) => this.setAffiliateOptsAll(affs), (error) => console.log(error));
+*/
       }
     } catch (error) {
       this.pushData({ type: "SHOW-LOGIN" });
-    }
-  }
-
-  serverError(error) {
-    if (error.status == 401) {
-      this.pushData({ type: "SHOW-LOGIN" });
-    } else {
-      console.log(error);
     }
   }
 
@@ -180,7 +191,6 @@ export class AppService {
     return this.http.get(this.serverUrl + url, options)
       .map(response => response.json());
   }
-
 
   httpPost(url: string, data: any) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -197,6 +207,41 @@ export class AppService {
     let options = new RequestOptions({ headers: headers });
     return this.http.put(this.serverUrl + url, data, options)
       .map(response => response.json());
+  }
+
+  setAppData(appData){
+    this.setDistricts(appData.districts);
+    this.setStates(appData.states);
+    this.setCountries(appData.countries);
+		this.setPrefixes(appData.prefixOpts);
+		this.setRepOpts(appData.repOpts);
+    this.setRepOptsAll(appData.reps);
+		this.setDisciplines(appData.dispOpts);
+		this.setPositions(appData.posOpts);
+		this.setAffiliateOpts(appData.affOpts);
+		this.setAffiliateOptsAll(appData.affOptsAll);
+		this.setAffStatus(appData.affStatus);
+  }
+
+  serverError(error) {
+    if (error.status == 401) {
+      this.pushData({ type: "SHOW-LOGIN" });
+    } else {
+      console.log(error);
+    }
+  }
+
+  setDistricts(districts) {
+    this.districts.push({
+      value: '',
+      label: ''
+    });
+    districts.forEach((district) => {
+      this.districts.push({
+        value: district.emdDisID,
+        label: district.disDescription
+      });
+    });
   }
 
   setStates(states) {
@@ -223,19 +268,6 @@ export class AppService {
       this.countries.push({
         value: country.couID,
         label: country.couCountry
-      });
-    });
-  }
-
-  setDistricts(districts) {
-    this.districts.push({
-      value: '',
-      label: ''
-    });
-    districts.forEach((district) => {
-      this.districts.push({
-        value: district.emdDisID,
-        label: district.disDescription
       });
     });
   }

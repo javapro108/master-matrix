@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/primeng';
 
 import { AppService } from '../services/app.service';
-
+import { User } from '../services/app.types';
 
 @Component({
   selector: 'header-view',
@@ -13,17 +13,18 @@ import { AppService } from '../services/app.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   infoItems: MenuItem[];
-
+  user: User;
 
   constructor(
     private router: Router,
     private appService: AppService
   ) {
-
+    this.user = appService.user;
   }
 
   ngOnInit() {
     this.infoItems = [
+/*
       { label: 'Bootstrap', icon: 'fa-picture-o', command: () => { this.changeTheme('bootstrap/theme.css'); } },
       { label: 'Cruze', icon: 'fa-picture-o', command: () => { this.changeTheme('cruze/theme.css'); } },
       { label: 'Cupertino', icon: 'fa-picture-o', command: () => { this.changeTheme('cupertino/theme.css'); } },
@@ -41,6 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       { label: 'Start', icon: 'fa-picture-o', command: () => { this.changeTheme('start/theme.css'); } },
       { label: 'Trontastic', icon: 'fa-picture-o', command: () => { this.changeTheme('trontastic/theme.css'); } },
       { label: 'Voclain', icon: 'fa-picture-o', command: () => { this.changeTheme('voclain/theme.css'); } }
+*/
     ];
   }
 
@@ -54,8 +56,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   onSideNavToggle() {
-    debugger;
-    this.appService.toggleSideNav();
+    this.appService.pushData({ type: "TOGGLE-SIDE-NAV" });
   }
 
   showMessages() {
@@ -63,7 +64,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logOff() {
-    window.localStorage.removeItem("Auth-token");
+    window.localStorage.removeItem("current-user");
     this.router.navigate(['login']);
   }
 }

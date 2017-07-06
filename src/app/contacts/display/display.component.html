@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div class="ui-g-12">
-			<general-contacts-view [contactDetail]="contactDetail"></general-contacts-view>
+			<general-contacts-view [contactDetail]="contactDetail" [conID]="conID"></general-contacts-view>
 		</div>
 
 		<div class="ui-g-12">
@@ -121,7 +121,7 @@
 				<p-footer>
 					<div class="ui-helper-clearfix">
 						<div class="ui-panel-title ui-g-11" style="font-size:16px;display:inline-block;margin-top:2px"></div>
-						<div class="ui-g-1"><button pButton type="button" icon="fa-plus-square" label="Add" iconPos="left" [style]="{'float':'right', 'width':'10%'}" (click)="displayDialog=true;cmdPriority='';cmdComment='';"></button> </div>
+						<div class="ui-g-1"><button pButton type="button" icon="fa-plus-square" label="Add" iconPos="left" [style]="{'float':'right', 'width':'10%'}" (click)="displayDialog=true;cmdPriority=false;cmdComment='';"></button> </div>
 					</div>
 				</p-footer>
 			</p-panel>

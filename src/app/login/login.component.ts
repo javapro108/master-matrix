@@ -10,7 +10,7 @@ import { AppService } from '../services/app.service';
   styleUrls: ['/login.styles.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
+  busy:boolean = false;
   username = new FormControl('');
   password = new FormControl('');
   loginForm: FormGroup;
@@ -20,14 +20,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     private builder: FormBuilder,
     private router: Router,
     private appService: AppService
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.busy = false;
     this.buildForm();
   }
 
   ngOnDestroy() {
-
+    this.busy = false;
   }
 
   buildForm() {
@@ -46,12 +49,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
+    this.busy = true;
     this.loginForm.value.username;
     this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe((data)=> this.loginSuccess(data), (error)=>this.loginError(error));
+      .subscribe((data)=>this.loginSuccess(data), (error)=>this.loginError(error));
   }
 
   loginSuccess(data) {
+    this.busy = false;
     if (data.token) {
       debugger;
       this.appService.setLoginUser(data);
@@ -63,6 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginError(error) {
+    this.busy = false;
     console.log(error);
     this.loginMessage = "Login error, please try again" ;
     //this.appService.showMessage("Login error, please try again");

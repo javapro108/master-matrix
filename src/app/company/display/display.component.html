@@ -18,14 +18,14 @@
 
   <div class="ui-g-12 ui-widget-content content-area">
     <p-panel header="Company Details" [toggleable]="true">
-      <form [formGroup]="companyForm" (ngSubmit)="onSubmit()" class="content-area">
+      <form [formGroup]="companyForm" class="content-area">
         <div class="ui-g-12 content-area">
           <div class="ui-g-12">
           <div class="ui-g-2">
             Created By: <b>{{companyDetail.company.comCreatedBy}} </b>
           </div>
           <div class="ui-g-4">
-            Created Date: <b>{{companyDetail.company.comDate}} </b>
+            Created Date: <b>{{companyDetail.company.comDate | date:"longDate"}}</b>
           </div>
           <div class="ui-g-2">
             Revised By: <b>{{companyDetail.company.comRevisedBy}}</b>
@@ -40,7 +40,7 @@
               <div class="ui-g ui-widget-content">
                 <div class="ui-g-1"></div>
                 <div class="ui-g-11">
-                  <B> General Information</B>
+                  <B><u>General Information</u></B>
                 </div>
 
                 <!-- Name:{{companyDetail.company.comName}}-->
@@ -71,14 +71,14 @@
 
                 </div>
                 <div class="ui-g-2 align-right fa fa-globe"> Web Site: </div>
-                <b>{{companyDetail.company.comWeb}}</b>
+                <b><a [href]="'http://'+companyDetail.company.comWeb" target="_blank">{{companyDetail.company.comWeb}}</a></b>
               </div>
             </div>
 
             <div class="ui-g-6">
               <div class="ui-g ui-widget-content">
                 <div class="ui-g-1"></div>
-                <div class="ui-g-11"><b>Main Address</b></div>
+                <div class="ui-g-11"><b><u>Main Address</u></b></div>
 
                 <div class="ui-g-3 align-right"> Address: </div>
                 <div class="ui-g-9">
@@ -102,7 +102,7 @@
               <div class="ui-g ui-widget-content">
                 <span class="ui-g-1"></span>
                 <div class="ui-g-5">
-                  <B>Mailing Address</B>
+                  <B><u>Mailing Address</u></B>
                 </div>
                 <div class="ui-g-6">
                 </div>
@@ -120,7 +120,7 @@
               <div class="ui-g ui-widget-content">
                 <div class="ui-g-1"></div>
                 <div class="ui-g-5">
-                  <B>Delivery Address</B>
+                  <B><u>Delivery Address</u></B>
                 </div>
                 <div class="ui-g-6"></div>
 
@@ -212,7 +212,7 @@
       <p-footer>
         <div class="ui-helper-clearfix">
           <div class="ui-panel-title ui-g-11" style="font-size:16px;display:inline-block;margin-top:2px"></div>
-          <div class="ui-g-1"><button pButton type="button" icon="fa-plus-square" label="Add" iconPos="left" [style]="{'float':'right', 'width':'10%'}" (click)="displayDialog=true;cmcPriority='';cmcComment='';"></button> </div>
+          <div class="ui-g-1"><button pButton type="button" icon="fa-plus-square" label="Add" iconPos="left" [style]="{'float':'right', 'width':'10%'}" (click)="displayDialog=true;cmcPriority=false;cmcComment='';"></button> </div>
         </div>
       </p-footer>
 

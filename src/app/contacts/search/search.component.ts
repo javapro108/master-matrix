@@ -6,6 +6,7 @@ import {SelectItem} from 'primeng/primeng';
 
 import { AppService } from  '../../services/app.service';
 import { ContactsService } from '../../services/contacts.service';
+import { FindResult } from '../../services/contacts.types';
 
 @Component({
   selector: 'search-company-view',
@@ -18,6 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   columnOptions: SelectItem[];
   selectedColumns: SelectItem[];
   searchForm: FormGroup;
+  findResults: FindResult[];
 
   constructor(
     private router: Router,
@@ -62,6 +64,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.selectedColumns = this.cols.filter((column) => {
       return (column.display == true ? true : false);
     });
+
+    this.findResults = this.contactsService.contactEntity.findResults;
+
   }
 
   ngOnDestroy(){
@@ -71,7 +76,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   onFind() {
 
     this.contactsService.contactEntity.findParams = this.searchForm.value;
-    
+
     // if both active and inactive selected then call findContactsAdvAll
     if (this.contactsService.contactEntity.findParams.conInactive == true
       && this.contactsService.contactEntity.findParams.conActive == true) {
@@ -110,13 +115,15 @@ export class SearchComponent implements OnInit, OnDestroy {
       contact.actDate = this.appService.formatDate(contact.actDate);
       return contact;
     });
+    this.findResults = this.contactsService.contactEntity.findResults;
   }
 
 
   findError(error) {
 
     this.busy = false;
-
+    this.findResults = [];
+    this.contactsService.contactEntity.findResults = [];
     if (error.status = 401) {
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {

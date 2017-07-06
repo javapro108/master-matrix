@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from './services/app.service';
+import { AppMessage } from './services/app.types';
 
 import { Subscription } from 'rxjs/Subscription'
 
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit, OnDestroy{
   loginForm: FormGroup;
   showLogin: boolean = false;
   loginMessage: string;
+  latestMessage: AppMessage = {};
+  appMessages: AppMessage[] = [];
 
   constructor(
     private appService: AppService,
@@ -40,6 +43,8 @@ export class AppComponent implements OnInit, OnDestroy{
 
   appServiceUpdate(data){
     if (data && data.type == "NEW-MESSAGE"){
+      this.latestMessage = this.appService.latestMessage;
+      this.appMessages = this.appService.appMessages;
       this.showMessages = true;
       if (this.timeOutHandle){
         clearTimeout(this.timeOutHandle);
@@ -47,6 +52,8 @@ export class AppComponent implements OnInit, OnDestroy{
       this.timeOutHandle = setTimeout(() => this.showMessages = false, 5000 );
     }
     if (data && data.type == "SHOW-MESSAGE"){
+      this.latestMessage = this.appService.latestMessage;
+      this.appMessages = this.appService.appMessages;
       this.showMessages = true;
     }
     if (data && data.type == "SHOW-LOGIN"){
@@ -81,6 +88,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   clearMessages(){
     this.appService.appMessages = [];
+    this.appMessages = [];
   }
 
 }

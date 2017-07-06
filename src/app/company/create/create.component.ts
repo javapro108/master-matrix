@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import {SelectItem} from 'primeng/primeng';
+
 import { BaseComponent } from  '../../common/base.component';
 
 import { AppService } from '../../services/app.service';
@@ -19,6 +21,9 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   companyForm: FormGroup;
   duplicateCompanies: any;
   showDuplicate: boolean;
+  districts: SelectItem[];
+  states: SelectItem[];
+  countries: SelectItem[];
 
   constructor(
     private router: Router,
@@ -29,6 +34,9 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     private companyService: CompanyService
   ) {
     super();
+    this.districts = appService.districts;
+    this.states = appService.states;
+    this.countries = appService.countries;
   }
 
 

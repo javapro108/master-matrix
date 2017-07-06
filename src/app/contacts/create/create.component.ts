@@ -31,8 +31,21 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   disciplines = [];
   reps = [];
 
-  disciplineOpts: SelectItem[];
+  states: SelectItem[] = [];
+  countries: SelectItem[] = [];
+  repOpts: SelectItem[] = [];
+  repOptsAll: SelectItem[] = [];
+  prefixOpts: SelectItem[] = [];
+  disciplineOpts: SelectItem[] = [];
+  disciplineOptsAll: SelectItem[] = [];
+  positionOpts: SelectItem[] = [];
+  affiliateOpts: SelectItem[] = [];
+  affiliateOptsAll: SelectItem[] = [];
+  affStatusOpts: SelectItem[] = [];
+  productStatusOpts: SelectItem[];
+  repStatusOpts: SelectItem[];
   repAffiliateOpts: SelectItem[];
+
 
   constructor(
     private router: Router,
@@ -45,6 +58,21 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   ) {
     super();
     this.contactsService.subscribe((data)=>this.rxUpdate(data));
+
+    this.states = appService.states ;
+    this.countries = appService.countries ;
+    this.repOptsAll = appService.repOptsAll ;
+    this.repOpts = appService.repOpts ;
+    this.prefixOpts = appService.prefixOpts ;
+    this.disciplineOpts = appService.disciplineOpts ;
+    this.disciplineOptsAll = appService.disciplineOptsAll ;
+    this.positionOpts = appService.positionOpts ;
+    this.affiliateOpts = appService.affiliateOpts ;
+    this.affiliateOptsAll = appService.affiliateOptsAll ;
+    this.affStatusOpts = appService.affStatusOpts ;
+    this.productStatusOpts = appService.productStatusOpts ;
+    this.repStatusOpts = appService.repStatusOpts ;
+
   }
 
   ngOnInit(): void {
@@ -172,6 +200,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
       row.cafAffialiateID = selectedValue;
       this.updateRepAffiliate();
     }
+    selectedValue = "";
   }
 
   addAffiliaterow() {

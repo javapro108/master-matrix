@@ -74,3 +74,55 @@ display-contact-view {
   display: flex;
   flex-flow: column;
 }
+
+
+.login-center-div {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+   background-image: url("./assets/images/9.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  border-radius: 3px;
+}
+
+.login-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 400px;
+	text-align: center;
+  background-color: rgba(0,0,0,0.4);
+	border-radius: 4px;
+	margin: 0 auto;
+}
+
+.login-container-img {
+	width: 5px;
+	height: 5px;
+	margin-top: -60px;
+	margin-bottom: 60 px;
+	margin-left: 125px;
+}
+
+.login-label-color {
+	color: White;
+}
+
+.login-label-color{
+	color: White;
+}
+
+.login-footer {
+  background-color: rgba(0,0,0,0.4);
+ }
+
+.login-header {
+  background-color: rgba(0,0,0,0.4);
+}

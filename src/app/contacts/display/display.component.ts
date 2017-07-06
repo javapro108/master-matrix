@@ -27,6 +27,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   disciplines: any[];
   affiliates: any[];
   reps: any[];
+  cmdPriority: boolean;
+  cmdComment: string;
 
   constructor(
     private router: Router,
@@ -146,7 +148,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeContact(contact) {
+  changeContact() {
     this.router.navigate(['../../change', this.conID], { relativeTo: this.activeRoute });
   }
 

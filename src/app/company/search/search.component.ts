@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
+import { FindCompanyResult } from '../../services/company.types';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   busy:Boolean = false;
   searchForm: FormGroup;
+  findCompanyResults:FindCompanyResult;
 
   constructor(
     private router: Router,
@@ -29,6 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       comName:     [this.companyService.companyEntity.findParams.comName,     Validators.required],
       comInactive: [this.companyService.companyEntity.findParams.comInactive]
     });
+    this.findCompanyResults = this.companyService.companyEntity.findCompanyResults;
   }
 
   ngOnDestroy(){
@@ -37,7 +40,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   onFind(){
     this.companyService.companyEntity.findParams = this.searchForm.value;
-    
+
     if (this.companyService.companyEntity.findParams.comInactive != true ) {
       this.companyService.companyEntity.findParams.comInactive = false;
     }
@@ -58,10 +61,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   findSuccess(findResult){
     this.busy = false;
+    this.findCompanyResults = findResult.findCompanyResults;
     this.companyService.companyEntity.findCompanyResults = findResult.findCompanyResults;
   }
   findError(error){
     this.busy = false;
+    this.findCompanyResults = [];
+    this.companyService.companyEntity.findCompanyResults = [];
     if (error.status = 401){
       this.appService.pushData({type:"SHOW-LOGIN"});
     } else {

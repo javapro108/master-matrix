@@ -1,3 +1,10 @@
+<!--
+<p-blockUI id="login-block" [blocked]="busy" [target]="">
+  <div id="login-block" style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
+-->
 <div class="home">
   <div class="header login-header">
     <div class="ui-g ui-fluid">
@@ -8,20 +15,20 @@
   </div>
   <div class="main-content">
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()" (keydown)="keyDownFunction($event)">
-      <div class="ui-g-12 ui-fluid center-div">
-        <div class="ui-g container">
+      <div class="ui-g-12 ui-fluid login-center-div">
+        <div class="ui-g login-container">
           <div class="ui-g-12" *ngIf="loginMessage != null">
             <b style="color:red;">{{loginMessage}}</b>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-1"> </div>
-            <div class="ui-g-4 align-right label-color"><b>User name</b></div>
+            <div class="ui-g-4 align-right login-label-color"><b>User name</b></div>
             <div class="ui-g-4"><input pInputText type="text" placeholder="Required" formControlName="username"></div>
             <div class="ui-g-3"> </div>
           </div>
           <div class="ui-g-12">
             <div class="ui-g-1"> </div>
-            <div class="ui-g-4 align-right label-color"><b>Password</b></div>
+            <div class="ui-g-4 align-right login-label-color"><b>Password</b></div>
             <div class="ui-g-4"><input pInputText type="password" placeholder="Required" formControlName="password"></div>
             <div class="ui-g-3"> </div>
           </div>
