@@ -11,9 +11,14 @@ import { User, AppMessage, NameValue } from './app.types';
 @Injectable()
 export class AppService {
 
+  //Stand alone server on development
   //serverUrl = 'http://localhost:8080/restjpa/api/';
-  serverUrl = 'api/';
+
+  //Stand alone server
   //serverUrl = 'http://localhost:8080/master-matrix/api/';
+
+  //Final Deployed On Same Server - Production Mode
+  serverUrl = 'api/';
 
   rxService: BehaviorSubject<any>;
   user: User = {};

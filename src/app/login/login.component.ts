@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from '../services/app.service';
@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private builder: FormBuilder,
     private router: Router,
+    private activeRoute : ActivatedRoute,
     private appService: AppService
   ) {
 
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (data.token) {
       debugger;
       this.appService.setLoginUser(data);
-      this.router.navigate(['../home']);
+      this.router.navigate(['../home'], { relativeTo: this.activeRoute });
     } else {
       this.loginMessage = "Invalid valid username or password.";
       //this.appService.showMessage("Invalid valid username or password.");
