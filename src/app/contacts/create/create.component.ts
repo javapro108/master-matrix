@@ -132,10 +132,12 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
       return;
     }
 
+    /*
     if(repsSend.length == 0){
       this.appService.showMessage("Please enter reps");
       return;
     }
+    */
 
     let contactEntity = {
       contact: this.contactsForm.value,
@@ -145,7 +147,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     };
 
     this.busy = true;
-
+    console.log(contactEntity);
     this.contactsService.createContact(contactEntity)
         .subscribe((data)=>this.createSuccess(data), (error)=>this.createError(error));
 

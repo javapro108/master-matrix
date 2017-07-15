@@ -327,10 +327,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       return;
     }
 
+    /*
     if(!repOk){
       this.appService.showMessage("Please enter reps");
       return;
     }
+    */
 
     let contactEntity = {
       contact: this.contactsForm.value,

@@ -116,7 +116,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     };
     companyEntity.company = company;
     companyEntity.comments = [comment];
-
+    console.log(companyEntity);
     this.companyService.createCompany(companyEntity)
       .subscribe((data) => this.createSuccess(data), (error) => this.createError(error));
     this.companyForm.markAsPristine();
