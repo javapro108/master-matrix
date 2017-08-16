@@ -1,13 +1,14 @@
 <div class="header">
-  <p-toolbar>
-      <div class="ui-toolbar-group-left">
-          <button pButton type="button" icon="fa fa-bars" (click)="onSideNavToggle()"></button>
-      </div>
+    <p-toolbar>
+        <div class="ui-toolbar-group-left">
+            <button pButton type="button" icon="fa fa-bars" (click)="onSideNavToggle()"></button>
+        </div>
 
-      <div class="ui-toolbar-group-right">
-          <p-splitButton [label]="user.firstName" icon="fa-user-circle-o" [model]="infoItems"></p-splitButton>
-          <button pButton type="button" icon="fa-exclamation" (click)="showMessages()"></button>
-          <button pButton type="button" icon="fa-power-off" (click)="logOff()"></button>
-      </div>
-  </p-toolbar>
+        <div class="ui-toolbar-group-right">
+            <button pButton type="button" label="Generate Document" icon="" (click)="getDocument()"></button>
+            <p-splitButton [label]="user.firstName" icon="fa-user-circle-o" [model]="infoItems"></p-splitButton>
+            <button pButton type="button" icon="fa-exclamation" (click)="showMessages()"></button>
+            <button pButton type="button" icon="fa-power-off" (click)="logOff()"></button>
+        </div>
+    </p-toolbar>
 </div>

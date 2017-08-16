@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { AppService } from './services/app.service';
-import { AppMessage } from './services/app.types';
+import { AppMessage, GlobalObject } from './services/app.types';
 
 import { Subscription } from 'rxjs/Subscription'
 
@@ -12,12 +12,13 @@ import { Subscription } from 'rxjs/Subscription'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
 
   title = 'app';
+  globalObject: GlobalObject;
   showMessages: boolean = false;
   timeOutHandle: any;
-  appServiceSub : Subscription;
+  appServiceSub: Subscription;
   loginForm: FormGroup;
   showLogin: boolean = false;
   loginMessage: string;
@@ -27,41 +28,44 @@ export class AppComponent implements OnInit, OnDestroy{
   constructor(
     private appService: AppService,
     private builder: FormBuilder
-  ){}
-
-  ngOnInit(){
-    this.appServiceSub = this.appService.subscribe((data)=>this.appServiceUpdate(data))
-    this.loginForm = this.builder.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required]
-      });
+  ) {
+    this.globalObject = appService.globalObject;
   }
 
-  ngOnDestroy(){
+  ngOnInit() {
+    this.appServiceSub = this.appService.subscribe((data) => this.appServiceUpdate(data))
+    this.loginForm = this.builder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+    this.globalObject.busy = false;
+  }
+
+  ngOnDestroy() {
     this.appServiceSub.unsubscribe();
   }
 
-  appServiceUpdate(data){
-    if (data && data.type == "NEW-MESSAGE"){
+  appServiceUpdate(data) {
+    if (data && data.type == "NEW-MESSAGE") {
       this.latestMessage = this.appService.latestMessage;
       this.appMessages = this.appService.appMessages;
       this.showMessages = true;
-      if (this.timeOutHandle){
+      if (this.timeOutHandle) {
         clearTimeout(this.timeOutHandle);
       }
-      this.timeOutHandle = setTimeout(() => this.showMessages = false, 5000 );
+      this.timeOutHandle = setTimeout(() => this.showMessages = false, 5000);
     }
-    if (data && data.type == "SHOW-MESSAGE"){
+    if (data && data.type == "SHOW-MESSAGE") {
       this.latestMessage = this.appService.latestMessage;
       this.appMessages = this.appService.appMessages;
       this.showMessages = true;
     }
-    if (data && data.type == "SHOW-LOGIN"){
+    if (data && data.type == "SHOW-LOGIN") {
       this.showLogin = true;
     }
   }
 
-  showLoginForm(){
+  showLoginForm() {
     this.loginMessage = "";
     this.showLogin = true;
   }
@@ -69,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy{
   onLogin() {
     this.loginForm.value.username;
     this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe((data)=> this.loginSuccess(data), (error)=>this.loginError(error));
+      .subscribe((data) => this.loginSuccess(data), (error) => this.loginError(error));
   }
 
   loginSuccess(data) {
@@ -83,10 +87,10 @@ export class AppComponent implements OnInit, OnDestroy{
 
   loginError(error) {
     console.log(error);
-    this.loginMessage = "Login error, please try again" ;
+    this.loginMessage = "Login error, please try again";
   }
 
-  clearMessages(){
+  clearMessages() {
     this.appService.appMessages = [];
     this.appMessages = [];
   }

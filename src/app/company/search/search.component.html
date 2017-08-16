@@ -1,18 +1,12 @@
-<p-blockUI [blocked]="busy" [target]="">
-  <div style="position:absolute;top:40%;left:45%">
-    <font size="5" color="black">Loading...</font>
-  </div>
-</p-blockUI>
-
 <div class="content-area">
   <p-panel header="Find Company" [toggleable]="true">
-    <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header" >
+    <form [formGroup]="searchForm" (ngSubmit)="onFind()" class="header">
       <div class="ui-g ui-fluid">
         <div class="ui-g-12">
 
           <div class="ui-g-2">Company Name:</div>
           <div class="ui-g-4">
-            <input pInputText type="text" name="comName" id="comName" placeholder="Use % for wildcard serch" formControlName="comName" >
+            <input pInputText type="text" name="comName" id="comName" placeholder="Use % for wildcard serch" formControlName="comName">
           </div>
           <div class="ui-g-2">
             <p-checkbox name="comInactive" label="Inactive:" id="comInactive" formControlName="comInactive" binary="true"></p-checkbox>
@@ -28,48 +22,25 @@
   </p-panel>
   <div class="content-area">
     <div>
-      <p-dataTable [value]="findCompanyResults"
-                   [rows]="20"
-                   [paginator]="true"
-                   [pageLinks]="5"
-                   [rowsPerPageOptions]="[10,20,30,40,50]" >
+      <p-dataTable [value]="findCompanyResults" [rows]="20" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[10,20,30,40,50]">
 
-        <p-column styleClass="col-button"  [style]="{'width':'7%'}">
-           <ng-template let-company="rowData" pTemplate="body">
-               <button type="button" pButton (click)="changeCompany(company)" icon="fa-pencil"></button>
-               <button type="button" pButton (click)="displayCompany(company)" icon="fa-binoculars"></button>
-           </ng-template>
-       </p-column>
+        <p-column styleClass="col-button" [style]="{'width':'7%'}">
+          <ng-template let-company="rowData" pTemplate="body">
+            <button type="button" pButton (click)="changeCompany(company)" icon="fa-pencil"></button>
+            <button type="button" pButton (click)="displayCompany(company)" icon="fa-binoculars"></button>
+          </ng-template>
+        </p-column>
 
-        <p-column field="comID"
-                  header="ID"
-                  [style]="{'width':'10%'}"
-                  [filter]="true" filterPlaceholder="Search"
-                  [sortable]="true">
-                  </p-column>
-        <p-column field="comName"
-                  header="Name"
-                  [style]="{'width':'25%'}"
-                  [sortable]="true"
-                  [filter]="true" filterPlaceholder="Search">
-                  </p-column>
-        <p-column field="comAlias" header="Alias"
-                  [style]="{'width':'25%'}"
-                  [sortable]="true"
-                  [filter]="true" filterPlaceholder="Search">
-                  </p-column>
-        <p-column field="comCity"
-                  header="City"
-                  [style]="{'width':'20%'}"
-                  [sortable]="true"
-                  [filter]="true" filterPlaceholder="Search">
-                  </p-column>
-        <p-column field="comState"
-                  header="State"
-                  [style]="{'width':'10%'}"
-                  [sortable]="true"
-                  [filter]="true" filterPlaceholder="Search">
-                  </p-column>
+        <p-column field="comID" header="ID" [style]="{'width':'10%'}" [filter]="true" filterPlaceholder="Search" [sortable]="true">
+        </p-column>
+        <p-column field="comName" header="Name" [style]="{'width':'25%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+        <p-column field="comAlias" header="Alias" [style]="{'width':'25%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+        <p-column field="comCity" header="City" [style]="{'width':'20%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
+        <p-column field="comState" header="State" [style]="{'width':'10%'}" [sortable]="true" [filter]="true" filterPlaceholder="Search">
+        </p-column>
       </p-dataTable>
     </div>
   </div>

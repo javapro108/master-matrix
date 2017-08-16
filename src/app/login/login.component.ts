@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
+import { BaseComponent } from '../common/base.component';
 import { AppService } from '../services/app.service';
 
 @Component({
@@ -9,8 +10,7 @@ import { AppService } from '../services/app.service';
   templateUrl: './login.component.html',
   styleUrls: ['/login.styles.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  busy:boolean = false;
+export class LoginComponent extends BaseComponent implements OnInit, OnDestroy {
   username = new FormControl('');
   password = new FormControl('');
   loginForm: FormGroup;
@@ -19,19 +19,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private activeRoute : ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private appService: AppService
   ) {
-
+    super();
+    this.globalObject = appService.globalObject;
   }
 
   ngOnInit(): void {
-    this.busy = false;
     this.buildForm();
   }
 
   ngOnDestroy() {
-    this.busy = false;
   }
 
   buildForm() {
@@ -50,17 +49,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    this.busy = true;
+    this.globalObject.busy = true;
     this.loginForm.value.username;
     this.appService.login(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe((data)=>this.loginSuccess(data), (error)=>this.loginError(error));
+      .subscribe((data) => this.loginSuccess(data), (error) => this.loginError(error));
   }
 
   loginSuccess(data) {
-    this.busy = false;
     if (data.token) {
       debugger;
       this.appService.setLoginUser(data);
+      this.globalObject.busy = false;
       this.router.navigate(['../home'], { relativeTo: this.activeRoute });
     } else {
       this.loginMessage = "Invalid valid username or password.";
@@ -69,9 +68,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   loginError(error) {
-    this.busy = false;
     console.log(error);
-    this.loginMessage = "Login error, please try again" ;
+    this.globalObject.busy = false;
+    this.loginMessage = "Login error, please try again";
     //this.appService.showMessage("Login error, please try again");
   }
 }

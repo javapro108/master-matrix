@@ -8,8 +8,7 @@
 
   <div class="ui-g-12 ui-widget-content header">
     <div class="ui-g-6">
-      <button pButton type="button" class="ui-button-info"
-        [label]="'Change Contact: ' + conID + ' - ' + contactEntity.contact.conCourtesy + ' ' + contactEntity.contact.conFName + ' '+ contactEntity.contact.conLName">
+      <button pButton type="button" class="ui-button-info" [label]="'Change Contact: ' + conID + ' - ' + contactEntity.contact.conCourtesy + ' ' + contactEntity.contact.conFName + ' '+ contactEntity.contact.conLName">
       </button>
     </div>
     <div class="ui-g-2">
@@ -155,12 +154,14 @@
 
               <div class="ui-g-3 align-right">Birthday: </div>
               <div class="ui-g-3">
-                <p-calendar formControlName="conBirthday" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readonlyInput="true"></p-calendar>
+                <p-calendar formControlName="conBirthday" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050"
+                  readonlyInput="true"></p-calendar>
               </div>
 
               <div class="ui-g-3 align-right">Anniversary: </div>
               <div class="ui-g-3">
-                <p-calendar formControlName="conAnniversary" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050" readonlyInput="true"></p-calendar>
+                <p-calendar formControlName="conAnniversary" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1925:2050"
+                  readonlyInput="true"></p-calendar>
               </div>
 
               <div class="ui-g-3 align-right">Personal Email: </div>
@@ -217,10 +218,12 @@
 
               <p-column field="cafAffialiateID" header="Affiliate" [editable]="true" [style]="{'overflow':'visible', 'width': '32%'}">
                 <ng-template let-col let-row="rowData" pTemplate="editor">
-                  <p-dropdown [(ngModel)]="selectedValue" [options]="affiliateOpts" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="affSelValue" [options]="affiliateOpts" (onChange)="onAffiliateSelect(affSelValue, row); affSelValue = '';"
+                    [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
                 <ng-template let-col let-row="rowData" pTemplate="body">
-                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affiliateOptsAll" (onChange)="onAffiliateSelect(selectedValue, row)" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
+                  <p-dropdown [(ngModel)]="row[col.field]" [options]="affiliateOptsAll" (onChange)="onAffiliateSelect(selectedValue, row)"
+                    [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
                 </ng-template>
               </p-column>
 

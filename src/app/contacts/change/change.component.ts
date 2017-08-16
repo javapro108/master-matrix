@@ -7,9 +7,9 @@ import { Subscription } from 'rxjs/Subscription'
 
 import { SelectItem } from 'primeng/primeng';
 
-import { BaseComponent } from  '../../common/base.component';
+import { BaseComponent } from '../../common/base.component';
 
-import { AppService } from  '../../services/app.service';
+import { AppService } from '../../services/app.service';
 import { ContactsService } from '../../services/contacts.service';
 import { CompanyService } from '../../services/company.service';
 import { CompanySearchComponent } from '../../common/companysearch.component';
@@ -25,8 +25,9 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   contactsForm: FormGroup;
   rxSub: Subscription;
   contactEntity: ContactEntity;
-  conID:string;
+  conID: string;
   conActive: boolean;
+  affSelValue: string = "";
 
   @ViewChild(CompanySearchComponent) companySearchComp: CompanySearchComponent;
 
@@ -67,19 +68,19 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       }
     };
 
-    this.states = appService.states ;
-    this.countries = appService.countries ;
-    this.repOptsAll = appService.repOptsAll ;
-    this.repOpts = appService.repOpts ;
-    this.prefixOpts = appService.prefixOpts ;
-    this.disciplineOpts = appService.disciplineOpts ;
-    this.disciplineOptsAll = appService.disciplineOptsAll ;
-    this.positionOpts = appService.positionOpts ;
-    this.affiliateOpts = appService.affiliateOpts ;
-    this.affiliateOptsAll = appService.affiliateOptsAll ;
-    this.affStatusOpts = appService.affStatusOpts ;
-    this.productStatusOpts = appService.productStatusOpts ;
-    this.repStatusOpts = appService.repStatusOpts ;
+    this.states = appService.states;
+    this.countries = appService.countries;
+    this.repOptsAll = appService.repOptsAll;
+    this.repOpts = appService.repOpts;
+    this.prefixOpts = appService.prefixOpts;
+    this.disciplineOpts = appService.disciplineOpts;
+    this.disciplineOptsAll = appService.disciplineOptsAll;
+    this.positionOpts = appService.positionOpts;
+    this.affiliateOpts = appService.empAffiliateOpts;
+    this.affiliateOptsAll = appService.affiliateOptsAll;
+    this.affStatusOpts = appService.affStatusOpts;
+    this.productStatusOpts = appService.productStatusOpts;
+    this.repStatusOpts = appService.repStatusOpts;
 
   }
 
@@ -103,7 +104,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
   getSuccess(contactEntity) {
     this.busy = false;
-    if (contactEntity.messages.length > 0){
+    if (contactEntity.messages.length > 0) {
       this.appService.showMessage(contactEntity.messages[0].message);
       this.location.back();
     } else {
@@ -116,56 +117,58 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.error = true;
     if (error.status == 401) {
       this.location.back();
-      this.appService.pushData({type:"SHOW-LOGIN"});
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     } else {
       this.appService.showMessage("Error reading contact data.");
     }
   }
 
-  initValues(contactEntity){
+  initValues(contactEntity) {
     debugger;
     this.contactEntity = contactEntity;
 
     this.conID = this.contactEntity.contact.conID;
     this.conActive = !this.contactEntity.contact.conInactive;
 
-    let formValue:ContactEntity = Object.assign({}, contactEntity);
-    //Deep copy arrays so that can be compared while submit
-    this.affiliates = contactEntity.affiliates.map((data) => Object.assign({},data));
-    this.reps = contactEntity.reps.map((data) => Object.assign({},data));
+
+    //Copy objects and deep copy arrays so that can be compared while submit
+    let contact: TblContacts = Object.assign({}, contactEntity.contact);
+    let disciplines: string[] = contactEntity.disciplines.map(discipline => discipline.codDisciplineID);
+    this.affiliates = contactEntity.affiliates.map((data) => Object.assign({}, data));
+    this.reps = contactEntity.reps.map((data) => Object.assign({}, data));
     this.updateRepAffiliate();
     if (!this.contactEntity.disciplines) {
       this.contactEntity.disciplines = [];
     }
-    formValue.disciplines = formValue.disciplines.map(discipline => discipline.codDisciplineID);
-    if (contactEntity.contact.conBirthday != undefined && contactEntity.contact.conBirthday != ""){
-      formValue.contact.conBirthday = new Date(Date.parse(contactEntity.contact.conBirthday));
+
+    if (contactEntity.contact.conBirthday != undefined && contactEntity.contact.conBirthday != "") {
+      contact.conBirthday = new Date(Date.parse(contactEntity.contact.conBirthday));
     }
-    if (contactEntity.contact.conAnniversary != undefined && contactEntity.contact.conAnniversary != ""){
-      formValue.contact.conAnniversary = new Date(Date.parse(contactEntity.contact.conAnniversary));
+    if (contactEntity.contact.conAnniversary != undefined && contactEntity.contact.conAnniversary != "") {
+      contact.conAnniversary = new Date(Date.parse(contactEntity.contact.conAnniversary));
     }
-    this.setFormValue(formValue);
+    this.setFormValue(contact, disciplines);
     //Call multiselect change event handler to populate discipline table
     this.onMultiselectChange();
   }
 
   onMultiselectChange() {
-    this.disciplines = this.contactsForm.value.codDisciplineID.map((discipline)=>{
-        let disp = this.appService.arrayFind(this.appService.disciplines,[{name:'dispCode',value:discipline}]);
-        return {
-          codDisciplineID: discipline,
-          name: disp? disp.dispName: ''
-        }
+    this.disciplines = this.contactsForm.value.codDisciplineID.map((discipline) => {
+      let disp = this.appService.arrayFind(this.appService.disciplines, [{ name: 'dispCode', value: discipline }]);
+      return {
+        codDisciplineID: discipline,
+        name: disp ? disp.dispName : ''
       }
+    }
     );
   }
 
-  onAffiliateSelect(selectedValue, row) {
-    if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:selectedValue}])){
+  onAffiliateSelect(affSelValue, row) {
+    if (this.appService.arrayFind(this.affiliates, [{ name: 'cafAffialiateID', value: affSelValue }])) {
       this.appService.showMessage("Affiliate already selected");
     } else {
       row.cafStatus = '3';
-      row.cafAffialiateID = selectedValue;
+      row.cafAffialiateID = affSelValue;
       this.updateRepAffiliate();
     }
   }
@@ -195,9 +198,9 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
   updateRepAffiliate() {
     this.repAffiliateOpts = this.affiliates.map((affiliate) => {
-      return this.appService.arrayFind(this.appService.affiliateOpts, [{ name: 'value', value: affiliate.cafAffialiateID }]);
+      return this.appService.arrayFind(this.appService.affiliateOptsAll, [{ name: 'value', value: affiliate.cafAffialiateID }]);
     }).filter((affiliateOpt) => {
-      // we need this filter in change mode, because old contact can have inactive affilirated wich are not part of the
+      // we need this filter in change mode, because old contact can have inactive affiliates wich are not part of the
       // affiliateOpts in this case affiliateOpt will be undefined. filer such options
       if (affiliateOpt) {
         return (affiliateOpt.value ? true : false);
@@ -208,8 +211,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.repAffiliateOpts.unshift({ label: '', value: '' });
 
     // remove reps of the deleted/removed affiliates
-    this.reps = this.reps.filter((rep)=>{
-      if (this.appService.arrayFind(this.affiliates, [{name:'cafAffialiateID', value:rep.corAffialiateID}])){
+    this.reps = this.reps.filter((rep) => {
+      if (this.appService.arrayFind(this.affiliates, [{ name: 'cafAffialiateID', value: rep.corAffialiateID }])) {
         return true;
       } else {
         return false;
@@ -218,7 +221,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
   }
 
-  onBlurName(){
+  onBlurName() {
 
   }
 
@@ -291,7 +294,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.contactEntity.reps.forEach((rep) => {
       let newRep = this.appService.arrayFind(this.reps,
         [{ name: 'corRepID', value: rep.corRepID },
-         { name: 'corAffialiateID', value: rep.corAffialiateID }]);
+        { name: 'corAffialiateID', value: rep.corAffialiateID }]);
       if (!newRep) {
         rep.mode = "D";
         rep.corContactID = this.conID;
@@ -303,13 +306,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.reps.forEach((rep) => {
       let oldRep = this.appService.arrayFind(this.contactEntity.reps,
         [{ name: 'corRepID', value: rep.corRepID },
-         { name: 'corAffialiateID', value: rep.corAffialiateID }]);
+        { name: 'corAffialiateID', value: rep.corAffialiateID }]);
       if (oldRep) {
         repOk = true;
         rep.mode = "U";
         rep.corContactID = this.conID;
         repsSend.push(rep);
-      } else if (rep.corRepID && rep.corAffialiateID){
+      } else if (rep.corRepID && rep.corAffialiateID) {
         repOk = true;
         rep.mode = "I";
         rep.corContactID = this.conID;
@@ -317,12 +320,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
       }
     });
 
-    if(!dispOk){
+    if (!dispOk) {
       this.appService.showMessage("Please enter disciplines");
       return;
     }
 
-    if(!affOk){
+    if (!affOk) {
       this.appService.showMessage("Please enter affiliates");
       return;
     }
@@ -344,13 +347,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     contactEntity.contact.conDate = this.contactEntity.contact.conDate;
     contactEntity.contact.conCreatedBy = this.contactEntity.contact.conCreatedBy;
 
-    if (this.conActive == true || this.conActive == false ){
+    if (this.conActive == true || this.conActive == false) {
       contactEntity.contact.conInactive = !this.conActive;
     }
 
     this.busy = true;
     this.contactsService.changeContact(contactEntity)
-        .subscribe((data)=>this.changeSuccess(data), (error)=>this.changeError(error));
+      .subscribe((data) => this.changeSuccess(data), (error) => this.changeError(error));
 
   }
 
@@ -366,7 +369,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.error = true;
     this.busy = false;
     if (error.status == 401) {
-      this.appService.pushData({type:"SHOW-LOGIN"});
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     } else if (error.status == 403) {
       this.appService.showMessage("You are not authorized to change contact.");
     } else {
@@ -375,7 +378,7 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.location.back();
   }
 
@@ -414,41 +417,41 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     });
   }
 
-  setFormValue(contactEntity: ContactEntity) {
+  setFormValue(contact: TblContacts, disciplines: string[]) {
     let contactFormValue = {
-      conID: contactEntity.contact.conID,
-      conCourtesy: contactEntity.contact.conCourtesy,
-      conFName: contactEntity.contact.conFName,
-      conMI: contactEntity.contact.conMI,
-      conLName: contactEntity.contact.conLName,
-      conAlias: contactEntity.contact.conAlias,
-      conCompanyID: contactEntity.contact.conCompanyID,
-      conTitle: contactEntity.contact.conTitle,
-      conPosition: contactEntity.contact.conPosition,
-      conDirectPhone: contactEntity.contact.conDirectPhone,
-      conExt: contactEntity.contact.conExt,
-      conCellPhone: contactEntity.contact.conCellPhone,
-      conFaxNum: contactEntity.contact.conFaxNum,
-      conEmail: contactEntity.contact.conEmail,
-      conAssistantName: contactEntity.contact.conAssistantName,
-      conAssistPhone: contactEntity.contact.conAssistPhone,
-      conAssistExt: contactEntity.contact.conAssistExt,
-      conAssistEmail: contactEntity.contact.conAssistEmail,
-      conHomeAddress: contactEntity.contact.conHomeAddress,
-      conHomeAddress2: contactEntity.contact.conHomeAddress2,
-      conHomeCity: contactEntity.contact.conHomeCity,
-      conHomeState: contactEntity.contact.conHomeState,
-      conHomeZip: contactEntity.contact.conHomeZip,
-      conHomePhone: contactEntity.contact.conHomePhone,
-      conHomeFax: contactEntity.contact.conHomeFax,
-      conHomeEmail: contactEntity.contact.conHomeEmail,
-      conBirthday: contactEntity.contact.conBirthday,
-      conAnniversary: contactEntity.contact.conAnniversary,
-      conGuestName: contactEntity.contact.conGuestName,
-      codDisciplineID: contactEntity.disciplines
+      conID: contact.conID,
+      conCourtesy: contact.conCourtesy,
+      conFName: contact.conFName,
+      conMI: contact.conMI,
+      conLName: contact.conLName,
+      conAlias: contact.conAlias,
+      conCompanyID: contact.conCompanyID,
+      conTitle: contact.conTitle,
+      conPosition: contact.conPosition,
+      conDirectPhone: contact.conDirectPhone,
+      conExt: contact.conExt,
+      conCellPhone: contact.conCellPhone,
+      conFaxNum: contact.conFaxNum,
+      conEmail: contact.conEmail,
+      conAssistantName: contact.conAssistantName,
+      conAssistPhone: contact.conAssistPhone,
+      conAssistExt: contact.conAssistExt,
+      conAssistEmail: contact.conAssistEmail,
+      conHomeAddress: contact.conHomeAddress,
+      conHomeAddress2: contact.conHomeAddress2,
+      conHomeCity: contact.conHomeCity,
+      conHomeState: contact.conHomeState,
+      conHomeZip: contact.conHomeZip,
+      conHomePhone: contact.conHomePhone,
+      conHomeFax: contact.conHomeFax,
+      conHomeEmail: contact.conHomeEmail,
+      conBirthday: contact.conBirthday,
+      conAnniversary: contact.conAnniversary,
+      conGuestName: contact.conGuestName,
+      codDisciplineID: disciplines
     }
 
-    Object.keys(contactFormValue).forEach(function(key) {
+    Object.keys(contactFormValue).forEach(function (key) {
       if (contactFormValue[key] == undefined) {
         contactFormValue[key] = '';
       }
@@ -456,8 +459,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.contactsForm.setValue(contactFormValue);
   }
 
-  canDeactivateRoute(){
-    this.appService.unLockObject("CONTACT", this.conID).subscribe((data)=>{}, (error)=>console.log(error));
+  canDeactivateRoute() {
+    this.appService.unLockObject("CONTACT", this.conID).subscribe((data) => { }, (error) => console.log(error));
     return true;
   }
 

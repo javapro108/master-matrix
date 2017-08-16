@@ -1,4 +1,8 @@
-<!--The whole content below can be removed with the new code.-->
+<p-blockUI [blocked]="globalObject.busy">
+  <div id="app-component" style="position:absolute;top:40%;left:45%">
+    <font size="5" color="black">Loading...</font>
+  </div>
+</p-blockUI>
 
 <div class="root-component">
   <router-outlet></router-outlet>
@@ -14,14 +18,14 @@
     </div>
     <div class="ui-g-12">
       <p-dataTable [value]="appMessages" [rows]="5" [paginator]="true" [pageLinks]="5" [rowsPerPageOptions]="[5,10,15,20]">
-        <p-column field="type" header="Message Type" [style]="{'width':'20%'}" ></p-column>
-        <p-column field="message" header="Message" [style]="{'width':'80%'}" ></p-column>
+        <p-column field="type" header="Message Type" [style]="{'width':'20%'}"></p-column>
+        <p-column field="message" header="Message" [style]="{'width':'80%'}"></p-column>
       </p-dataTable>
     </div>
   </div>
   <p-footer>
     <div class="ui-g-12">
-      <div class="ui-g-9">  </div>
+      <div class="ui-g-9"> </div>
       <div class="ui-g-3">
         <button type="button" pButton label="Clear Old Messages" (click)="clearMessages()"></button>
       </div>

@@ -3,9 +3,9 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import {SelectItem} from 'primeng/primeng';
+import { SelectItem } from 'primeng/primeng';
 
-import { BaseComponent } from  '../../common/base.component';
+import { BaseComponent } from '../../common/base.component';
 
 import { AppService } from '../../services/app.service';
 import { CompanyService } from '../../services/company.service';
@@ -21,20 +21,20 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   companyForm: FormGroup;
   duplicateCompanies: any;
   showDuplicate: boolean;
-  districts: SelectItem[];
+  empDistricts: SelectItem[];
   states: SelectItem[];
   countries: SelectItem[];
 
   constructor(
     private router: Router,
-    private location:Location,
+    private location: Location,
     private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
     private companyService: CompanyService
   ) {
     super();
-    this.districts = appService.districts;
+    this.empDistricts = appService.empDistricts;
     this.states = appService.states;
     this.countries = appService.countries;
   }
@@ -45,7 +45,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
 
-  ngOnDestroy(){
+  ngOnDestroy() {
 
   }
 
@@ -56,16 +56,16 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
 
 
   onBlurName() {
-    if (this.companyForm.value.comName){
+    if (this.companyForm.value.comName) {
       this.companyService.newCheck(this.companyForm.value.comName)
-          .subscribe((data) => this.newCheckResults(data))
+        .subscribe((data) => this.newCheckResults(data))
     }
   }
 
 
   newCheckResults(duplicateCompanies) {
     this.duplicateCompanies = duplicateCompanies;
-    if (this.duplicateCompanies.length > 0){
+    if (this.duplicateCompanies.length > 0) {
       this.showDuplicate = true;
     }
   }
@@ -135,8 +135,8 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
   createError(error) {
     console.log(error);
     this.busy = false;
-    if (error.status == 401){
-      this.appService.pushData({type:"SHOW-LOGIN"});
+    if (error.status == 401) {
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     } else if (error.status == 403) {
       this.appService.showMessage("You are not authorized to create company.");
     } else {
@@ -144,7 +144,7 @@ export class CreateComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.location.back();
   }
 

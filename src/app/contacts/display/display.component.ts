@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs/Subscription'
 
 import { AppService } from '../../services/app.service';
 import { ContactsService } from '../../services/contacts.service';
-import { ContactDetail, ContactEntity, SpContactViewResult} from '../../services/contacts.types';
+import { ContactDetail, ContactEntity, SpContactViewResult } from '../../services/contacts.types';
 
 @Component({
   selector: 'display-contact-view',
@@ -17,9 +17,9 @@ import { ContactDetail, ContactEntity, SpContactViewResult} from '../../services
 export class DisplayComponent implements OnInit, OnDestroy {
 
   busy: boolean = true;
-  displayDialog:boolean=false;
+  displayDialog: boolean = false;
   contactForm: FormGroup;
-  Subscription: Subscription;
+  subContactService: Subscription;
   subRoute: Subscription;
   spContactView: SpContactViewResult;
   contactDetail: ContactDetail;
@@ -40,20 +40,20 @@ export class DisplayComponent implements OnInit, OnDestroy {
   ) {
     this.contactDetail = {
       contact: {},
-		  comments: [],
+      comments: [],
       contactActivities: [],
       marketings: [],
       jobs: [],
       projects: [],
-      disciplines:[],
-      affiliates:[],
-      reps:[]
+      disciplines: [],
+      affiliates: [],
+      reps: []
     };
-	 }
+  }
 
   ngOnInit() {
     this.busy = true;
-    this.Subscription = this.contactService.subscribe((data) => this.rxupdate(data));
+    this.subContactService = this.contactService.subscribe((data) => this.rxUpdate(data));
     this.subRoute = this.activeRoute.params.subscribe((params) => {
       this.conID = params.id;
       let getParams = {
@@ -74,12 +74,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.Subscription.unsubscribe();
+    this.subContactService.unsubscribe();
     this.subRoute.unsubscribe();
   }
 
 
-  rxupdate(data) { debugger; }
+  rxUpdate(data) { debugger; }
 
   getContactSuccess(contactDetail) {
     debugger;
@@ -90,52 +90,52 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.contactDetail.comments = contactDetail.comments;
     this.contactDetail.marketings = contactDetail.marketings;
     this.contactDetail.disciplines = contactDetail.disciplines;
-    this.contactDetail.affiliates= contactDetail.affiliates;
-    this.contactDetail.reps= contactDetail.reps;
-    this.affiliates= contactDetail.affiliates;
-    this.reps= contactDetail.reps;
+    this.contactDetail.affiliates = contactDetail.affiliates;
+    this.contactDetail.reps = contactDetail.reps;
+    this.affiliates = contactDetail.affiliates;
+    this.reps = contactDetail.reps;
 
-    this.disciplines = this.contactDetail.disciplines.map((discipline)=>{
-        let disp = this.appService.arrayFind(this.appService.disciplines,[{name:'dispCode',value:discipline.codDisciplineID}]);
-        return {
-          codDisciplineID: discipline.codDisciplineID,
-          name: disp? disp.dispName: ''
-        }
+    this.disciplines = this.contactDetail.disciplines.map((discipline) => {
+      let disp = this.appService.arrayFind(this.appService.disciplines, [{ name: 'dispCode', value: discipline.codDisciplineID }]);
+      return {
+        codDisciplineID: discipline.codDisciplineID,
+        name: disp ? disp.dispName : ''
       }
+    }
     );
 
-    this.affiliates = this.contactDetail.affiliates.map((affiliate)=>{
-      let newAffiliate:any = affiliate;
+    this.affiliates = this.contactDetail.affiliates.map((affiliate) => {
+      let newAffiliate: any = affiliate;
 
-      newAffiliate.affName = this.appService.arrayFind(this.appService.affiliateOptsAll, [{name:'value', value: affiliate.cafAffialiateID}] );
-      newAffiliate.affName = newAffiliate.affName? newAffiliate.affName.label : affiliate.cafAffialiateID;
+      newAffiliate.affName = this.appService.arrayFind(this.appService.affiliateOptsAll, [{ name: 'value', value: affiliate.cafAffialiateID }]);
+      newAffiliate.affName = newAffiliate.affName ? newAffiliate.affName.label : affiliate.cafAffialiateID;
 
-      newAffiliate.stsText = this.appService.arrayFind(this.appService.affStatusOpts, [{name:'value', value: affiliate.cafStatus}] );
-      newAffiliate.stsText = newAffiliate.stsText? newAffiliate.stsText.label : affiliate.cafStatus;
+      newAffiliate.stsText = this.appService.arrayFind(this.appService.affStatusOpts, [{ name: 'value', value: affiliate.cafStatus }]);
+      newAffiliate.stsText = newAffiliate.stsText ? newAffiliate.stsText.label : affiliate.cafStatus;
 
-      newAffiliate.stsText2 = this.appService.arrayFind(this.appService.productStatusOpts, [{name:'value', value: affiliate.cafstatus2}] );
-      newAffiliate.stsText2 = newAffiliate.stsText2? newAffiliate.stsText2.label : affiliate.cafstatus2;
+      newAffiliate.stsText2 = this.appService.arrayFind(this.appService.productStatusOpts, [{ name: 'value', value: affiliate.cafstatus2 }]);
+      newAffiliate.stsText2 = newAffiliate.stsText2 ? newAffiliate.stsText2.label : affiliate.cafstatus2;
 
       return newAffiliate;
     });
 
-    this.reps = this.contactDetail.reps.map((rep)=>{
+    this.reps = this.contactDetail.reps.map((rep) => {
       let newRep: any = rep;
 
-      newRep.repName = this.appService.arrayFind(this.appService.repOpts, [{name:'value', value: rep.corRepID}] );
-      newRep.repName = newRep.repName? newRep.repName.label : rep.corRepID;
+      newRep.repName = this.appService.arrayFind(this.appService.repOpts, [{ name: 'value', value: rep.corRepID }]);
+      newRep.repName = newRep.repName ? newRep.repName.label : rep.corRepID;
 
-      newRep.affName = this.appService.arrayFind(this.appService.affiliateOptsAll, [{name:'value', value: rep.corAffialiateID}] );
-      newRep.affName = newRep.affName? newRep.affName.label : rep.corAffialiateID;
+      newRep.affName = this.appService.arrayFind(this.appService.affiliateOptsAll, [{ name: 'value', value: rep.corAffialiateID }]);
+      newRep.affName = newRep.affName ? newRep.affName.label : rep.corAffialiateID;
 
-      newRep.stsText = this.appService.arrayFind(this.appService.repStatusOpts, [{name:'value', value: rep.corStatus}] );
-      newRep.stsText = newRep.stsText? newRep.stsText.label : rep.corStatus;
+      newRep.stsText = this.appService.arrayFind(this.appService.repStatusOpts, [{ name: 'value', value: rep.corStatus }]);
+      newRep.stsText = newRep.stsText ? newRep.stsText.label : rep.corStatus;
 
       return newRep;
     });
 
-    let distName = this.appService.arrayFind(this.appService.districts, [{name:'value', value: this.contactDetail.contact.comDistrict}] );
-    this.contactDetail.contact.comDistrict = distName? distName.label : this.contactDetail.contact.comDistrict;
+    let distName = this.appService.arrayFind(this.appService.empDistricts, [{ name: 'value', value: this.contactDetail.contact.comDistrict }]);
+    this.contactDetail.contact.comDistrict = distName ? distName.label : this.contactDetail.contact.comDistrict;
 
   }
 
@@ -143,7 +143,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.busy = false;
     if (error.status == 401) {
       this.location.back();
-      this.appService.pushData({type:"SHOW-LOGIN"});
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     } else {
     }
   }
@@ -152,7 +152,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.router.navigate(['../../change', this.conID], { relativeTo: this.activeRoute });
   }
 
-  saveComments(cmdPriority,cmdComment){
+  saveComments(cmdPriority, cmdComment) {
     debugger;
     this.displayDialog = false;
     let comment = {
@@ -161,16 +161,16 @@ export class DisplayComponent implements OnInit, OnDestroy {
       cmdComment: cmdComment
     }
     this.contactService.addComment(comment)
-        .subscribe(data => this.successAddComment(data), error => this.errorAddComment(error));
+      .subscribe(data => this.successAddComment(data), error => this.errorAddComment(error));
   }
 
-  successAddComment(comment){
-    comment.cmdPriority = comment.cmdPriority == true? '!':'';
+  successAddComment(comment) {
+    comment.cmdPriority = comment.cmdPriority == true ? '!' : '';
     this.contactDetail.comments.unshift(comment);
     this.contactDetail.comments = this.contactDetail.comments.slice();
   }
 
-  errorAddComment(error){
+  errorAddComment(error) {
 
   }
 

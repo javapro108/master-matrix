@@ -1,18 +1,22 @@
+export interface GlobalObject {
+  busy?: boolean;
+}
+
 export interface User {
-  userName?:string,
-  firstName?:string,
-  lastName?:string,
-  department?:string,
-  email?:string
-  token?:string
+  userName?: string,
+  firstName?: string,
+  lastName?: string,
+  department?: string,
+  email?: string
+  token?: string
 }
 
 export interface AppMessage {
   type?: string,
   message?: string,
   objType?: string,
-  objID?:string,
-  time?:Date
+  objID?: string,
+  time?: Date
 }
 
 export interface DropDownOption {
@@ -21,6 +25,6 @@ export interface DropDownOption {
 }
 
 export interface NameValue {
-  name:any,
-  value:any
+  name: any,
+  value: any
 }

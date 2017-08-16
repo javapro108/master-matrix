@@ -65,40 +65,40 @@ export interface FindCompanyResult {
 
 export interface SpCompanyTableResult {
   comID?: string;
-	comInactive?: boolean;
-	comName?: string;
-	comAlias?: string;
-	comAddress?: string;
-	comAddress2?: string;
-	comCity?: string;
-	comState?: string;
-	comZip?: string;
-	comCountry?: string;
-	comWeb?: string;
-	comPhone?: string;
-	comFax?: string;
-	comTollFree?: string;
-	comDirections?: string;
-	comDistrict?: string;
-	comDeliveryAddress1?: string;
-	comDeliveryAddress2?: string;
-	comDeliveryCity?: string;
-	comDeliveryState?: string;
-	comDeliveryZip?: string;
-	comDeliveryCountry?: string;
-	comRevisedDate?: string;
-	comRevisedBy?: string;
-	comDeliveryDirections?: string;
-	comMailAddress1?: string;
-	comMailAddress2?: string;
-	comMailCity?: string;
-	comMailState?: string;
-	comMailZip?: string;
-	comMailCountry?: string;
-	comDirectionComments?: string;
-	terName?: string;
-	comDate?: string;
-	comCreatedBy?: string;
+  comInactive?: boolean;
+  comName?: string;
+  comAlias?: string;
+  comAddress?: string;
+  comAddress2?: string;
+  comCity?: string;
+  comState?: string;
+  comZip?: string;
+  comCountry?: string;
+  comWeb?: string;
+  comPhone?: string;
+  comFax?: string;
+  comTollFree?: string;
+  comDirections?: string;
+  comDistrict?: string;
+  comDeliveryAddress1?: string;
+  comDeliveryAddress2?: string;
+  comDeliveryCity?: string;
+  comDeliveryState?: string;
+  comDeliveryZip?: string;
+  comDeliveryCountry?: string;
+  comRevisedDate?: string;
+  comRevisedBy?: string;
+  comDeliveryDirections?: string;
+  comMailAddress1?: string;
+  comMailAddress2?: string;
+  comMailCity?: string;
+  comMailState?: string;
+  comMailZip?: string;
+  comMailCountry?: string;
+  comDirectionComments?: string;
+  terName?: string;
+  comDate?: string;
+  comCreatedBy?: string;
 }
 
 export interface CompanyEntity {
@@ -106,7 +106,7 @@ export interface CompanyEntity {
   comments?: Array<TblCompanyComment>;
   contacts?: Array<TblContacts>;
   findParams?: FindParams;
-  findCompanyResults?: Array<FindCompanyResult>;
+  findCompanyResults?: FindCompanyResult[];
 }
 
 

@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Subscription'
 
-import {SelectItem} from 'primeng/primeng';
+import { SelectItem } from 'primeng/primeng';
 
-import { BaseComponent } from  '../../common/base.component';
+import { BaseComponent } from '../../common/base.component';
 
 import { AppService } from '../../services/app.service';
 import { CanDeactivateRoute } from '../../services/route.service';
@@ -20,29 +20,29 @@ import { CompanyEntity, TblCompany, TblCompanyComment } from '../../services/com
 })
 export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy {
 
-  busy:boolean = false;
-  error:boolean = false;
+  busy: boolean = false;
+  error: boolean = false;
   companyForm: FormGroup;
   subscription: Subscription;
   subRoute: Subscription;
   companyEntity: CompanyEntity;
   comActive: boolean;
-  districts: SelectItem[];
+  empDistricts: SelectItem[];
   states: SelectItem[];
   countries: SelectItem[];
 
 
   constructor(
     private router: Router,
-    private location:Location,
-    private activeRoute:ActivatedRoute,
+    private location: Location,
+    private activeRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private appService: AppService,
-    private companyService:CompanyService
-  ){
+    private companyService: CompanyService
+  ) {
     super();
 
-    this.districts = appService.districts;
+    this.empDistricts = appService.empDistricts;
     this.states = appService.states;
     this.countries = appService.countries;
 
@@ -55,14 +55,14 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
 
-  ngOnInit(): void{
-   this.buildForm();
-   this.subRoute = this.activeRoute.params.subscribe( (params) => {
-     this.companyService.getCompany(params.id, true)
-         .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
-   });
-   this.subscription = this.companyService.subscribe((data)=>this.rxUpdate(data));
-   this.busy = true;
+  ngOnInit(): void {
+    this.buildForm();
+    this.subRoute = this.activeRoute.params.subscribe((params) => {
+      this.companyService.getCompany(params.id, true)
+        .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
+    });
+    this.subscription = this.companyService.subscribe((data) => this.rxUpdate(data));
+    this.busy = true;
   }
 
 
@@ -72,19 +72,19 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
 
-  rxUpdate(data){
-    if (data.type == 'CHANGE-FROM-CREATE'){
+  rxUpdate(data) {
+    if (data.type == 'CHANGE-FROM-CREATE') {
       this.setCompanyFormValue(data.data);
-    } else if ( data.type == 'CHANGE-FROM-SEARCH' ) {
+    } else if (data.type == 'CHANGE-FROM-SEARCH') {
       this.companyService.getCompany(data.data)
-          .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
+        .subscribe((data) => this.getSuccess(data), (error) => this.getError(error))
     }
   }
 
 
-  getSuccess(companyEntity){
+  getSuccess(companyEntity) {
     this.busy = false;
-    if (companyEntity.messages.length > 0){
+    if (companyEntity.messages.length > 0) {
       this.appService.showMessage(companyEntity.messages[0].message);
       this.location.back();
     } else {
@@ -95,12 +95,12 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
 
-  getError(error){
+  getError(error) {
     this.error = true;
     this.busy = false;
-    if (error.status == 401){
+    if (error.status == 401) {
       this.location.back();
-      this.appService.pushData({type:"SHOW-LOGIN"});
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     }
   }
 
@@ -139,10 +139,10 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
 
   onSubmit() {
-    let companyEntity:CompanyEntity = {};
+    let companyEntity: CompanyEntity = {};
 
     companyEntity.company = this.companyForm.value;
-    if (this.comActive == true || this.comActive == false){
+    if (this.comActive == true || this.comActive == false) {
       companyEntity.company.comInactive = !this.comActive;
     }
 
@@ -156,13 +156,13 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
 
     console.log(this.companyEntity);
     this.companyService.changeCompany(companyEntity)
-        .subscribe((data) => this.changeSuccess(data),(data) => this.changeError(data) )
+      .subscribe((data) => this.changeSuccess(data), (data) => this.changeError(data))
     this.companyForm.markAsPristine();
 
   }
 
 
-  changeSuccess(companyEntity){
+  changeSuccess(companyEntity) {
     this.companyService.companyEntity.company = companyEntity.company;
     //this.setCompanyFormValue(this.companyService.companyEntity.company);
     this.busy = false;
@@ -171,11 +171,11 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
   }
 
 
-  changeError(error){
+  changeError(error) {
     this.busy = false;
     this.error = true;
-    if (error.status == 401){
-      this.appService.pushData({type:"SHOW-LOGIN"});
+    if (error.status == 401) {
+      this.appService.pushData({ type: "SHOW-LOGIN" });
     } else if (error.status == 403) {
       this.appService.showMessage("You are not authorized to change company.");
     } else {
@@ -183,86 +183,86 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     }
   }
 
-  onCancel(){
+  onCancel() {
     this.location.back();
   }
 
 
-  buildForm(): void{
+  buildForm(): void {
     this.companyForm = this.formBuilder.group({
-      comID:'',
-      comName : ['', Validators.required],
-      comInactive:'',
-      comAlias :'',
+      comID: '',
+      comName: ['', Validators.required],
+      comInactive: '',
+      comAlias: '',
       comPhone: ['', Validators.required],
-      comFax :'',
-      comTollFree :'',
+      comFax: '',
+      comTollFree: '',
       comDistrict: ['', Validators.required],
-      comWeb:'',
-      comAddress :['', Validators.required],
-      comAddress2 :'',
-      comCity :['', Validators.required],
-      comState :['', Validators.required],
-      comZip :['', Validators.required],
-      comCountry :['', Validators.required],
-      comDirections :'',
-      comMailAddress1 :['', Validators.required],
-      comMailAddress2 :'',
-      comMailCity :['', Validators.required],
-      comMailState :['', Validators.required],
-      comMailZip :['', Validators.required],
-      comMailCountry :['', Validators.required],
-      comDeliveryAddress1 :'',
-      comDeliveryAddress2 :'',
-      comDeliveryCity :'',
-      comDeliveryState :'',
-      comDeliveryZip :'',
-      comDeliveryCountry :'',
-      comDeliveryDirections :'',
-      comDirectionComments :'',
-      cmcComment :'',
+      comWeb: '',
+      comAddress: ['', Validators.required],
+      comAddress2: '',
+      comCity: ['', Validators.required],
+      comState: ['', Validators.required],
+      comZip: ['', Validators.required],
+      comCountry: ['', Validators.required],
+      comDirections: '',
+      comMailAddress1: ['', Validators.required],
+      comMailAddress2: '',
+      comMailCity: ['', Validators.required],
+      comMailState: ['', Validators.required],
+      comMailZip: ['', Validators.required],
+      comMailCountry: ['', Validators.required],
+      comDeliveryAddress1: '',
+      comDeliveryAddress2: '',
+      comDeliveryCity: '',
+      comDeliveryState: '',
+      comDeliveryZip: '',
+      comDeliveryCountry: '',
+      comDeliveryDirections: '',
+      comDirectionComments: '',
+      cmcComment: '',
       cmcPriority: ''
     });
   }
 
-  setCompanyFormValue(company:TblCompany) {
+  setCompanyFormValue(company: TblCompany) {
     let companyFormValue = {
       comID: company.comID,
-      comName : company.comName,
+      comName: company.comName,
       comInactive: company.comInactive,
-      comAlias : company.comAlias,
+      comAlias: company.comAlias,
       comPhone: company.comPhone,
-      comFax : company.comFax,
-      comTollFree : company.comTollFree,
+      comFax: company.comFax,
+      comTollFree: company.comTollFree,
       comDistrict: company.comDistrict,
       comWeb: company.comWeb,
-      comAddress : company.comAddress,
-      comAddress2 : company.comAddress2,
-      comCity : company.comCity,
-      comState : company.comState,
-      comZip : company.comZip,
-      comCountry : company.comCountry,
-      comDirections : company.comDirections,
-      comMailAddress1 : company.comMailAddress1,
-      comMailAddress2 : company.comMailAddress2,
-      comMailCity : company.comMailCity,
-      comMailState : company.comMailState,
-      comMailZip : company.comMailZip,
-      comMailCountry : company.comMailCountry,
-      comDeliveryAddress1 : company.comDeliveryAddress1,
-      comDeliveryAddress2 : company.comDeliveryAddress2,
-      comDeliveryCity : company.comDeliveryCity,
-      comDeliveryState : company.comDeliveryState,
-      comDeliveryZip : company.comDeliveryZip,
-      comDeliveryCountry : company.comDeliveryCountry,
-      comDeliveryDirections : company.comDeliveryDirections,
-      comDirectionComments : company.comDirectionComments,
+      comAddress: company.comAddress,
+      comAddress2: company.comAddress2,
+      comCity: company.comCity,
+      comState: company.comState,
+      comZip: company.comZip,
+      comCountry: company.comCountry,
+      comDirections: company.comDirections,
+      comMailAddress1: company.comMailAddress1,
+      comMailAddress2: company.comMailAddress2,
+      comMailCity: company.comMailCity,
+      comMailState: company.comMailState,
+      comMailZip: company.comMailZip,
+      comMailCountry: company.comMailCountry,
+      comDeliveryAddress1: company.comDeliveryAddress1,
+      comDeliveryAddress2: company.comDeliveryAddress2,
+      comDeliveryCity: company.comDeliveryCity,
+      comDeliveryState: company.comDeliveryState,
+      comDeliveryZip: company.comDeliveryZip,
+      comDeliveryCountry: company.comDeliveryCountry,
+      comDeliveryDirections: company.comDeliveryDirections,
+      comDirectionComments: company.comDirectionComments,
       cmcComment: '',
       cmcPriority: false
     }
 
-    Object.keys(companyFormValue).forEach(function(key) {
-      if (companyFormValue[key] == undefined ){
+    Object.keys(companyFormValue).forEach(function (key) {
+      if (companyFormValue[key] == undefined) {
         companyFormValue[key] = '';
       }
     });
@@ -270,8 +270,8 @@ export class ChangeComponent extends BaseComponent implements OnInit, OnDestroy 
     this.companyForm.setValue(companyFormValue);
   }
 
-  canDeactivateRoute(){
-    this.appService.unLockObject("COMPANY", this.companyEntity.company.comID).subscribe((data)=>{}, (error)=>console.log(error));
+  canDeactivateRoute() {
+    this.appService.unLockObject("COMPANY", this.companyEntity.company.comID).subscribe((data) => { }, (error) => console.log(error));
     return true;
   }
 
